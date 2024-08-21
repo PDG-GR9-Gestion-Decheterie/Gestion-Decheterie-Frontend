@@ -9,14 +9,6 @@ export default function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Ramassages />
-            </ProtectedRoute>
-          }
-        />
         <Route path="/login" element={<Login />} />
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<Error />} />
