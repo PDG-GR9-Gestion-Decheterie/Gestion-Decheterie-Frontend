@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../components/Layout";
-import { Grid, Paper } from "@mui/material";
+import { Grid, Box, Avatar } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
 export default function Home() {
@@ -9,16 +9,28 @@ export default function Home() {
       title={"Home"}
       content={
         <Grid item xs={12}>
-          <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+          <Box
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Avatar
+              sx={{ width: 250, height: 250 }}
+              src="DIRTS_logo.png"
+              alt="DIRTS-LOGO"
+            />
             <Typography
-              component="h2"
-              variant="h6"
+              component="h1"
+              variant="h5"
               color="primary"
-              gutterBottom
+              sx={{ fontSize: 50 }}
             >
               Bienvenue !
             </Typography>
-          </Paper>
+          </Box>
         </Grid>
       }
     />

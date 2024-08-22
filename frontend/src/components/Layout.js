@@ -18,6 +18,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import LogoutIcon from "@mui/icons-material/Logout";
+import HomeIcon from "@mui/icons-material/Home";
 import Container from "@mui/material/Container";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useAuth } from "../hooks/useAuth";
@@ -161,7 +162,7 @@ export default function Layout({ title, content }) {
           <List component="nav">
             <ListItemButton href="/">
               <ListItemIcon>
-                <AssignmentIcon />
+                <HomeIcon />
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItemButton>
