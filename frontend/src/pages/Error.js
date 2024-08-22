@@ -29,7 +29,7 @@ export default function Error() {
           <Typography variant="h6" component="p" gutterBottom>
             Une erreur est survenue.
           </Typography>
-          <Button variant="contained" href="/login">
+          <Button variant="contained" href="/">
             Retour à l'accueil
           </Button>
         </Box>
