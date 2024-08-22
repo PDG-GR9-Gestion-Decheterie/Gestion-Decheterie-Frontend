@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Layout from "../components/Layout";
-import { Grid, Paper, Button } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
-export default function Ramassages() {
+export default function Home() {
   return (
     <Layout
       title={"Home"}
