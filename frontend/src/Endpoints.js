@@ -1,5 +1,7 @@
+const apiUrl = process.env.REACT_APP_API_URL;
+
 async function loginUser(credentials) {
-  return fetch("https://localhost/api/login", {
+  return fetch(`${apiUrl}/api/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -9,7 +11,7 @@ async function loginUser(credentials) {
 }
 
 async function logoutUser() {
-  return fetch("https://localhost/api/logout", {
+  return fetch(`${apiUrl}/api/logout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
