@@ -17,6 +17,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import PeopleIcon from "@mui/icons-material/People";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HomeIcon from "@mui/icons-material/Home";
 import Container from "@mui/material/Container";
@@ -166,6 +167,15 @@ export default function Layout({ title, content }) {
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItemButton>
+            {localStorage.getItem("fonction") === '"Responsable"' ||
+            localStorage.getItem("fonction") === '"Secrétaire"' ? (
+              <ListItemButton href="/employes">
+                <ListItemIcon>
+                  <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Employés" />
+              </ListItemButton>
+            ) : null}
             <Divider sx={{ my: 1 }} />
             <ListSubheader component="div" inset>
               Compte

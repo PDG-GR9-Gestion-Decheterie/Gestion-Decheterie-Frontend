@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Error from "./pages/Error";
 import Home from "./pages/Home";
 import Profil from "./pages/Profil";
+import Employe from "./pages/Employes";
 
 export default function App() {
   return (
@@ -24,6 +25,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Profil />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/employes"
+          element={
+            <ProtectedRoute>
+              <Employe />
             </ProtectedRoute>
           }
         />
