@@ -43,4 +43,13 @@ async function getDecheteries() {
   });
 }
 
-export { loginUser, logoutUser, getProfil, getDecheteries };
+async function getEmployes() {
+  return fetch("https://localhost/api/employes", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+export { loginUser, logoutUser, getProfil, getDecheteries, getEmployes };
