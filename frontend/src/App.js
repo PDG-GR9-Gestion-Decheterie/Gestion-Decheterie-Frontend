@@ -5,6 +5,7 @@ import { AuthProvider } from "./hooks/useAuth";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
 import Home from "./pages/Home";
+import Profil from "./pages/Profil";
 
 export default function App() {
   return (
@@ -15,6 +16,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profil"
+          element={
+            <ProtectedRoute>
+              <Profil />
             </ProtectedRoute>
           }
         />
