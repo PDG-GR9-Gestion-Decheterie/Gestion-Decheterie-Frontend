@@ -7,6 +7,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { getEmployes } from "../Endpoints";
 
@@ -19,7 +20,7 @@ export default function Employes() {
       const response = await getEmployes();
       if (response.ok) {
         const data = await response.json();
-        setEmployes(data);
+        setEmployes(data.employesData);
       } else if (response.status === 403) {
         navigate("/login");
       } else {
@@ -82,6 +83,16 @@ export default function Employes() {
                 ))}
               </TableBody>
             </Table>
+            {localStorage.getItem("fonction") === '"Responsable"' ? (
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={() => navigate("/employes/create")}
+              >
+                Nouvel employé
+              </Button>
+            ) : null}
           </Paper>
         </Grid>
       }

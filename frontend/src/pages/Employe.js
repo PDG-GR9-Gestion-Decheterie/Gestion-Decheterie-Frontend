@@ -13,6 +13,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import BadgeIcon from "@mui/icons-material/Badge";
 import FactoryIcon from "@mui/icons-material/Factory";
+import HomeIcon from "@mui/icons-material/Home";
 import {
   Grid,
   Paper,
@@ -31,7 +32,7 @@ export default function Employe() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [employe, setEmploye] = React.useState({});
-    const [decheteries, setDecheteries] = React.useState([]);
+  const [decheteries, setDecheteries] = React.useState([]);
   const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleCloseDelete = () => {
@@ -68,7 +69,7 @@ export default function Employe() {
       const response = await getDecheteries();
       if (response.ok) {
         const data = await response.json();
-        setDecheteries(data.decheteries);
+        setDecheteries(data.decheteriesData);
       } else if (response.status === 403) {
         navigate("/login");
       } else {
@@ -153,22 +154,30 @@ export default function Employe() {
                     employe.typepermis == null ? "-" : employe.typepermis
                   }
                 />
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <FactoryIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Décheterie"
-                    secondary={(() => {
-                      const decheterie = decheteries.find(
-                        (d) => d.id === employe.fk_decheterie
-                      );
-                      return decheterie ? decheterie.nom : "-";
-                    })()}
-                  />
-                </ListItem>
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <FactoryIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Décheterie"
+                  secondary={(() => {
+                    const decheterie = decheteries.find(
+                      (d) => d.id === employe.fk_decheterie
+                    );
+                    return decheterie ? decheterie.nom : "-";
+                  })()}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <HomeIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="Adresse" secondary="-" />
               </ListItem>
             </List>
             <Box display="flex" justifyContent="end">
@@ -210,7 +219,7 @@ export default function Employe() {
               <Button
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={() => navigate(`/ramassage/update/${id}`)}
+                onClick={() => navigate(`/employes/${id}/update`)}
               >
                 Modifier
               </Button>
