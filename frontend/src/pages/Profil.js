@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Grid, Paper, Typography, Box, CircularProgress } from "@mui/material";
+import { Grid, Paper, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -12,13 +12,13 @@ import FactoryIcon from "@mui/icons-material/Factory";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
+import HomeIcon from "@mui/icons-material/Home";
 import Layout from "../components/Layout";
-import { getProfil, getDecheteries } from "../Endpoints";
+import { getProfil } from "../Endpoints";
 
 export default function Profil() {
   const navigate = useNavigate();
   const [profil, setProfil] = React.useState({});
-  const [decheteries, setDecheteries] = React.useState([]);
 
   useEffect(() => {
     const fetchProfil = async () => {
@@ -34,37 +34,6 @@ export default function Profil() {
     };
     fetchProfil();
   }, []);
-
-  // Fetch decheterie separately because it depends on profile.fk_decheterie
-  useEffect(() => {
-    const fetchDecheteries = async () => {
-      if (!profil.fk_decheterie) return;
-
-      const response = await getDecheteries(profil.fk_decheterie);
-      if (response.ok) {
-        const data = await response.json();
-        setDecheteries(data.decheteries);
-      } else if (response.status === 403) {
-        navigate("/login");
-      } else {
-        navigate("/error");
-      }
-    };
-    fetchDecheteries();
-  }, [profil.fk_decheterie]);
-
-  if (!profil.fk_decheterie) {
-    return (
-      <Layout
-        title="Chargement..."
-        content={
-          <Box style={{ textAlign: "center", marginTop: "5rem" }}>
-            <CircularProgress />
-          </Box>
-        }
-      />
-    );
-  }
 
   return (
     <Layout
@@ -83,22 +52,6 @@ export default function Profil() {
             <List
               sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
             >
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <FactoryIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Décheterie"
-                  secondary={(() => {
-                    const decheterie = decheteries.find(
-                      (d) => d.id === profil.fk_decheterie
-                    );
-                    return decheterie ? decheterie.nom : "Nom non trouvé";
-                  })()}
-                />
-              </ListItem>
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>
@@ -152,6 +105,28 @@ export default function Profil() {
                 <ListItemText
                   primary="Type de permis"
                   secondary={profil.typepermis ? profil.typepermis : "-"}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <FactoryIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Décheterie"
+                  secondary={profil.decheterie_nom}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <HomeIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Adresse"
+                  secondary={`${profil.adresse_rue} ${profil.adresse_numero}, ${profil.adresse_npa} ${profil.adresse_nomville}`}
                 />
               </ListItem>
             </List>

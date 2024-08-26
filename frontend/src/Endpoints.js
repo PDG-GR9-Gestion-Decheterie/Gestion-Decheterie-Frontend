@@ -20,18 +20,12 @@ async function logoutUser() {
 }
 
 async function getProfil() {
-  return fetch(
-    `https://localhost/api/employes/${localStorage
-      .getItem("userId")
-      .replace('"', "")
-      .replace('"', "")}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  return fetch(`https://localhost/api/profile/`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 }
 
 async function getDecheteries() {

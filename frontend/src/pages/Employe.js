@@ -163,7 +163,7 @@ export default function Employe() {
                     primary="Décheterie"
                     secondary={(() => {
                       const decheterie = decheteries.find(
-                        (d) => d.id === ramassage.fk_decheterie
+                        (d) => d.id === employe.fk_decheterie
                       );
                       return decheterie ? decheterie.nom : "-";
                     })()}
@@ -210,7 +210,7 @@ export default function Employe() {
               <Button
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={() => navigate(`/ramassage/update/${idRamassage}`)}
+                onClick={() => navigate(`/ramassage/update/${id}`)}
               >
                 Modifier
               </Button>
