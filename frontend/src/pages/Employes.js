@@ -19,7 +19,7 @@ export default function Employes() {
       const response = await getEmployes();
       if (response.ok) {
         const data = await response.json();
-        setEmployes(data.employes);
+        setEmployes(data);
       } else if (response.status === 403) {
         navigate("/login");
       } else {
@@ -59,19 +59,24 @@ export default function Employes() {
               </TableHead>
               <TableBody>
                 {employes.map((e) => (
-                  <TableRow key={e.id_employe} hover={true}>
-                    <TableCell>{e.id_employe}</TableCell>
-                    <TableCell>{e.nom_employe}</TableCell>
-                    <TableCell>{e.prenom_employe}</TableCell>
-                    <TableCell>{e.nom_decheterie}</TableCell>
-                    <TableCell>{e.fonction_employe}</TableCell>
-                    <TableCell>{e.date_naissance}</TableCell>
-                    <TableCell>{e.date_debut_contrat}</TableCell>
+                  <TableRow
+                    key={e.idlogin}
+                    hover={true}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => navigate(`/employes/${e.idlogin}`)}
+                  >
+                    <TableCell>{e.idlogin}</TableCell>
+                    <TableCell>{e.nom}</TableCell>
+                    <TableCell>{e.prenom}</TableCell>
+                    <TableCell>{e.decheterie_nom}</TableCell>
+                    <TableCell>{e.fk_fonction}</TableCell>
+                    <TableCell>{e.datenaissance}</TableCell>
+                    <TableCell>{e.datedebutcontrat}</TableCell>
                     <TableCell>
-                      {e.numero_telephone == null ? "-" : e.numero_telephone}
+                      {e.numtelephone == null ? "-" : e.numtelephone}
                     </TableCell>
                     <TableCell>
-                      {e.type_permis == null ? "-" : e.type_permis}
+                      {e.typepermis == null ? "-" : e.typepermis}
                     </TableCell>
                   </TableRow>
                 ))}

@@ -6,7 +6,8 @@ import Login from "./pages/Login";
 import Error from "./pages/Error";
 import Home from "./pages/Home";
 import Profil from "./pages/Profil";
-import Employe from "./pages/Employes";
+import Employes from "./pages/Employes";
+import Employe from "./pages/Employe";
 
 export default function App() {
   return (
@@ -32,10 +33,11 @@ export default function App() {
           path="/employes"
           element={
             <ProtectedRoute>
-              <Employe />
+              <Employes />
             </ProtectedRoute>
           }
         />
+        <Route path="/employes/:id" element={<Employe />} />
         <Route path="/login" element={<Login />} />
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<Error />} />
