@@ -59,7 +59,14 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/employes/:id/update" element={<EmployeUpdate />} />
+        <Route
+          path="/employes/:id/update"
+          element={
+            <ProtectedRoute>
+              <EmployeUpdate />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/decheteries"
           element={
@@ -84,7 +91,14 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/decheteries/:id/update" element={<DecheterieUpdate />} />
+        <Route
+          path="/decheteries/:id/update"
+          element={
+            <ProtectedRoute>
+              <DecheterieUpdate />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<Error />} />
