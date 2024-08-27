@@ -20,7 +20,7 @@ async function logoutUser() {
 }
 
 async function getProfil() {
-  return fetch(`https://localhost/api/profile/`, {
+  return fetch(`${apiUrl}/api/profile/`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -29,7 +29,7 @@ async function getProfil() {
 }
 
 async function getDecheteries() {
-  return fetch(`https://localhost/api/decheteries`, {
+  return fetch(`${apiUrl}/api/decheteries`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -38,7 +38,7 @@ async function getDecheteries() {
 }
 
 async function getEmployes() {
-  return fetch("https://localhost/api/employes", {
+  return fetch("${apiUrl}/api/employes", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -47,7 +47,7 @@ async function getEmployes() {
 }
 
 async function getEmploye(id) {
-  return fetch(`https://localhost/api/employes/${id}`, {
+  return fetch(`${apiUrl}/api/employes/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -56,7 +56,7 @@ async function getEmploye(id) {
 }
 
 async function createEmploye(employe) {
-  return fetch("https://localhost/api/employes", {
+  return fetch(`${apiUrl}/api/employes`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -66,7 +66,7 @@ async function createEmploye(employe) {
 }
 
 async function updateEmploye(employe) {
-  return fetch(`https://localhost/api/employes/${employe.idlogin}`, {
+  return fetch(`${apiUrl}/api/employes/${employe.idlogin}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -76,7 +76,7 @@ async function updateEmploye(employe) {
 }
 
 async function deleteEmploye(id) {
-  return fetch(`https://localhost/api/employes/${id}`, {
+  return fetch(`${apiUrl}/api/employes/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -85,7 +85,7 @@ async function deleteEmploye(id) {
 }
 
 async function getFonctions() {
-  return fetch(`https://localhost/api/fonctions`, {
+  return fetch(`${apiUrl}/api/fonctions`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
