@@ -6,7 +6,10 @@ import Login from "./pages/Login";
 import Error from "./pages/Error";
 import Home from "./pages/Home";
 import Profil from "./pages/Profil";
-import Employe from "./pages/Employes";
+import Employes from "./pages/Employes";
+import Employe from "./pages/Employe";
+import EmployeCreate from "./pages/EmployeCreate";
+import EmployeUpdate from "./pages/EmployeUpdate";
 
 export default function App() {
   return (
@@ -32,10 +35,27 @@ export default function App() {
           path="/employes"
           element={
             <ProtectedRoute>
+              <Employes />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/employes/:id"
+          element={
+            <ProtectedRoute>
               <Employe />
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/employes/create"
+          element={
+            <ProtectedRoute>
+              <EmployeCreate />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/employes/:id/update" element={<EmployeUpdate />} />
         <Route path="/login" element={<Login />} />
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<Error />} />
