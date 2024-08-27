@@ -122,6 +122,53 @@ async function deleteEmploye(id) {
   });
 }
 
+async function getContenants() {
+  return fetch(`${apiUrl}/api/contenants`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function getContenant(id) {
+  return fetch(`${apiUrl}/api/contenants/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function createContenant(contenant) {
+  return fetch(`${apiUrl}/api/contenants`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(contenant),
+  });
+}
+
+async function updateContenant(contenant) {
+  return fetch(`${apiUrl}/api/contenants/${contenant.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(contenant),
+  });
+}
+
+async function deleteContenant(id) {
+  return fetch(`${apiUrl}/api/contenants/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
 async function getAdresses() {
   return fetch(`${apiUrl}/api/adresses`, {
     method: "GET",
@@ -163,6 +210,11 @@ export {
   createEmploye,
   updateEmploye,
   deleteEmploye,
+  getContenants,
+  getContenant,
+  createContenant,
+  updateContenant,
+  deleteContenant,
   getAdresses,
   getAdresse,
   getFonctions,

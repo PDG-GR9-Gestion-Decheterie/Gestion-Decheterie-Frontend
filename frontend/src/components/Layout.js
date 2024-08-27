@@ -17,6 +17,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import BoxIcon from "@mui/icons-material/Box";
 import PeopleIcon from "@mui/icons-material/People";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HomeIcon from "@mui/icons-material/Home";
@@ -174,6 +175,12 @@ export default function Layout({ title, content }) {
               </ListItemIcon>
               <ListItemText primary="Décheteries" />
             </ListItemButton>
+              <ListItemButton href="/contenants">
+                <ListItemIcon>
+                  <BoxIcon />
+                </ListItemIcon>
+                <ListItemText primary="Contenants" />
+              </ListItemButton>
             {localStorage.getItem("fonction") === '"Responsable"' ? (
               <ListItemButton href="/employes">
                 <ListItemIcon>

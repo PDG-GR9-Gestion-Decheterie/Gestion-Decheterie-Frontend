@@ -14,6 +14,10 @@ import Decheteries from "./pages/Decheteries/Decheteries";
 import Decheterie from "./pages/Decheteries/Decheterie";
 import DecheterieCreate from "./pages/Decheteries/DecheterieCreate";
 import DecheterieUpdate from "./pages/Decheteries/DecheterieUpdate";
+import Contenants from "./pages/Contenants/Contenants";
+import Contenant from "./pages/Contenants/Contenant";
+import ContenantCreate from "./pages/Contenants/ContenantCreate";
+import ContenantUpdate from "./pages/Contenants/ContenantUpdate";
 
 export default function App() {
   return (
@@ -96,6 +100,38 @@ export default function App() {
           element={
             <ProtectedRoute>
               <DecheterieUpdate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contenants"
+          element={
+            <ProtectedRoute>
+              <Contenants />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contenants/:id"
+          element={
+            <ProtectedRoute>
+              <Contenant />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contenants/create"
+          element={
+            <ProtectedRoute>
+              <ContenantCreate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contenants/:id/update"
+          element={
+            <ProtectedRoute>
+              <ContenantUpdate />
             </ProtectedRoute>
           }
         />

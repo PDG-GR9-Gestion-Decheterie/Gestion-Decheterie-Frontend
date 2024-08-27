@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { getDecheterie, deleteDecheterie, getAdresses } from "../../Endpoints";
 
-export default function Employe() {
+export default function Decheterie() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [decheterie, setDecheterie] = React.useState({});
