@@ -26,13 +26,19 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { getEmploye, deleteEmploye, getDecheteries } from "../../Endpoints";
+import {
+  getEmploye,
+  deleteEmploye,
+  getDecheteries,
+  getAdresses,
+} from "../../Endpoints";
 
 export default function Employe() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [employe, setEmploye] = React.useState({});
   const [decheteries, setDecheteries] = React.useState([]);
+  const [addresses, setAddresses] = React.useState([]);
   const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleCloseDelete = () => {
@@ -77,6 +83,19 @@ export default function Employe() {
       }
     };
     fetchDecheteries();
+
+    const fetchAddresses = async () => {
+      const response = await getAdresses();
+      if (response.ok) {
+        const data = await response.json();
+        setAddresses(data.adressesData);
+      } else if (response.status === 403) {
+        navigate("/login");
+      } else {
+        navigate("/error");
+      }
+    };
+    fetchAddresses();
   }, []);
 
   return (
@@ -177,7 +196,17 @@ export default function Employe() {
                     <HomeIcon />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Adresse" secondary="-" />
+                <ListItemText
+                  primary="Adresse"
+                  secondary={(() => {
+                    const adresse = addresses.find(
+                      (a) => a.id === employe.fk_adresse
+                    );
+                    return adresse
+                      ? `${adresse.numero} ${adresse.rue}, ${adresse.nomville}`
+                      : "-";
+                  })()}
+                />
               </ListItem>
             </List>
             <Box display="flex" justifyContent="end">
