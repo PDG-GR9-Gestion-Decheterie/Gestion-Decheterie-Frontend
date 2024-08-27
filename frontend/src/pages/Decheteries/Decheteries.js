@@ -62,7 +62,10 @@ export default function Decheteries() {
                   >
                     <TableCell>{d.id}</TableCell>
                     <TableCell>{d.nom}</TableCell>
-                    <TableCell>{d.adresse}</TableCell>
+                    <TableCell>
+                      {d.adresse_rue} {d.adresse_numero}, {d.adresse_npa}{" "}
+                      {d.adresse_nomville}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
