@@ -5,7 +5,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 import { useParams } from "react-router-dom";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -26,7 +26,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { getEmploye, deleteEmploye, getDecheteries } from "../Endpoints";
+import { getEmploye, deleteEmploye, getDecheteries } from "../../Endpoints";
 
 export default function Employe() {
   const navigate = useNavigate();
