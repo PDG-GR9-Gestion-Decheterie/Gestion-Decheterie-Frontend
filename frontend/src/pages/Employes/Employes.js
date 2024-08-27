@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 import { Grid, Paper } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,7 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { getEmployes } from "../Endpoints";
+import { getEmployes } from "../../Endpoints";
 
 export default function Employes() {
   const navigate = useNavigate();

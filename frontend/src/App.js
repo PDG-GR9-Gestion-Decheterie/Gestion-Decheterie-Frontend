@@ -6,10 +6,10 @@ import Login from "./pages/Login";
 import Error from "./pages/Error";
 import Home from "./pages/Home";
 import Profil from "./pages/Profil";
-import Employes from "./pages/Employes";
-import Employe from "./pages/Employe";
-import EmployeCreate from "./pages/EmployeCreate";
-import EmployeUpdate from "./pages/EmployeUpdate";
+import Employes from "./pages/Employes/Employes";
+import Employe from "./pages/Employes/Employe";
+import EmployeCreate from "./pages/Employes/EmployeCreate";
+import EmployeUpdate from "./pages/Employes/EmployeUpdate";
 
 export default function App() {
   return (

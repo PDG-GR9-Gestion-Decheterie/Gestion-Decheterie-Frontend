@@ -38,7 +38,7 @@ async function getDecheteries() {
 }
 
 async function getEmployes() {
-  return fetch("${apiUrl}/api/employes", {
+  return fetch(`${apiUrl}/api/employes`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
