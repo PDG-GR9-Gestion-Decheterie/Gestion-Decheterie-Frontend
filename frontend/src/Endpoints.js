@@ -37,6 +37,44 @@ async function getDecheteries() {
   });
 }
 
+async function getDecheterie(id) {
+  return fetch(`${apiUrl}/api/decheteries/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function createDecheterie(decheterie) {
+  return fetch(`${apiUrl}/api/decheteries`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(decheterie),
+  });
+}
+
+async function updateDecheterie(decheterie) {
+  return fetch(`${apiUrl}/api/decheteries/${decheterie.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(decheterie),
+  });
+}
+
+async function deleteDecheterie(id) {
+  return fetch(`${apiUrl}/api/decheteries/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
 async function getEmployes() {
   return fetch(`${apiUrl}/api/employes`, {
     method: "GET",
@@ -84,6 +122,24 @@ async function deleteEmploye(id) {
   });
 }
 
+async function getAdresses() {
+  return fetch(`${apiUrl}/api/adresses`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function getAdresse(id) {
+  return fetch(`${apiUrl}/api/adresses/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
 async function getFonctions() {
   return fetch(`${apiUrl}/api/fonctions`, {
     method: "GET",
@@ -98,10 +154,16 @@ export {
   logoutUser,
   getProfil,
   getDecheteries,
+  getDecheterie,
+  createDecheterie,
+  updateDecheterie,
+  deleteDecheterie,
   getEmployes,
   getEmploye,
   createEmploye,
   updateEmploye,
   deleteEmploye,
+  getAdresses,
+  getAdresse,
   getFonctions,
 };
