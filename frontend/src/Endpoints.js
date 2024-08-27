@@ -66,7 +66,7 @@ async function createEmploye(employe) {
 }
 
 async function updateEmploye(employe) {
-  return fetch(`https://localhost/api/employes/${employe.id}`, {
+  return fetch(`https://localhost/api/employes/${employe.idlogin}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -84,6 +84,15 @@ async function deleteEmploye(id) {
   });
 }
 
+async function getFonctions() {
+  return fetch(`https://localhost/api/fonctions`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
 export {
   loginUser,
   logoutUser,
@@ -94,4 +103,5 @@ export {
   createEmploye,
   updateEmploye,
   deleteEmploye,
+  getFonctions,
 };

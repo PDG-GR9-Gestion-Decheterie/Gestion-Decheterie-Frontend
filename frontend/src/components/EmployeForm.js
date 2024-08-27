@@ -12,6 +12,8 @@ import PortraitIcon from "@mui/icons-material/Portrait";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import BadgeIcon from "@mui/icons-material/Badge";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
+import PasswordIcon from "@mui/icons-material/Password";
 import { useNavigate } from "react-router-dom";
 import {
   Grid,
@@ -26,6 +28,7 @@ import {
 } from "@mui/material";
 import {
   getDecheteries,
+  getFonctions,
   getEmploye,
   updateEmploye,
   createEmploye,
@@ -45,6 +48,7 @@ export default function EmployeForm({ idEmploye }) {
   const [fk_decheterie, setFk_decheterie] = React.useState();
   const [fk_fonction, setFk_fonction] = React.useState();
   const [decheteries, setDecheteries] = React.useState([]);
+  const [fonctions, setFonctions] = React.useState([]);
   const [employeFetched, setEmployeFetched] = React.useState(false);
 
   useEffect(() => {
@@ -85,10 +89,27 @@ export default function EmployeForm({ idEmploye }) {
       }
     };
     fetchDecheteries();
+
+    const fetchFonctions = async () => {
+      const response = await getFonctions();
+      if (response.ok) {
+        const data = await response.json();
+        setFonctions(data.FonctionsData);
+      } else if (response.status === 403) {
+        navigate("/login");
+      } else {
+        navigate("/error");
+      }
+    };
+    fetchFonctions();
   }, []);
 
   const handleDecheterieChange = (e) => {
     setFk_decheterie(e.target.value);
+  };
+
+  const handleFonctionChange = (e) => {
+    setFk_fonction(e.target.value);
   };
 
   const handleCreate = async (e) => {
@@ -100,11 +121,11 @@ export default function EmployeForm({ idEmploye }) {
       prenom: firstName,
       datenaissance: birthDate,
       datedebutcontrat: startDate,
+      fk_fonction,
       numtelephone: phoneNumber,
       typepermis: typePermis,
       fk_adresse: 9, // TODO : fk_address,
       fk_decheterie,
-      fk_fonction,
     });
     if (response.ok) {
       navigate("/");
@@ -118,16 +139,17 @@ export default function EmployeForm({ idEmploye }) {
   const handleUpdate = async (e) => {
     e.preventDefault();
     const response = await updateEmploye({
-      idlogin: id,
+      idlogin: idEmploye,
+      mdplogin: password,
       nom: lastName,
       prenom: firstName,
       datenaissance: birthDate,
       datedebutcontrat: startDate,
+      fk_fonction,
       numtelephone: phoneNumber,
       typepermis: typePermis,
       fk_adresse: 9, // TODO : fk_address,
       fk_decheterie,
-      fk_fonction,
     });
     if (response.ok) {
       navigate("/");
@@ -186,21 +208,20 @@ export default function EmployeForm({ idEmploye }) {
                   onChange={(e) => setId(e.target.value)}
                   label="Identifiant"
                   fullWidth
-                  InputProps={{ inputProps: { min: 0 } }}
                 />
               </ListItem>
             )}
             <ListItem>
               <ListItemAvatar>
                 <Avatar>
-                  <NumbersIcon />
+                  <PasswordIcon />
                 </Avatar>
               </ListItemAvatar>
               <TextField
+                type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 label="Mot de passe"
                 fullWidth
-                InputProps={{ inputProps: { min: 0 } }}
               />
             </ListItem>
             <ListItem>
@@ -245,7 +266,7 @@ export default function EmployeForm({ idEmploye }) {
                 </Avatar>
               </ListItemAvatar>
               <TextField
-                value={birthDate}
+                value={startDate}
                 label="Date de début du contrat"
                 type="date"
                 onChange={(e) => setStartDate(e.target.value)}
@@ -295,8 +316,30 @@ export default function EmployeForm({ idEmploye }) {
                   label="Décheterie"
                 >
                   {decheteries.map((d) => (
-                    <MenuItem key={`decheterie-${d.id}`} value={d.id}>
+                    <MenuItem key={d.id} value={d.id}>
                       {d.nom}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </ListItem>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
+                  <BusinessCenterIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <FormControl fullWidth>
+                <InputLabel id="fonction-label">Fonction</InputLabel>
+                <Select
+                  onChange={handleFonctionChange}
+                  value={fk_fonction}
+                  labelId="fonction-label"
+                  label="Fonction"
+                >
+                  {fonctions.map((f) => (
+                    <MenuItem key={f.nom} value={f.nom}>
+                      {f.nom}
                     </MenuItem>
                   ))}
                 </Select>
