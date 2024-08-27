@@ -14,6 +14,7 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import BadgeIcon from "@mui/icons-material/Badge";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import PasswordIcon from "@mui/icons-material/Password";
+import HomeIcon from "@mui/icons-material/Home";
 import { useNavigate } from "react-router-dom";
 import {
   Grid,
@@ -32,6 +33,7 @@ import {
   getEmploye,
   updateEmploye,
   createEmploye,
+  getAdresses,
 } from "../Endpoints";
 
 export default function EmployeForm({ idEmploye }) {
@@ -49,6 +51,7 @@ export default function EmployeForm({ idEmploye }) {
   const [fk_fonction, setFk_fonction] = React.useState();
   const [decheteries, setDecheteries] = React.useState([]);
   const [fonctions, setFonctions] = React.useState([]);
+  const [addresses, setAddresses] = React.useState([]);
   const [employeFetched, setEmployeFetched] = React.useState(false);
 
   useEffect(() => {
@@ -102,6 +105,19 @@ export default function EmployeForm({ idEmploye }) {
       }
     };
     fetchFonctions();
+
+    const fetchAddresses = async () => {
+      const response = await getAdresses();
+      if (response.ok) {
+        const data = await response.json();
+        setAddresses(data.adressesData);
+      } else if (response.status === 403) {
+        navigate("/login");
+      } else {
+        navigate("/error");
+      }
+    };
+    fetchAddresses();
   }, []);
 
   const handleDecheterieChange = (e) => {
@@ -110,6 +126,10 @@ export default function EmployeForm({ idEmploye }) {
 
   const handleFonctionChange = (e) => {
     setFk_fonction(e.target.value);
+  };
+
+  const handleAddressChange = (e) => {
+    setFk_address(e.target.value);
   };
 
   const handleCreate = async (e) => {
@@ -124,7 +144,7 @@ export default function EmployeForm({ idEmploye }) {
       fk_fonction,
       numtelephone: phoneNumber,
       typepermis: typePermis,
-      fk_adresse: 9, // TODO : fk_address,
+      fk_adresse: fk_address,
       fk_decheterie,
     });
     if (response.ok) {
@@ -148,7 +168,7 @@ export default function EmployeForm({ idEmploye }) {
       fk_fonction,
       numtelephone: phoneNumber,
       typepermis: typePermis,
-      fk_adresse: 9, // TODO : fk_address,
+      fk_adresse: fk_address,
       fk_decheterie,
     });
     if (response.ok) {
@@ -340,6 +360,28 @@ export default function EmployeForm({ idEmploye }) {
                   {fonctions.map((f) => (
                     <MenuItem key={f.nom} value={f.nom}>
                       {f.nom}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </ListItem>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
+                  <HomeIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <FormControl fullWidth>
+                <InputLabel id="address-label">Adresse</InputLabel>
+                <Select
+                  onChange={handleAddressChange}
+                  value={fk_address}
+                  labelId="address-label"
+                  label="Adresse"
+                >
+                  {addresses.map((a) => (
+                    <MenuItem key={a.id} value={a.id}>
+                      {a.rue} {a.numero}, {a.npa} {a.nomville}
                     </MenuItem>
                   ))}
                 </Select>
