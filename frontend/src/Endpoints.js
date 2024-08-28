@@ -299,6 +299,15 @@ async function getDechets() {
   });
 }
 
+async function getStatus() {
+  return fetch(`${apiUrl}/api/status`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
 export {
   loginUser,
   logoutUser,
@@ -332,4 +341,5 @@ export {
   deleteRamassage,
   getFonctions,
   getDechets,
+  getStatus,
 };

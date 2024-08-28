@@ -73,7 +73,7 @@ export default function Ramassages() {
                       }
                       onClick={
                         localStorage.getItem("fonction") === '"Responsable"'
-                          ? () => navigate(`/ramassage/${r.id}`)
+                          ? () => navigate(`/ramassages/${r.id}`)
                           : null
                       }
                     >

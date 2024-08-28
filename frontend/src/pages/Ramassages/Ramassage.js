@@ -9,8 +9,8 @@ import FactoryIcon from "@mui/icons-material/Factory";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import BreakfastDiningIcon from "@mui/icons-material/BreakfastDining";
 import ScaleIcon from "@mui/icons-material/Scale";
-import HeightIcon from "@mui/icons-material/Height";
-import NumbersIcon from "@mui/icons-material/Numbers";
+import AspectRatioIcon from "@mui/icons-material/AspectRatio";
+import FilterNoneIcon from "@mui/icons-material/FilterNone";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -41,7 +41,7 @@ import {
 
 export default function Ramassage() {
   const navigate = useNavigate();
-  const { idRamassage } = useParams();
+  const { id } = useParams();
   const [ramassage, setRamassage] = React.useState({});
   const [decheteries, setDecheteries] = React.useState([]);
   const [status, setStatus] = React.useState([]);
@@ -68,10 +68,10 @@ export default function Ramassage() {
 
   useEffect(() => {
     const fetchRamassage = async () => {
-      const response = await getRamassage(idRamassage);
+      const response = await getRamassage(id);
       if (response.ok) {
         const data = await response.json();
-        setRamassage(data.ramassagesData);
+        setRamassage(data.ramassageData);
       } else if (response.status === 403) {
         navigate("/login");
       } else {
@@ -135,7 +135,7 @@ export default function Ramassage() {
     const fetchContenants = async () => {
       if (!ramassage.fk_decheterie) return;
 
-      const response = await getContenants(ramassage.fk_decheterie);
+      const response = await getContenants();
       if (response.ok) {
         const data = await response.json();
         setContenants(data.contenantsData);
@@ -181,7 +181,7 @@ export default function Ramassage() {
 
   return (
     <Layout
-      title={`Ramassage n°${idRamassage}`}
+      title={`Ramassage n°${id}`}
       content={
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
@@ -256,7 +256,7 @@ export default function Ramassage() {
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>
-                    <HeightIcon />
+                    <AspectRatioIcon />
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
@@ -272,7 +272,7 @@ export default function Ramassage() {
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>
-                    <NumbersIcon />
+                    <FilterNoneIcon />
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
@@ -298,9 +298,7 @@ export default function Ramassage() {
                       (e) => e.idlogin === ramassage.fk_employee
                     );
                     return e
-                      ? `${e.prenom} ${e.nom}, ${
-                          e.fk_fonction
-                        }, ${
+                      ? `${e.prenom} ${e.nom}, ${e.fk_fonction}, ${
                           e.typepermis
                             ? "permis " + e.typepermis
                             : "pas de permis"
@@ -363,7 +361,7 @@ export default function Ramassage() {
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
                     Êtes-vous sûr de vouloir supprimer le ramassage n°
-                    {idRamassage}?
+                    {id}?
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -382,7 +380,7 @@ export default function Ramassage() {
               <Button
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={() => navigate(`/ramassage/update/${idRamassage}`)}
+                onClick={() => navigate(`/ramassage/update/${id}`)}
               >
                 Modifier
               </Button>
