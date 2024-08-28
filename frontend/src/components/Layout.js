@@ -22,6 +22,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import HomeIcon from "@mui/icons-material/Home";
 import Container from "@mui/material/Container";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import FactoryIcon from "@mui/icons-material/Factory";
 import { useAuth } from "../hooks/useAuth";
 import { logoutUser } from "../Endpoints";
@@ -173,6 +174,12 @@ export default function Layout({ title, content }) {
                 <FactoryIcon />
               </ListItemIcon>
               <ListItemText primary="Décheteries" />
+            </ListItemButton>
+            <ListItemButton href="/vehicules">
+              <ListItemIcon>
+                <LocalShippingIcon />
+              </ListItemIcon>
+              <ListItemText primary="Véhicules" />
             </ListItemButton>
             {localStorage.getItem("fonction") === '"Responsable"' ? (
               <ListItemButton href="/employes">

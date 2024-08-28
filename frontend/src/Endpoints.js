@@ -140,6 +140,53 @@ async function getAdresse(id) {
   });
 }
 
+async function getVehicules() {
+  return fetch(`${apiUrl}/api/vehicules`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function getVehicule(id) {
+  return fetch(`${apiUrl}/api/vehicules/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function createVehicule(vehicule) {
+  return fetch(`${apiUrl}/api/vehicules`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(vehicule),
+  });
+}
+
+async function updateVehicule(vehicule) {
+  return fetch(`${apiUrl}/api/vehicules/${vehicule.immatriculation}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(vehicule),
+  });
+}
+
+async function deleteVehicule(id) {
+  return fetch(`${apiUrl}/api/vehicules/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
 async function getFonctions() {
   return fetch(`${apiUrl}/api/fonctions`, {
     method: "GET",
@@ -165,5 +212,10 @@ export {
   deleteEmploye,
   getAdresses,
   getAdresse,
+  getVehicules,
+  getVehicule,
+  createVehicule,
+  updateVehicule,
+  deleteVehicule,
   getFonctions,
 };

@@ -14,6 +14,10 @@ import Decheteries from "./pages/Decheteries/Decheteries";
 import Decheterie from "./pages/Decheteries/Decheterie";
 import DecheterieCreate from "./pages/Decheteries/DecheterieCreate";
 import DecheterieUpdate from "./pages/Decheteries/DecheterieUpdate";
+import Vehicules from "./pages/Vehicules/Vehicules";
+import Vehicule from "./pages/Vehicules/Vehicule";
+import VehiculeCreate from "./pages/Vehicules/VehiculeCreate";
+import VehiculeUpdate from "./pages/Vehicules/VehiculeUpdate";
 
 export default function App() {
   return (
@@ -96,6 +100,38 @@ export default function App() {
           element={
             <ProtectedRoute>
               <DecheterieUpdate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/vehicules"
+          element={
+            <ProtectedRoute>
+              <Vehicules />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/vehicules/:id"
+          element={
+            <ProtectedRoute>
+              <Vehicule />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/vehicules/create"
+          element={
+            <ProtectedRoute>
+              <VehiculeCreate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/vehicules/:id/update"
+          element={
+            <ProtectedRoute>
+              <VehiculeUpdate />
             </ProtectedRoute>
           }
         />
