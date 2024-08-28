@@ -134,7 +134,7 @@ export default function Employe() {
                 </ListItemAvatar>
                 <ListItemText
                   primary="Date de naissance"
-                  secondary={new Date(employe.datenaissance).toLocaleString()}
+                  secondary={employe.datenaissance}
                 />
               </ListItem>
               <ListItem>

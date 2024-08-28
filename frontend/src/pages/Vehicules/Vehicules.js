@@ -9,30 +9,30 @@ import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { getDecheteries } from "../../Endpoints";
+import { getVehicules } from "../../Endpoints";
 
-export default function Decheteries() {
+export default function Employes() {
   const navigate = useNavigate();
-  const [decheteries, setDecheteries] = React.useState([]);
+  const [vehicules, setVehicules] = React.useState([]);
 
   useEffect(() => {
-    const fetchDecheteries = async () => {
-      const response = await getDecheteries();
+    const fetchVehicules = async () => {
+      const response = await getVehicules();
       if (response.ok) {
         const data = await response.json();
-        setDecheteries(data.decheteriesData);
+        setVehicules(data.vehiculesData);
       } else if (response.status === 403) {
         navigate("/login");
       } else {
         navigate("/error");
       }
     };
-    fetchDecheteries();
+    fetchVehicules();
   }, []);
 
   return (
     <Layout
-      title={"Décheteries"}
+      title={"Véhicules"}
       content={
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
@@ -42,50 +42,58 @@ export default function Decheteries() {
               color="primary"
               gutterBottom
             >
-              Liste des décheteries
+              Liste des véhicules
             </Typography>
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell>Nom</TableCell>
-                  <TableCell>Adresse</TableCell>
+                  <TableCell>Immatriculation</TableCell>
+                  <TableCell>Type</TableCell>
+                  <TableCell>Remorque</TableCell>
+                  <TableCell>Année de fabrication</TableCell>
+                  <TableCell>Date d'expertise</TableCell>
+                  <TableCell>Consommation de carburant</TableCell>
+                  <TableCell>Décheterie</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {decheteries.map((d) => (
+                {vehicules.map((v) => (
                   <TableRow
-                    key={d.id}
+                    key={v.immatriculation}
                     hover={true}
                     style={
-                      localStorage.getItem("fonction") === '"Responsable"'
+                      localStorage.getItem("fonction") === '"Responsable"' ||
+                      localStorage.getItem("fonction") === '"Secrétaire"'
                         ? { cursor: "pointer" }
                         : null
                     }
                     onClick={
-                      localStorage.getItem("fonction") === '"Responsable"'
-                        ? () => navigate(`/decheteries/${d.id}`)
+                      localStorage.getItem("fonction") === '"Responsable"' ||
+                      localStorage.getItem("fonction") === '"Secrétaire"'
+                        ? () => navigate(`/vehicules/${v.immatriculation}`)
                         : null
                     }
                   >
-                    <TableCell>{d.id}</TableCell>
-                    <TableCell>{d.nom}</TableCell>
-                    <TableCell>
-                      {d.adresse_rue} {d.adresse_numero}, {d.adresse_npa}{" "}
-                      {d.adresse_nomville}
-                    </TableCell>
+                    <TableCell>{v.immatriculation}</TableCell>
+                    <TableCell>{v.type}</TableCell>
+                    <TableCell>{v.remorque ? "Oui" : "Non"}</TableCell>
+                    <TableCell>{v.anneefabrication}</TableCell>
+                    <TableCell>{v.dateexpertise}</TableCell>
+                    <TableCell>{v.consocarburant}</TableCell>
+                    <TableCell>{v.decheterie_nom}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
-            {localStorage.getItem("fonction") === '"Responsable"' ? (
+            {localStorage.getItem("fonction") === '"Responsable"' ||
+            localStorage.getItem("fonction") === '"Secrétaire"' ? (
               <Button
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={() => navigate("/decheteries/create")}
+                onClick={() => navigate("/vehicules/create")}
               >
-                Nouvelle décheterie
+                Nouveau véhicule
               </Button>
             ) : null}
           </Paper>

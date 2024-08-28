@@ -140,8 +140,111 @@ async function getAdresse(id) {
   });
 }
 
+async function getVehicules() {
+  return fetch(`${apiUrl}/api/vehicules`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function getVehicule(id) {
+  return fetch(`${apiUrl}/api/vehicules/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function createVehicule(vehicule) {
+  return fetch(`${apiUrl}/api/vehicules`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(vehicule),
+  });
+}
+
+async function updateVehicule(vehicule) {
+  return fetch(`${apiUrl}/api/vehicules/${vehicule.immatriculation}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(vehicule),
+  });
+}
+
+async function deleteVehicule(id) {
+  return fetch(`${apiUrl}/api/vehicules/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function getContenants() {
+  return fetch(`${apiUrl}/api/contenants`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function getContenant(id) {
+  return fetch(`${apiUrl}/api/contenants/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function createContenant(contenant) {
+  return fetch(`${apiUrl}/api/contenants`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(contenant),
+  });
+}
+
+async function updateContenant(contenant) {
+  return fetch(`${apiUrl}/api/contenants/${contenant.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(contenant),
+  });
+}
+
+async function deleteContenant(id) {
+  return fetch(`${apiUrl}/api/contenants/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
 async function getFonctions() {
   return fetch(`${apiUrl}/api/fonctions`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function getDechets() {
+  return fetch(`${apiUrl}/api/dechets`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -165,5 +268,16 @@ export {
   deleteEmploye,
   getAdresses,
   getAdresse,
+  getVehicules,
+  getVehicule,
+  createVehicule,
+  updateVehicule,
+  deleteVehicule,
+  getContenants,
+  getContenant,
+  createContenant,
+  updateContenant,
+  deleteContenant,
   getFonctions,
+  getDechets,
 };

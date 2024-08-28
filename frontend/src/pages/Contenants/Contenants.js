@@ -9,30 +9,30 @@ import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { getDecheteries } from "../../Endpoints";
+import { getContenants } from "../../Endpoints";
 
-export default function Decheteries() {
+export default function Contenants() {
   const navigate = useNavigate();
-  const [decheteries, setDecheteries] = React.useState([]);
+  const [contenants, setContenants] = React.useState([]);
 
   useEffect(() => {
-    const fetchDecheteries = async () => {
-      const response = await getDecheteries();
+    const fetchContenants = async () => {
+      const response = await getContenants();
       if (response.ok) {
         const data = await response.json();
-        setDecheteries(data.decheteriesData);
+        setContenants(data.contenantsData);
       } else if (response.status === 403) {
         navigate("/login");
       } else {
         navigate("/error");
       }
     };
-    fetchDecheteries();
+    fetchContenants();
   }, []);
 
   return (
     <Layout
-      title={"Décheteries"}
+      title={"Contenants"}
       content={
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
@@ -42,38 +42,39 @@ export default function Decheteries() {
               color="primary"
               gutterBottom
             >
-              Liste des décheteries
+              Liste des contenants
             </Typography>
             <Table size="small">
               <TableHead>
                 <TableRow>
                   <TableCell>ID</TableCell>
                   <TableCell>Nom</TableCell>
-                  <TableCell>Adresse</TableCell>
+                  <TableCell>Capacité max</TableCell>
+                  <TableCell>Nombre de cadres</TableCell>
+                  <TableCell>Taille</TableCell>
+                  <TableCell>Couleur</TableCell>
+                  <TableCell>Déchèterie associée</TableCell>
+                  <TableCell>Déchet</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {decheteries.map((d) => (
+                {contenants.map((c) => (
                   <TableRow
-                    key={d.id}
+                    key={c.id}
                     hover={true}
-                    style={
-                      localStorage.getItem("fonction") === '"Responsable"'
-                        ? { cursor: "pointer" }
-                        : null
-                    }
-                    onClick={
-                      localStorage.getItem("fonction") === '"Responsable"'
-                        ? () => navigate(`/decheteries/${d.id}`)
-                        : null
-                    }
+                    style={{ cursor: "pointer" }}
+                    onClick={() => navigate(`/contenants/${c.id}`)}
                   >
-                    <TableCell>{d.id}</TableCell>
-                    <TableCell>{d.nom}</TableCell>
+                    <TableCell>{c.id}</TableCell>
+                    <TableCell>{c.nom}</TableCell>
                     <TableCell>
-                      {d.adresse_rue} {d.adresse_numero}, {d.adresse_npa}{" "}
-                      {d.adresse_nomville}
+                      {c.capacitemax == null ? "-" : c.capacitemax}
                     </TableCell>
+                    <TableCell>{c.nbcadre == null ? "-" : c.nbcadre}</TableCell>
+                    <TableCell>{c.taille == null ? "-" : c.taille}</TableCell>
+                    <TableCell>{c.couleur == null ? "-" : c.couleur}</TableCell>
+                    <TableCell>{c.fk_decheterie}</TableCell>
+                    <TableCell>{c.fk_dechet}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -83,9 +84,9 @@ export default function Decheteries() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={() => navigate("/decheteries/create")}
+                onClick={() => navigate("/contenants/create")}
               >
-                Nouvelle décheterie
+                Nouveau contenant
               </Button>
             ) : null}
           </Paper>

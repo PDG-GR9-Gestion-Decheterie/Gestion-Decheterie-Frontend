@@ -7,7 +7,12 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Layout from "../../components/Layout";
 import { useParams } from "react-router-dom";
-import HomeIcon from "@mui/icons-material/Home";
+import AutoAwesomeMotionIcon from "@mui/icons-material/AutoAwesomeMotion";
+import AspectRatioIcon from "@mui/icons-material/AspectRatio";
+import FilterNoneIcon from "@mui/icons-material/FilterNone";
+import ColorLensIcon from "@mui/icons-material/ColorLens";
+import FactoryIcon from "@mui/icons-material/Factory";
+import RecyclingIcon from "@mui/icons-material/Recycling";
 import {
   Grid,
   Paper,
@@ -20,13 +25,13 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { getDecheterie, deleteDecheterie, getAdresses } from "../../Endpoints";
+import { getContenant, deleteContenant, getDecheteries } from "../../Endpoints";
 
-export default function Decheterie() {
+export default function Contenant() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [decheterie, setDecheterie] = React.useState({});
-  const [adresses, setAdresses] = React.useState([]);
+  const [contenant, setContenant] = React.useState({});
+  const [decheteries, setDecheteries] = React.useState([]);
   const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleCloseDelete = () => {
@@ -34,7 +39,7 @@ export default function Decheterie() {
   };
 
   const handleConfirmDelete = async () => {
-    const response = await deleteDecheterie(id);
+    const response = await deleteContenant(id);
     if (response.ok) {
       navigate("/");
     } else if (response.status === 403) {
@@ -46,36 +51,36 @@ export default function Decheterie() {
   };
 
   useEffect(() => {
-    const fetchDecheterie = async () => {
-      const response = await getDecheterie(id);
+    const fetchContenant = async () => {
+      const response = await getContenant(id);
       if (response.ok) {
         const data = await response.json();
-        setDecheterie(data.decheterieData);
+        setContenant(data.contenantData);
       } else if (response.status === 403) {
         navigate("/login");
       } else {
         navigate("/error");
       }
     };
-    fetchDecheterie();
+    fetchContenant();
 
-    const fetchAdresses = async () => {
-      const response = await getAdresses();
+    const fetchDecheteries = async () => {
+      const response = await getDecheteries();
       if (response.ok) {
         const data = await response.json();
-        setAdresses(data.adressesData);
+        setDecheteries(data.decheteriesData);
       } else if (response.status === 403) {
         navigate("/login");
       } else {
         navigate("/error");
       }
     };
-    fetchAdresses();
+    fetchDecheteries();
   }, []);
 
   return (
     <Layout
-      title={`Décheterie n°${id}`}
+      title={`Contenant n°${id}`}
       content={
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
@@ -85,7 +90,7 @@ export default function Decheterie() {
               color="primary"
               gutterBottom
             >
-              {decheterie.nom}
+              {contenant.nom}
             </Typography>
             <List
               sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
@@ -93,19 +98,78 @@ export default function Decheterie() {
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>
-                    <HomeIcon />
+                    <AutoAwesomeMotionIcon />
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primary="Adresse"
+                  primary="Capacité max"
+                  secondary={
+                    contenant.capacitemax == null ? "-" : contenant.capacitemax
+                  }
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <FilterNoneIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Nombre de cadres"
+                  secondary={
+                    contenant.nbcadre == null ? "-" : contenant.nbcadre
+                  }
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <AspectRatioIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Taille"
+                  secondary={contenant.taille == null ? "-" : contenant.taille}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <ColorLensIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Couleur"
+                  secondary={
+                    contenant.couleur == null ? "-" : contenant.couleur
+                  }
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <FactoryIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Décheterie"
                   secondary={(() => {
-                    const adresse = adresses.find(
-                      (a) => a.id === decheterie.fk_adresse
+                    const decheterie = decheteries.find(
+                      (d) => d.id === contenant.fk_decheterie
                     );
-                    return adresse
-                      ? `${adresse.rue} ${adresse.numero}, ${adresse.npa} ${adresse.nomville}`
-                      : "-";
+                    return decheterie ? decheterie.nom : "-";
                   })()}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <RecyclingIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Déchet"
+                  secondary={contenant.fk_dechet}
                 />
               </ListItem>
             </List>
@@ -129,7 +193,7 @@ export default function Decheterie() {
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                    Êtes-vous sûr de vouloir supprimer la décheterie n°{id}?
+                    Êtes-vous sûr de vouloir supprimer le contenant {id}?
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -148,7 +212,7 @@ export default function Decheterie() {
               <Button
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={() => navigate(`/decheteries/${id}/update`)}
+                onClick={() => navigate(`/contenants/${id}/update`)}
               >
                 Modifier
               </Button>
