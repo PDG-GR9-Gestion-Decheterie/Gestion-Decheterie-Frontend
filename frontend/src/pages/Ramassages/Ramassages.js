@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 import { Grid, Paper, Button } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
-import { getRamassages } from "../Endpoints";
+import { getRamassages } from "../../Endpoints";
 
 export default function Ramassages() {
   const navigate = useNavigate();
@@ -78,15 +78,11 @@ export default function Ramassages() {
                       }
                     >
                       <TableCell>{r.id}</TableCell>
-                      <TableCell>
-                        {r.date ? r.date : "-"}
-                      </TableCell>
+                      <TableCell>{r.date ? r.date : "-"}</TableCell>
                       <TableCell>
                         {r.decheterie_nom ? r.decheterie_nom : "-"}
                       </TableCell>
-                      <TableCell>
-                        {r.fk_status ? r.fk_status : "-"}
-                      </TableCell>
+                      <TableCell>{r.fk_status ? r.fk_status : "-"}</TableCell>
                       <TableCell>{r.poids ? r.poids : "-"}</TableCell>
                       <TableCell>
                         {r.contenant_nom ? r.contenant_nom : "-"}
@@ -97,7 +93,9 @@ export default function Ramassages() {
                       <TableCell>
                         {r.contenant_nbcadre ? r.contenant_nbcadre : "-"}
                       </TableCell>
-                      <TableCell>{r.employe_nom} {r.employe_prenom}</TableCell>
+                      <TableCell>
+                        {r.employe_nom} {r.employe_prenom}
+                      </TableCell>
                       <TableCell>
                         {r.vehicule_type ? r.vehicule_type : "-"}
                       </TableCell>
@@ -110,14 +108,14 @@ export default function Ramassages() {
                   ))}
               </TableBody>
             </Table>
-              <Button
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={() => navigate("/ramassages/create")}
-              >
-                Nouveau ramassage
-              </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={() => navigate("/ramassages/create")}
+            >
+              Nouveau ramassage
+            </Button>
           </Paper>
         </Grid>
       }
