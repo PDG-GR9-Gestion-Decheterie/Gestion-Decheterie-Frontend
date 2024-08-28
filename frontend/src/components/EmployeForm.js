@@ -97,7 +97,7 @@ export default function EmployeForm({ idEmploye }) {
       const response = await getFonctions();
       if (response.ok) {
         const data = await response.json();
-        setFonctions(data.FonctionsData);
+        setFonctions(data.fonctionsData);
       } else if (response.status === 403) {
         navigate("/login");
       } else {
@@ -119,18 +119,6 @@ export default function EmployeForm({ idEmploye }) {
     };
     fetchAddresses();
   }, []);
-
-  const handleDecheterieChange = (e) => {
-    setFk_decheterie(e.target.value);
-  };
-
-  const handleFonctionChange = (e) => {
-    setFk_fonction(e.target.value);
-  };
-
-  const handleAddressChange = (e) => {
-    setFk_address(e.target.value);
-  };
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -330,7 +318,7 @@ export default function EmployeForm({ idEmploye }) {
               <FormControl fullWidth>
                 <InputLabel id="decheterie-label">Décheterie</InputLabel>
                 <Select
-                  onChange={handleDecheterieChange}
+                  onChange={(e) => setFk_decheterie(e.target.value)}
                   value={fk_decheterie}
                   labelId="decheterie-label"
                   label="Décheterie"
@@ -352,7 +340,7 @@ export default function EmployeForm({ idEmploye }) {
               <FormControl fullWidth>
                 <InputLabel id="fonction-label">Fonction</InputLabel>
                 <Select
-                  onChange={handleFonctionChange}
+                  onChange={(e) => setFk_fonction(e.target.value)}
                   value={fk_fonction}
                   labelId="fonction-label"
                   label="Fonction"
@@ -374,7 +362,7 @@ export default function EmployeForm({ idEmploye }) {
               <FormControl fullWidth>
                 <InputLabel id="address-label">Adresse</InputLabel>
                 <Select
-                  onChange={handleAddressChange}
+                  onChange={(e) => setFk_address(e.target.value)}
                   value={fk_address}
                   labelId="address-label"
                   label="Adresse"

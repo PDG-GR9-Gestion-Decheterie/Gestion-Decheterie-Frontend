@@ -187,8 +187,64 @@ async function deleteVehicule(id) {
   });
 }
 
+async function getContenants() {
+  return fetch(`${apiUrl}/api/contenants`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function getContenant(id) {
+  return fetch(`${apiUrl}/api/contenants/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function createContenant(contenant) {
+  return fetch(`${apiUrl}/api/contenants`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(contenant),
+  });
+}
+
+async function updateContenant(contenant) {
+  return fetch(`${apiUrl}/api/contenants/${contenant.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(contenant),
+  });
+}
+
+async function deleteContenant(id) {
+  return fetch(`${apiUrl}/api/contenants/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
 async function getFonctions() {
   return fetch(`${apiUrl}/api/fonctions`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function getDechets() {
+  return fetch(`${apiUrl}/api/dechets`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -217,5 +273,11 @@ export {
   createVehicule,
   updateVehicule,
   deleteVehicule,
+  getContenants,
+  getContenant,
+  createContenant,
+  updateContenant,
+  deleteContenant,
   getFonctions,
+  getDechets,
 };

@@ -57,7 +57,6 @@ export default function VehiculeForm({ idVehicule }) {
           setDateExpertise(data.vehiculeData.dateexpertise);
           setConsommationCarburant(data.vehiculeData.consocarburant);
           setFk_decheterie(data.vehiculeData.fk_decheterie);
-          setVehiculeFetched(true);
         } else if (response.status === 403) {
           navigate("/login");
         } else {
@@ -240,10 +239,12 @@ export default function VehiculeForm({ idVehicule }) {
                 </Avatar>
               </ListItemAvatar>
               <TextField
+                type="number"
                 onChange={(e) => setConsommationCarburant(e.target.value)}
                 value={consommationCarburant}
                 label="Consommation de carburant"
                 fullWidth
+                InputProps={{ inputProps: { min: 0.1, max: 99.9 } }}
               />
             </ListItem>
             <ListItem>

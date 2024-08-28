@@ -61,8 +61,18 @@ export default function Employes() {
                   <TableRow
                     key={v.immatriculation}
                     hover={true}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => navigate(`/vehicules/${v.immatriculation}`)}
+                    style={
+                      localStorage.getItem("fonction") === '"Responsable"' ||
+                      localStorage.getItem("fonction") === '"Secrétaire"'
+                        ? { cursor: "pointer" }
+                        : null
+                    }
+                    onClick={
+                      localStorage.getItem("fonction") === '"Responsable"' ||
+                      localStorage.getItem("fonction") === '"Secrétaire"'
+                        ? () => navigate(`/vehicules/${v.immatriculation}`)
+                        : null
+                    }
                   >
                     <TableCell>{v.immatriculation}</TableCell>
                     <TableCell>{v.type}</TableCell>

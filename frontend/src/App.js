@@ -18,6 +18,10 @@ import Vehicules from "./pages/Vehicules/Vehicules";
 import Vehicule from "./pages/Vehicules/Vehicule";
 import VehiculeCreate from "./pages/Vehicules/VehiculeCreate";
 import VehiculeUpdate from "./pages/Vehicules/VehiculeUpdate";
+import Contenants from "./pages/Contenants/Contenants";
+import Contenant from "./pages/Contenants/Contenant";
+import ContenantCreate from "./pages/Contenants/ContenantCreate";
+import ContenantUpdate from "./pages/Contenants/ContenantUpdate";
 
 export default function App() {
   return (
@@ -132,6 +136,38 @@ export default function App() {
           element={
             <ProtectedRoute>
               <VehiculeUpdate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contenants"
+          element={
+            <ProtectedRoute>
+              <Contenants />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contenants/:id"
+          element={
+            <ProtectedRoute>
+              <Contenant />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contenants/create"
+          element={
+            <ProtectedRoute>
+              <ContenantCreate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contenants/:id/update"
+          element={
+            <ProtectedRoute>
+              <ContenantUpdate />
             </ProtectedRoute>
           }
         />

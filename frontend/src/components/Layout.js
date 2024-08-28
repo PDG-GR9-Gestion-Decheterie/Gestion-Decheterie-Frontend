@@ -17,6 +17,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import BreakfastDiningIcon from "@mui/icons-material/BreakfastDining";
 import PeopleIcon from "@mui/icons-material/People";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HomeIcon from "@mui/icons-material/Home";
@@ -180,6 +181,12 @@ export default function Layout({ title, content }) {
                 <LocalShippingIcon />
               </ListItemIcon>
               <ListItemText primary="Véhicules" />
+            </ListItemButton>
+            <ListItemButton href="/contenants">
+              <ListItemIcon>
+                <BreakfastDiningIcon />
+              </ListItemIcon>
+              <ListItemText primary="Contenants" />
             </ListItemButton>
             {localStorage.getItem("fonction") === '"Responsable"' ? (
               <ListItemButton href="/employes">
