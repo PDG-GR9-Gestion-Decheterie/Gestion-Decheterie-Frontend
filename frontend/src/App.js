@@ -22,6 +22,10 @@ import Contenants from "./pages/Contenants/Contenants";
 import Contenant from "./pages/Contenants/Contenant";
 import ContenantCreate from "./pages/Contenants/ContenantCreate";
 import ContenantUpdate from "./pages/Contenants/ContenantUpdate";
+import Ramassages from "./pages/Ramassages/Ramassages";
+import Ramassage from "./pages/Ramassages/Ramassage";
+import RamassageCreate from "./pages/Ramassages/RamassageCreate";
+import RamassageUpdate from "./pages/Ramassages/RamassageUpdate";
 
 export default function App() {
   return (
@@ -168,6 +172,38 @@ export default function App() {
           element={
             <ProtectedRoute>
               <ContenantUpdate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/ramassages"
+          element={
+            <ProtectedRoute>
+              <Ramassages />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/ramassages/:id"
+          element={
+            <ProtectedRoute>
+              <Ramassage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/ramassages/create"
+          element={
+            <ProtectedRoute>
+              <RamassageCreate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/ramassages/:id/update"
+          element={
+            <ProtectedRoute>
+              <RamassageUpdate />
             </ProtectedRoute>
           }
         />

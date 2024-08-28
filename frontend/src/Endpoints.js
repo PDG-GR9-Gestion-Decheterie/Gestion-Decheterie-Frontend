@@ -234,6 +234,53 @@ async function deleteContenant(id) {
   });
 }
 
+async function getRamassages() {
+  return fetch(`${apiUrl}/api/ramassages`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function getRamassage(id) {
+  return fetch(`${apiUrl}/api/ramassages/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function createRamassage(ramassage) {
+  return fetch(`${apiUrl}/api/ramassages`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(ramassage),
+  });
+}
+
+async function updateRamassage(ramassage) {
+  return fetch(`${apiUrl}/api/ramassages/${ramassage.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(ramassage),
+  });
+}
+
+async function deleteRamassage(id) {
+  return fetch(`${apiUrl}/api/ramassages/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
 async function getFonctions() {
   return fetch(`${apiUrl}/api/fonctions`, {
     method: "GET",
@@ -278,6 +325,11 @@ export {
   createContenant,
   updateContenant,
   deleteContenant,
+  getRamassages,
+  getRamassage,
+  createRamassage,
+  updateRamassage,
+  deleteRamassage,
   getFonctions,
   getDechets,
 };
