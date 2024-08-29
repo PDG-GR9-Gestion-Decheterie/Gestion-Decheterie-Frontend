@@ -40,8 +40,8 @@ export default function Vehicule() {
   const handleConfirmDelete = async () => {
     const response = await deleteVehicule(id);
     if (response.ok) {
-      navigate("/");
-    } else if (response.status === 403) {
+      navigate("/vehicules");
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -55,7 +55,7 @@ export default function Vehicule() {
       if (response.ok) {
         const data = await response.json();
         setVehicule(data.vehiculeData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -68,7 +68,7 @@ export default function Vehicule() {
       if (response.ok) {
         const data = await response.json();
         setDecheteries(data.decheteriesData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -91,9 +91,7 @@ export default function Vehicule() {
             >
               {vehicule.type}
             </Typography>
-            <List
-              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            >
+            <List sx={{ width: "100%", bgcolor: "background.paper" }}>
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>

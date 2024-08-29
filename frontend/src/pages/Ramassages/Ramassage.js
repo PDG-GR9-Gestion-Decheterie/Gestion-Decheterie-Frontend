@@ -57,8 +57,8 @@ export default function Ramassage() {
   const handleConfirmDelete = async () => {
     const response = await deleteRamassage(ramassage.id);
     if (response.ok) {
-      navigate("/");
-    } else if (response.status === 403) {
+      navigate("/ramassages");
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -72,7 +72,7 @@ export default function Ramassage() {
       if (response.ok) {
         const data = await response.json();
         setRamassage(data.ramassageData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -85,7 +85,7 @@ export default function Ramassage() {
       if (response.ok) {
         const data = await response.json();
         setDecheteries(data.decheteriesData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -98,7 +98,7 @@ export default function Ramassage() {
       if (response.ok) {
         const data = await response.json();
         setStatus(data.statusData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -111,7 +111,7 @@ export default function Ramassage() {
       if (response.ok) {
         const data = await response.json();
         setVehicules(data.vehiculesData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -124,7 +124,7 @@ export default function Ramassage() {
       if (response.ok) {
         const data = await response.json();
         setEmployes(data.employesData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -139,7 +139,7 @@ export default function Ramassage() {
       if (response.ok) {
         const data = await response.json();
         setContenants(data.contenantsData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -157,7 +157,7 @@ export default function Ramassage() {
       if (response.ok) {
         const data = await response.json();
         setContenants(data.contenantsData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -193,9 +193,7 @@ export default function Ramassage() {
             >
               Date du ramassage {ramassage.date}
             </Typography>
-            <List
-              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            >
+            <List sx={{ width: "100%", bgcolor: "background.paper" }}>
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>

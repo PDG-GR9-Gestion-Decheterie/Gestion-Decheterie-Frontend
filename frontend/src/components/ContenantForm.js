@@ -64,7 +64,7 @@ export default function ContenantForm({ idContenant }) {
           setColor(data.contenantData.couleur);
           setFk_decheterie(data.contenantData.fk_decheterie);
           setFk_dechet(data.contenantData.fk_dechet);
-        } else if (response.status === 403) {
+        } else if (response.status === 401) {
           navigate("/login");
         } else {
           navigate("/error");
@@ -78,7 +78,7 @@ export default function ContenantForm({ idContenant }) {
       if (response.ok) {
         const data = await response.json();
         setDecheteries(data.decheteriesData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -91,7 +91,7 @@ export default function ContenantForm({ idContenant }) {
       if (response.ok) {
         const data = await response.json();
         setDechets(data.dechetsData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -114,7 +114,7 @@ export default function ContenantForm({ idContenant }) {
     });
     if (response.ok) {
       navigate("/contenants");
-    } else if (response.status === 403) {
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -135,7 +135,7 @@ export default function ContenantForm({ idContenant }) {
     });
     if (response.ok) {
       navigate("/contenants");
-    } else if (response.status === 403) {
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -175,7 +175,6 @@ export default function ContenantForm({ idContenant }) {
           <List
             sx={{
               width: "100%",
-              maxWidth: 360,
               bgcolor: "background.paper",
             }}
           >
@@ -187,9 +186,11 @@ export default function ContenantForm({ idContenant }) {
                   </Avatar>
                 </ListItemAvatar>
                 <TextField
+                  type="number"
                   onChange={(e) => setId(e.target.value)}
                   label="Identifiant"
                   fullWidth
+                  InputProps={{ inputProps: { min: 0 } }}
                 />
               </ListItem>
             )}

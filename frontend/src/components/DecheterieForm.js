@@ -8,6 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import HomeIcon from "@mui/icons-material/Home";
 import NumbersIcon from "@mui/icons-material/Numbers";
 import PortraitIcon from "@mui/icons-material/Portrait";
+import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import {
   Grid,
@@ -45,7 +46,7 @@ export default function DecheterieForm({ idDecheterie }) {
           setId(data.decheterieData.id);
           setName(data.decheterieData.nom);
           setFk_address(data.decheterieData.fk_adresse);
-        } else if (response.status === 403) {
+        } else if (response.status === 401) {
           navigate("/login");
         } else {
           navigate("/error");
@@ -53,23 +54,18 @@ export default function DecheterieForm({ idDecheterie }) {
       };
       fetchDecheterie();
     }
-
-    const fetchAddresses = async () => {
-      const response = await getAdresses();
-      if (response.ok) {
-        const data = await response.json();
-        setAddresses(data.adressesData);
-      } else if (response.status === 403) {
-        navigate("/login");
-      } else {
-        navigate("/error");
-      }
-    };
-    fetchAddresses();
   }, []);
 
-  const handleAddressChange = (e) => {
-    setFk_address(e.target.value);
+  const searchAddresses = async (address) => {
+    const response = await getAdresses(address);
+    if (response.ok) {
+      const data = await response.json();
+      setAddresses(data.adressesData);
+    } else if (response.status === 401) {
+      navigate("/login");
+    } else {
+      navigate("/error");
+    }
   };
 
   const handleCreate = async (e) => {
@@ -81,7 +77,7 @@ export default function DecheterieForm({ idDecheterie }) {
     });
     if (response.ok) {
       navigate("/decheteries");
-    } else if (response.status === 403) {
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -97,7 +93,7 @@ export default function DecheterieForm({ idDecheterie }) {
     });
     if (response.ok) {
       navigate("/decheteries");
-    } else if (response.status === 403) {
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -106,15 +102,6 @@ export default function DecheterieForm({ idDecheterie }) {
 
   // Wait for employee to be fetched (Update case)
   if (idDecheterie && !decheterieFetched) {
-    return (
-      <Box style={{ textAlign: "center", marginTop: "5rem" }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  // Wait for fields to be filled
-  if (!addresses.length) {
     return (
       <Box style={{ textAlign: "center", marginTop: "5rem" }}>
         <CircularProgress />
@@ -137,7 +124,6 @@ export default function DecheterieForm({ idDecheterie }) {
           <List
             sx={{
               width: "100%",
-              maxWidth: 360,
               bgcolor: "background.paper",
             }}
           >
@@ -149,9 +135,11 @@ export default function DecheterieForm({ idDecheterie }) {
                   </Avatar>
                 </ListItemAvatar>
                 <TextField
+                  type="number"
                   onChange={(e) => setId(e.target.value)}
                   label="Identifiant"
                   fullWidth
+                  InputProps={{ inputProps: { min: 0 } }}
                 />
               </ListItem>
             )}
@@ -171,20 +159,34 @@ export default function DecheterieForm({ idDecheterie }) {
             <ListItem>
               <ListItemAvatar>
                 <Avatar>
+                  <SearchIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <TextField
+                label="Rechercher une adresse"
+                onChange={(e) =>
+                  e.target.value && searchAddresses(e.target.value)
+                }
+                fullWidth
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
                   <HomeIcon />
                 </Avatar>
               </ListItemAvatar>
               <FormControl fullWidth>
                 <InputLabel id="address-label">Adresse</InputLabel>
                 <Select
-                  onChange={handleAddressChange}
+                  onChange={(e) => setFk_address(e.target.value)}
                   value={fk_address}
                   labelId="address-label"
                   label="Adresse"
                 >
                   {addresses.map((a) => (
                     <MenuItem key={a.id} value={a.id}>
-                      {a.rue} {a.numero}, {a.npa} {a.nomville}
+                      {a.street} {a.number}, {a.postcode} {a.city}
                     </MenuItem>
                   ))}
                 </Select>

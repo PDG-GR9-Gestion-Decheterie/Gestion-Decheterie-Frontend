@@ -15,6 +15,7 @@ import BadgeIcon from "@mui/icons-material/Badge";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import PasswordIcon from "@mui/icons-material/Password";
 import HomeIcon from "@mui/icons-material/Home";
+import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import {
   Grid,
@@ -53,6 +54,7 @@ export default function EmployeForm({ idEmploye }) {
   const [fonctions, setFonctions] = React.useState([]);
   const [addresses, setAddresses] = React.useState([]);
   const [employeFetched, setEmployeFetched] = React.useState(false);
+  const typesPermis = ["B", "C"];
 
   useEffect(() => {
     if (idEmploye) {
@@ -71,7 +73,7 @@ export default function EmployeForm({ idEmploye }) {
           setFk_address(data.employeData.fk_adresse);
           setFk_decheterie(data.employeData.fk_decheterie);
           setFk_fonction(data.employeData.fk_fonction);
-        } else if (response.status === 403) {
+        } else if (response.status === 401) {
           navigate("/login");
         } else {
           navigate("/error");
@@ -85,7 +87,7 @@ export default function EmployeForm({ idEmploye }) {
       if (response.ok) {
         const data = await response.json();
         setDecheteries(data.decheteriesData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -98,27 +100,26 @@ export default function EmployeForm({ idEmploye }) {
       if (response.ok) {
         const data = await response.json();
         setFonctions(data.fonctionsData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
       }
     };
     fetchFonctions();
-
-    const fetchAddresses = async () => {
-      const response = await getAdresses();
-      if (response.ok) {
-        const data = await response.json();
-        setAddresses(data.adressesData);
-      } else if (response.status === 403) {
-        navigate("/login");
-      } else {
-        navigate("/error");
-      }
-    };
-    fetchAddresses();
   }, []);
+
+  const searchAddresses = async (address) => {
+    const response = await getAdresses(address);
+    if (response.ok) {
+      const data = await response.json();
+      setAddresses(data.adressesData);
+    } else if (response.status === 401) {
+      navigate("/login");
+    } else {
+      navigate("/error");
+    }
+  };
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -137,7 +138,7 @@ export default function EmployeForm({ idEmploye }) {
     });
     if (response.ok) {
       navigate("/employes");
-    } else if (response.status === 403) {
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -161,7 +162,7 @@ export default function EmployeForm({ idEmploye }) {
     });
     if (response.ok) {
       navigate("/employes");
-    } else if (response.status === 403) {
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -201,7 +202,6 @@ export default function EmployeForm({ idEmploye }) {
           <List
             sx={{
               width: "100%",
-              maxWidth: 360,
               bgcolor: "background.paper",
             }}
           >
@@ -302,12 +302,21 @@ export default function EmployeForm({ idEmploye }) {
                   <BadgeIcon />
                 </Avatar>
               </ListItemAvatar>
-              <TextField
-                value={typePermis}
-                label="Type de permis"
-                onChange={(e) => setTypePermis(e.target.value)}
-                fullWidth
-              />
+              <FormControl fullWidth>
+                <InputLabel id="typepermis-label">Type de permis</InputLabel>
+                <Select
+                  onChange={(e) => setTypePermis(e.target.value)}
+                  value={typePermis}
+                  labelId="typepermis-label"
+                  label="Type de permis"
+                >
+                  {typesPermis.map((t) => (
+                    <MenuItem key={t} value={t}>
+                      {t}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </ListItem>
             <ListItem>
               <ListItemAvatar>
@@ -356,6 +365,20 @@ export default function EmployeForm({ idEmploye }) {
             <ListItem>
               <ListItemAvatar>
                 <Avatar>
+                  <SearchIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <TextField
+                label="Rechercher une adresse"
+                onChange={(e) =>
+                  e.target.value && searchAddresses(e.target.value)
+                }
+                fullWidth
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
                   <HomeIcon />
                 </Avatar>
               </ListItemAvatar>
@@ -369,7 +392,7 @@ export default function EmployeForm({ idEmploye }) {
                 >
                   {addresses.map((a) => (
                     <MenuItem key={a.id} value={a.id}>
-                      {a.rue} {a.numero}, {a.npa} {a.nomville}
+                      {a.street} {a.number}, {a.postcode} {a.city}
                     </MenuItem>
                   ))}
                 </Select>

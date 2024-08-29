@@ -19,14 +19,15 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  CircularProgress,
 } from "@mui/material";
-import { getDecheterie, deleteDecheterie, getAdresses } from "../../Endpoints";
+import { getDecheterie, deleteDecheterie, getAdresse } from "../../Endpoints";
 
 export default function Decheterie() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [decheterie, setDecheterie] = React.useState({});
-  const [adresses, setAdresses] = React.useState([]);
+  const [address, setAddress] = React.useState({});
   const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleCloseDelete = () => {
@@ -36,8 +37,8 @@ export default function Decheterie() {
   const handleConfirmDelete = async () => {
     const response = await deleteDecheterie(id);
     if (response.ok) {
-      navigate("/");
-    } else if (response.status === 403) {
+      navigate("/decheteries");
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -51,27 +52,44 @@ export default function Decheterie() {
       if (response.ok) {
         const data = await response.json();
         setDecheterie(data.decheterieData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
       }
     };
     fetchDecheterie();
+  }, []);
 
-    const fetchAdresses = async () => {
-      const response = await getAdresses();
+  useEffect(() => {
+    const fetchAdress = async () => {
+      if (!decheterie.fk_adresse) return;
+
+      const response = await getAdresse(decheterie.fk_adresse);
       if (response.ok) {
         const data = await response.json();
-        setAdresses(data.adressesData);
-      } else if (response.status === 403) {
+        setAddress(data.adresseData);
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
       }
     };
-    fetchAdresses();
-  }, []);
+    fetchAdress();
+  }, [decheterie.fk_adresse]);
+
+  if (!decheterie.fk_adresse) {
+    return (
+      <Layout
+        title="Chargement..."
+        content={
+          <Box style={{ textAlign: "center", marginTop: "5rem" }}>
+            <CircularProgress />
+          </Box>
+        }
+      />
+    );
+  }
 
   return (
     <Layout
@@ -87,9 +105,7 @@ export default function Decheterie() {
             >
               {decheterie.nom}
             </Typography>
-            <List
-              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            >
+            <List sx={{ width: "100%", bgcolor: "background.paper" }}>
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>
@@ -98,14 +114,7 @@ export default function Decheterie() {
                 </ListItemAvatar>
                 <ListItemText
                   primary="Adresse"
-                  secondary={(() => {
-                    const adresse = adresses.find(
-                      (a) => a.id === decheterie.fk_adresse
-                    );
-                    return adresse
-                      ? `${adresse.rue} ${adresse.numero}, ${adresse.npa} ${adresse.nomville}`
-                      : "-";
-                  })()}
+                  secondary={`${address.street} ${address.number}, ${address.postcode} ${address.city}`}
                 />
               </ListItem>
             </List>

@@ -26,6 +26,7 @@ import Ramassages from "./pages/Ramassages/Ramassages";
 import Ramassage from "./pages/Ramassages/Ramassage";
 import RamassageCreate from "./pages/Ramassages/RamassageCreate";
 import RamassageUpdate from "./pages/Ramassages/RamassageUpdate";
+import Itineraire from "./Itineraire";
 
 export default function App() {
   return (
@@ -204,6 +205,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <RamassageUpdate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/itineraire"
+          element={
+            <ProtectedRoute>
+              <Itineraire />
             </ProtectedRoute>
           }
         />
