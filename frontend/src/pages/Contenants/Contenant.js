@@ -41,8 +41,8 @@ export default function Contenant() {
   const handleConfirmDelete = async () => {
     const response = await deleteContenant(id);
     if (response.ok) {
-      navigate("/");
-    } else if (response.status === 403) {
+      navigate("/contenants");
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -56,7 +56,7 @@ export default function Contenant() {
       if (response.ok) {
         const data = await response.json();
         setContenant(data.contenantData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -69,7 +69,7 @@ export default function Contenant() {
       if (response.ok) {
         const data = await response.json();
         setDecheteries(data.decheteriesData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -193,7 +193,7 @@ export default function Contenant() {
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                    Êtes-vous sûr de vouloir supprimer le contenant {id}?
+                    Êtes-vous sûr de vouloir supprimer le contenant n°{id}?
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>

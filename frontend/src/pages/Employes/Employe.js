@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Layout from "../../components/Layout";
-import { useParams } from "react-router-dom";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -25,20 +24,21 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  CircularProgress,
 } from "@mui/material";
 import {
   getEmploye,
   deleteEmploye,
   getDecheteries,
-  getAdresses,
+  getAdresse,
 } from "../../Endpoints";
 
 export default function Employe() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [employe, setEmploye] = React.useState({});
+  const [address, setAddress] = React.useState({});
   const [decheteries, setDecheteries] = React.useState([]);
-  const [addresses, setAddresses] = React.useState([]);
   const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleCloseDelete = () => {
@@ -48,8 +48,8 @@ export default function Employe() {
   const handleConfirmDelete = async () => {
     const response = await deleteEmploye(id);
     if (response.ok) {
-      navigate("/");
-    } else if (response.status === 403) {
+      navigate("/employes");
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -63,7 +63,7 @@ export default function Employe() {
       if (response.ok) {
         const data = await response.json();
         setEmploye(data.employeData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -76,27 +76,44 @@ export default function Employe() {
       if (response.ok) {
         const data = await response.json();
         setDecheteries(data.decheteriesData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
       }
     };
     fetchDecheteries();
+  }, []);
 
-    const fetchAddresses = async () => {
-      const response = await getAdresses();
+  useEffect(() => {
+    const fetchAdress = async () => {
+      if (!employe.fk_adresse) return;
+
+      const response = await getAdresse(employe.fk_adresse);
       if (response.ok) {
         const data = await response.json();
-        setAddresses(data.adressesData);
-      } else if (response.status === 403) {
+        setAddress(data.adresseData);
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
       }
     };
-    fetchAddresses();
-  }, []);
+    fetchAdress();
+  }, [employe.fk_adresse]);
+
+  if (!employe.fk_adresse) {
+    return (
+      <Layout
+        title="Chargement..."
+        content={
+          <Box style={{ textAlign: "center", marginTop: "5rem" }}>
+            <CircularProgress />
+          </Box>
+        }
+      />
+    );
+  }
 
   return (
     <Layout
@@ -112,9 +129,7 @@ export default function Employe() {
             >
               {employe.prenom} {employe.nom}
             </Typography>
-            <List
-              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            >
+            <List sx={{ width: "100%", bgcolor: "background.paper" }}>
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>
@@ -198,14 +213,7 @@ export default function Employe() {
                 </ListItemAvatar>
                 <ListItemText
                   primary="Adresse"
-                  secondary={(() => {
-                    const adresse = addresses.find(
-                      (a) => a.id === employe.fk_adresse
-                    );
-                    return adresse
-                      ? `${adresse.numero} ${adresse.rue}, ${adresse.nomville}`
-                      : "-";
-                  })()}
+                  secondary={`${address.street} ${address.number}, ${address.postcode} ${address.city}`}
                 />
               </ListItem>
             </List>

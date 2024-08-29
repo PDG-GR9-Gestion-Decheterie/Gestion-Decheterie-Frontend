@@ -8,7 +8,7 @@ export default function RamassageUpdate() {
 
   return (
     <Layout
-      title={`Utilisateur ${id}`}
+      title={`Ramassage n°${id}`}
       content={<RamassageForm idRamassage={id} />}
     />
   );

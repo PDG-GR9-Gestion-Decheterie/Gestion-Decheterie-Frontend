@@ -26,7 +26,7 @@ export default function Profil() {
       if (response.ok) {
         const data = await response.json();
         setProfil(data.employeData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -49,9 +49,7 @@ export default function Profil() {
             >
               {profil.prenom} {profil.nom}
             </Typography>
-            <List
-              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            >
+            <List sx={{ width: "100%", bgcolor: "background.paper" }}>
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>

@@ -122,8 +122,8 @@ async function deleteEmploye(id) {
   });
 }
 
-async function getAdresses() {
-  return fetch(`${apiUrl}/api/adresses`, {
+async function getAdresses(string) {
+  return fetch(`${apiUrl}/api/adressessearch/${string}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -308,6 +308,15 @@ async function getStatus() {
   });
 }
 
+async function getApiKey() {
+  return fetch(`${apiUrl}/api/apikey`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
 export {
   loginUser,
   logoutUser,
@@ -342,4 +351,5 @@ export {
   getFonctions,
   getDechets,
   getStatus,
+  getApiKey,
 };

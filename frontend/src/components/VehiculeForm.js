@@ -42,6 +42,7 @@ export default function VehiculeForm({ idVehicule }) {
   const [fk_decheterie, setFk_decheterie] = React.useState();
   const [decheteries, setDecheteries] = React.useState([]);
   const [vehiculeFetched, setVehiculeFetched] = React.useState(false);
+  const vehiculeTypes = ["camion", "camionnette"];
 
   useEffect(() => {
     if (idVehicule) {
@@ -57,7 +58,7 @@ export default function VehiculeForm({ idVehicule }) {
           setDateExpertise(data.vehiculeData.dateexpertise);
           setConsommationCarburant(data.vehiculeData.consocarburant);
           setFk_decheterie(data.vehiculeData.fk_decheterie);
-        } else if (response.status === 403) {
+        } else if (response.status === 401) {
           navigate("/login");
         } else {
           navigate("/error");
@@ -71,7 +72,7 @@ export default function VehiculeForm({ idVehicule }) {
       if (response.ok) {
         const data = await response.json();
         setDecheteries(data.decheteriesData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -92,8 +93,8 @@ export default function VehiculeForm({ idVehicule }) {
       fk_decheterie,
     });
     if (response.ok) {
-      navigate("/");
-    } else if (response.status === 403) {
+      navigate("/vehicules");
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -112,8 +113,8 @@ export default function VehiculeForm({ idVehicule }) {
       fk_decheterie,
     });
     if (response.ok) {
-      navigate("/");
-    } else if (response.status === 403) {
+      navigate("/vehicules");
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -153,7 +154,6 @@ export default function VehiculeForm({ idVehicule }) {
           <List
             sx={{
               width: "100%",
-              maxWidth: 360,
               bgcolor: "background.paper",
             }}
           >
@@ -177,12 +177,21 @@ export default function VehiculeForm({ idVehicule }) {
                   <LocalShippingIcon />
                 </Avatar>
               </ListItemAvatar>
-              <TextField
-                onChange={(e) => setType(e.target.value)}
-                value={type}
-                label="Type"
-                fullWidth
-              />
+              <FormControl fullWidth>
+                <InputLabel id="type-label">Type</InputLabel>
+                <Select
+                  onChange={(e) => setType(e.target.value)}
+                  value={type}
+                  labelId="type-label"
+                  label="Type"
+                >
+                  {vehiculeTypes.map((t) => (
+                    <MenuItem key={t} value={t}>
+                      {t}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </ListItem>
             <ListItem>
               <ListItemAvatar>

@@ -25,6 +25,7 @@ import Container from "@mui/material/Container";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import FactoryIcon from "@mui/icons-material/Factory";
+import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
 import { useAuth } from "../hooks/useAuth";
 import { logoutUser } from "../Endpoints";
 
@@ -193,6 +194,12 @@ export default function Layout({ title, content }) {
                 <BreakfastDiningIcon />
               </ListItemIcon>
               <ListItemText primary="Contenants" />
+            </ListItemButton>
+            <ListItemButton href="/itineraire">
+              <ListItemIcon>
+                <AssistantDirectionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Itinéraire" />
             </ListItemButton>
             {localStorage.getItem("fonction") === '"Responsable"' ? (
               <ListItemButton href="/employes">

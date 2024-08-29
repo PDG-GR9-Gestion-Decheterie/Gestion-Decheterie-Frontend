@@ -21,7 +21,7 @@ export default function Contenants() {
       if (response.ok) {
         const data = await response.json();
         setContenants(data.contenantsData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -36,49 +36,68 @@ export default function Contenants() {
       content={
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-            <Typography
-              component="h2"
-              variant="h6"
-              color="primary"
-              gutterBottom
-            >
-              Liste des contenants
-            </Typography>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell>Nom</TableCell>
-                  <TableCell>Capacité max</TableCell>
-                  <TableCell>Nombre de cadres</TableCell>
-                  <TableCell>Taille</TableCell>
-                  <TableCell>Couleur</TableCell>
-                  <TableCell>Déchèterie associée</TableCell>
-                  <TableCell>Déchet</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {contenants.map((c) => (
-                  <TableRow
-                    key={c.id}
-                    hover={true}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => navigate(`/contenants/${c.id}`)}
-                  >
-                    <TableCell>{c.id}</TableCell>
-                    <TableCell>{c.nom}</TableCell>
-                    <TableCell>
-                      {c.capacitemax == null ? "-" : c.capacitemax}
-                    </TableCell>
-                    <TableCell>{c.nbcadre == null ? "-" : c.nbcadre}</TableCell>
-                    <TableCell>{c.taille == null ? "-" : c.taille}</TableCell>
-                    <TableCell>{c.couleur == null ? "-" : c.couleur}</TableCell>
-                    <TableCell>{c.fk_decheterie}</TableCell>
-                    <TableCell>{c.fk_dechet}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            {contenants.length > 0 ? (
+              <>
+                <Typography
+                  component="h2"
+                  variant="h6"
+                  color="primary"
+                  gutterBottom
+                >
+                  Liste des contenants
+                </Typography>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>ID</TableCell>
+                      <TableCell>Nom</TableCell>
+                      <TableCell>Capacité max</TableCell>
+                      <TableCell>Nombre de cadres</TableCell>
+                      <TableCell>Taille</TableCell>
+                      <TableCell>Couleur</TableCell>
+                      <TableCell>Déchèterie associée</TableCell>
+                      <TableCell>Déchet</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {contenants.map((c) => (
+                      <TableRow
+                        key={c.id}
+                        hover={true}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => navigate(`/contenants/${c.id}`)}
+                      >
+                        <TableCell>{c.id}</TableCell>
+                        <TableCell>{c.nom}</TableCell>
+                        <TableCell>
+                          {c.capacitemax == null ? "-" : c.capacitemax}
+                        </TableCell>
+                        <TableCell>
+                          {c.nbcadre == null ? "-" : c.nbcadre}
+                        </TableCell>
+                        <TableCell>
+                          {c.taille == null ? "-" : c.taille}
+                        </TableCell>
+                        <TableCell>
+                          {c.couleur == null ? "-" : c.couleur}
+                        </TableCell>
+                        <TableCell>{c.fk_decheterie}</TableCell>
+                        <TableCell>{c.fk_dechet}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </>
+            ) : (
+              <Typography
+                component="h2"
+                variant="h6"
+                color="primary"
+                gutterBottom
+              >
+                Aucun contenant
+              </Typography>
+            )}
             {localStorage.getItem("fonction") === '"Responsable"' ? (
               <Button
                 fullWidth

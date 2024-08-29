@@ -69,7 +69,7 @@ export default function RamassageForm({ idRamassage }) {
           setFk_employe(data.ramassageData.fk_employee);
           setFk_decheterie(data.ramassageData.fk_decheterie);
           setFk_vehicule(data.ramassageData.fk_vehicule);
-        } else if (response.status === 403) {
+        } else if (response.status === 401) {
           navigate("/login");
         } else {
           navigate("/error");
@@ -83,7 +83,7 @@ export default function RamassageForm({ idRamassage }) {
       if (response.ok) {
         const data = await response.json();
         setStatus(data.statusData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -96,7 +96,7 @@ export default function RamassageForm({ idRamassage }) {
       if (response.ok) {
         const data = await response.json();
         setDecheteries(data.decheteriesData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -109,7 +109,7 @@ export default function RamassageForm({ idRamassage }) {
       if (response.ok) {
         const data = await response.json();
         setVehicules(data.vehiculesData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -122,7 +122,7 @@ export default function RamassageForm({ idRamassage }) {
       if (response.ok) {
         const data = await response.json();
         setEmployes(data.employesData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -135,7 +135,7 @@ export default function RamassageForm({ idRamassage }) {
       if (response.ok) {
         const data = await response.json();
         setContenants(data.contenantsData);
-      } else if (response.status === 403) {
+      } else if (response.status === 401) {
         navigate("/login");
       } else {
         navigate("/error");
@@ -157,8 +157,8 @@ export default function RamassageForm({ idRamassage }) {
       fk_vehicule,
     });
     if (response.ok) {
-      navigate("/");
-    } else if (response.status === 403) {
+      navigate("/ramassages");
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -178,8 +178,8 @@ export default function RamassageForm({ idRamassage }) {
       fk_vehicule,
     });
     if (response.ok) {
-      navigate("/");
-    } else if (response.status === 403) {
+      navigate("/ramassages");
+    } else if (response.status === 401) {
       navigate("/login");
     } else {
       navigate("/error");
@@ -224,7 +224,6 @@ export default function RamassageForm({ idRamassage }) {
           <List
             sx={{
               width: "100%",
-              maxWidth: 360,
               bgcolor: "background.paper",
             }}
           >
@@ -236,6 +235,7 @@ export default function RamassageForm({ idRamassage }) {
                   </Avatar>
                 </ListItemAvatar>
                 <TextField
+                  type="number"
                   onChange={(e) => setId(e.target.value)}
                   label="Identifiant"
                   fullWidth
