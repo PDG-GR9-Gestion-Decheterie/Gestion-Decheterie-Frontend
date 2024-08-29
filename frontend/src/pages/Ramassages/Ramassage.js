@@ -380,7 +380,7 @@ export default function Ramassage() {
               <Button
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={() => navigate(`/ramassage/update/${id}`)}
+                onClick={() => navigate(`/ramassages/${id}/update`)}
               >
                 Modifier
               </Button>
