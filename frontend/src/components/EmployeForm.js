@@ -136,7 +136,7 @@ export default function EmployeForm({ idEmploye }) {
       fk_decheterie,
     });
     if (response.ok) {
-      navigate("/");
+      navigate("/employes");
     } else if (response.status === 403) {
       navigate("/login");
     } else {
@@ -160,7 +160,7 @@ export default function EmployeForm({ idEmploye }) {
       fk_decheterie,
     });
     if (response.ok) {
-      navigate("/");
+      navigate("/employes");
     } else if (response.status === 403) {
       navigate("/login");
     } else {

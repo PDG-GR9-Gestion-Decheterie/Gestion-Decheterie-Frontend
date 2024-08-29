@@ -113,7 +113,7 @@ export default function ContenantForm({ idContenant }) {
       fk_dechet,
     });
     if (response.ok) {
-      navigate("/");
+      navigate("/contenants");
     } else if (response.status === 403) {
       navigate("/login");
     } else {
@@ -134,7 +134,7 @@ export default function ContenantForm({ idContenant }) {
       fk_dechet,
     });
     if (response.ok) {
-      navigate("/");
+      navigate("/contenants");
     } else if (response.status === 403) {
       navigate("/login");
     } else {

@@ -80,7 +80,7 @@ export default function DecheterieForm({ idDecheterie }) {
       fk_adresse: fk_address,
     });
     if (response.ok) {
-      navigate("/");
+      navigate("/decheteries");
     } else if (response.status === 403) {
       navigate("/login");
     } else {
@@ -96,7 +96,7 @@ export default function DecheterieForm({ idDecheterie }) {
       fk_adresse: fk_address,
     });
     if (response.ok) {
-      navigate("/");
+      navigate("/decheteries");
     } else if (response.status === 403) {
       navigate("/login");
     } else {

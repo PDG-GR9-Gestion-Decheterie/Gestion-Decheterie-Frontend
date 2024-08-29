@@ -92,7 +92,7 @@ export default function VehiculeForm({ idVehicule }) {
       fk_decheterie,
     });
     if (response.ok) {
-      navigate("/");
+      navigate("/vehicules");
     } else if (response.status === 403) {
       navigate("/login");
     } else {
@@ -112,7 +112,7 @@ export default function VehiculeForm({ idVehicule }) {
       fk_decheterie,
     });
     if (response.ok) {
-      navigate("/");
+      navigate("/vehicules");
     } else if (response.status === 403) {
       navigate("/login");
     } else {

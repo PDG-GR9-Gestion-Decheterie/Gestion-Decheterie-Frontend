@@ -157,7 +157,7 @@ export default function RamassageForm({ idRamassage }) {
       fk_vehicule,
     });
     if (response.ok) {
-      navigate("/");
+      navigate("/ramassages");
     } else if (response.status === 403) {
       navigate("/login");
     } else {
@@ -178,7 +178,7 @@ export default function RamassageForm({ idRamassage }) {
       fk_vehicule,
     });
     if (response.ok) {
-      navigate("/");
+      navigate("/ramassages");
     } else if (response.status === 403) {
       navigate("/login");
     } else {
