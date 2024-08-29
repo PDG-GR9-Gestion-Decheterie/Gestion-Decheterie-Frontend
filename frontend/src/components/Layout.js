@@ -170,6 +170,12 @@ export default function Layout({ title, content }) {
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItemButton>
+            <ListItemButton href="/ramassages">
+              <ListItemIcon>
+                <AssignmentIcon />
+              </ListItemIcon>
+              <ListItemText primary="Ramassages" />
+            </ListItemButton>
             <ListItemButton href="/decheteries">
               <ListItemIcon>
                 <FactoryIcon />
