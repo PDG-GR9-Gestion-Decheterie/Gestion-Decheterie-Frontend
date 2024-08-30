@@ -59,6 +59,9 @@ export default function DecheterieForm({ idDecheterie }) {
     if (response.ok) {
       const data = await response.json();
       setAddresses(data.adressesData);
+      setFk_address(data.adressesData[0].id);
+    } else if (response.status === 404) {
+      return;
     } else if (response.status === 401) {
       navigate("/login");
     } else {
@@ -162,9 +165,7 @@ export default function DecheterieForm({ idDecheterie }) {
               </ListItemAvatar>
               <TextField
                 label="Rechercher une adresse"
-                onChange={(e) =>
-                  e.target.value && searchAddresses(e.target.value)
-                }
+                onChange={(e) => searchAddresses(e.target.value)}
                 fullWidth
               />
             </ListItem>
