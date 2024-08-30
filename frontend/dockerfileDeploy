@@ -13,6 +13,9 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
+# Set environment variables for the build process
+ENV REACT_APP_API_URL=https://gestion-decheterie.internet-box.ch
+
 # Build the React application for production
 RUN npm run build
 
