@@ -3,12 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import { getInfos } from "../Endpoints";
 
 export default function Home() {
@@ -33,52 +29,81 @@ export default function Home() {
       title={"Home"}
       content={
         <Grid item xs={12}>
-          <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-            {infos.length > 0 ? (
-              <>
+          {infos.length > 0 ? (
+            infos.map((i) => (
+              <Paper
+                key={i.nom}
+                sx={{
+                  p: 2,
+                  marginBottom: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <Typography
                   component="h2"
                   variant="h6"
                   color="primary"
                   gutterBottom
                 >
-                  Informations
+                  {i.nom}
                 </Typography>
-                <Table size="small">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Décheterie</TableCell>
-                      <TableCell>Contenants</TableCell>
-                      <TableCell>Adresse</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {infos
-                      .sort((a, b) => a.nom - b.nom)
-                      .map((i) => (
-                        <TableRow key={i.nom} hover={true}>
-                          <TableCell>{i.nom}</TableCell>
-                          <TableCell>{i.contenants.join(", ")}</TableCell>
-                          <TableCell>
-                            {i.adresse_street} {i.adresse_number},{" "}
-                            {i.adresse_postcode} {i.adresse_city}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-              </>
-            ) : (
-              <Typography
-                component="h2"
-                variant="h6"
-                color="primary"
-                gutterBottom
-              >
-                Aucune information
-              </Typography>
-            )}
-          </Paper>
+                <Typography sx={{ fontStyle: "italic" }}>
+                  {i.adresse_street} {i.adresse_number}, {i.adresse_postcode}{" "}
+                  {i.adresse_city}
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {i.contenants.map((c) => (
+                    <Box
+                      key={c}
+                      sx={{
+                        height: 120,
+                        width: 120,
+                        p: 1,
+                        m: 1,
+                        border: 1,
+                        borderRadius: 1,
+                        borderColor: "primary.main",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <img
+                        src={`/dechets/${c}.png`}
+                        alt={c}
+                        width="50"
+                        height="50"
+                      />
+                      <Typography
+                        variant="body2"
+                        color="primary"
+                        sx={{ textAlign: "center" }}
+                      >
+                        {c}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Box>
+              </Paper>
+            ))
+          ) : (
+            <Typography
+              component="h2"
+              variant="h6"
+              color="primary"
+              gutterBottom
+            >
+              Aucune information
+            </Typography>
+          )}
         </Grid>
       }
     />
