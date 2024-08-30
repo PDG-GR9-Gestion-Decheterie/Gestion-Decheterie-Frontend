@@ -1,26 +1,24 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import HomeIcon from "@mui/icons-material/Home";
 import NumbersIcon from "@mui/icons-material/Numbers";
 import PortraitIcon from "@mui/icons-material/Portrait";
 import SearchIcon from "@mui/icons-material/Search";
-import { useNavigate } from "react-router-dom";
-import {
-  Grid,
-  Paper,
-  Typography,
-  Button,
-  Select,
-  MenuItem,
-  TextField,
-  Box,
-  CircularProgress,
-} from "@mui/material";
 import {
   getDecheterie,
   getAdresses,
@@ -54,7 +52,7 @@ export default function DecheterieForm({ idDecheterie }) {
       };
       fetchDecheterie();
     }
-  }, []);
+  }, [idDecheterie, navigate]);
 
   const searchAddresses = async (address) => {
     const response = await getAdresses(address);

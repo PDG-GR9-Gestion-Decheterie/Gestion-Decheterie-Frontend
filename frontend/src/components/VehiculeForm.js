@@ -1,10 +1,20 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import CircularProgress from "@mui/material/CircularProgress";
 import FactoryIcon from "@mui/icons-material/Factory";
 import NumbersIcon from "@mui/icons-material/Numbers";
 import HandymanIcon from "@mui/icons-material/Handyman";
@@ -12,18 +22,6 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import RvHookupIcon from "@mui/icons-material/RvHookup";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
-import { useNavigate } from "react-router-dom";
-import {
-  Grid,
-  Paper,
-  Typography,
-  Button,
-  Select,
-  MenuItem,
-  TextField,
-  Box,
-  CircularProgress,
-} from "@mui/material";
 import {
   getDecheteries,
   getVehicule,
@@ -79,7 +77,7 @@ export default function VehiculeForm({ idVehicule }) {
       }
     };
     fetchDecheteries();
-  }, []);
+  }, [idVehicule, navigate]);
 
   const handleCreate = async (e) => {
     e.preventDefault();

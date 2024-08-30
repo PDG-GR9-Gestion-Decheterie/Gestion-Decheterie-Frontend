@@ -5,7 +5,17 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import Layout from "../../components/Layout";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import CircularProgress from "@mui/material/CircularProgress";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -13,19 +23,7 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import BadgeIcon from "@mui/icons-material/Badge";
 import FactoryIcon from "@mui/icons-material/Factory";
 import HomeIcon from "@mui/icons-material/Home";
-import {
-  Grid,
-  Paper,
-  Typography,
-  Button,
-  Box,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  CircularProgress,
-} from "@mui/material";
+import Layout from "../../components/Layout";
 import {
   getEmploye,
   deleteEmploye,
@@ -83,7 +81,7 @@ export default function Employe() {
       }
     };
     fetchDecheteries();
-  }, []);
+  }, [id, navigate]);
 
   useEffect(() => {
     const fetchAdress = async () => {
@@ -100,7 +98,7 @@ export default function Employe() {
       }
     };
     fetchAdress();
-  }, [employe.fk_adresse]);
+  }, [employe.fk_adresse, navigate]);
 
   if (!employe.fk_adresse) {
     return (

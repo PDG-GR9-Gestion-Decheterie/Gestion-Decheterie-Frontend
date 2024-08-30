@@ -1,10 +1,20 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import CircularProgress from "@mui/material/CircularProgress";
 import FactoryIcon from "@mui/icons-material/Factory";
 import NumbersIcon from "@mui/icons-material/Numbers";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -16,18 +26,6 @@ import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import PasswordIcon from "@mui/icons-material/Password";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
-import { useNavigate } from "react-router-dom";
-import {
-  Grid,
-  Paper,
-  Typography,
-  Button,
-  Select,
-  MenuItem,
-  TextField,
-  Box,
-  CircularProgress,
-} from "@mui/material";
 import {
   getDecheteries,
   getFonctions,
@@ -107,7 +105,7 @@ export default function EmployeForm({ idEmploye }) {
       }
     };
     fetchFonctions();
-  }, []);
+  }, [idEmploye, navigate]);
 
   const searchAddresses = async (address) => {
     const response = await getAdresses(address);

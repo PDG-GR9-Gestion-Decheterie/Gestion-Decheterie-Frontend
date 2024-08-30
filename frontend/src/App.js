@@ -26,7 +26,7 @@ import Ramassages from "./pages/Ramassages/Ramassages";
 import Ramassage from "./pages/Ramassages/Ramassage";
 import RamassageCreate from "./pages/Ramassages/RamassageCreate";
 import RamassageUpdate from "./pages/Ramassages/RamassageUpdate";
-import Itineraire from "./Itineraire";
+import Itineraire from "./pages/Itineraire";
 
 export default function App() {
   return (

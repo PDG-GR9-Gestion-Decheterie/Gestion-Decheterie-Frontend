@@ -1,7 +1,7 @@
 import React from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Box, Container, Typography, Button } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const defaultTheme = createTheme({
   palette: {
