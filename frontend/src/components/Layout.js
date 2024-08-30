@@ -26,6 +26,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import FactoryIcon from "@mui/icons-material/Factory";
 import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
+import LoginIcon from "@mui/icons-material/Login";
 import { useAuth } from "../hooks/useAuth";
 import { logoutUser } from "../Endpoints";
 
@@ -106,7 +107,7 @@ const defaultTheme = createTheme({
 
 export default function Layout({ title, content }) {
   const [open, setOpen] = React.useState(true);
-  const { logout } = useAuth();
+  const { logout, userId } = useAuth();
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -171,60 +172,75 @@ export default function Layout({ title, content }) {
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItemButton>
-            <ListItemButton href="/ramassages">
-              <ListItemIcon>
-                <AssignmentIcon />
-              </ListItemIcon>
-              <ListItemText primary="Ramassages" />
-            </ListItemButton>
-            <ListItemButton href="/decheteries">
-              <ListItemIcon>
-                <FactoryIcon />
-              </ListItemIcon>
-              <ListItemText primary="Décheteries" />
-            </ListItemButton>
-            <ListItemButton href="/vehicules">
-              <ListItemIcon>
-                <LocalShippingIcon />
-              </ListItemIcon>
-              <ListItemText primary="Véhicules" />
-            </ListItemButton>
-            <ListItemButton href="/contenants">
-              <ListItemIcon>
-                <BreakfastDiningIcon />
-              </ListItemIcon>
-              <ListItemText primary="Contenants" />
-            </ListItemButton>
-            <ListItemButton href="/itineraire">
-              <ListItemIcon>
-                <AssistantDirectionIcon />
-              </ListItemIcon>
-              <ListItemText primary="Itinéraire" />
-            </ListItemButton>
-            {localStorage.getItem("fonction") === '"Responsable"' ? (
-              <ListItemButton href="/employes">
-                <ListItemIcon>
-                  <PeopleIcon />
-                </ListItemIcon>
-                <ListItemText primary="Employés" />
-              </ListItemButton>
-            ) : null}
+            {userId && (
+              <>
+                <ListItemButton href="/ramassages">
+                  <ListItemIcon>
+                    <AssignmentIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Ramassages" />
+                </ListItemButton>
+                <ListItemButton href="/decheteries">
+                  <ListItemIcon>
+                    <FactoryIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Décheteries" />
+                </ListItemButton>
+                <ListItemButton href="/vehicules">
+                  <ListItemIcon>
+                    <LocalShippingIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Véhicules" />
+                </ListItemButton>
+                <ListItemButton href="/contenants">
+                  <ListItemIcon>
+                    <BreakfastDiningIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Contenants" />
+                </ListItemButton>
+                <ListItemButton href="/itineraire">
+                  <ListItemIcon>
+                    <AssistantDirectionIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Itinéraire" />
+                </ListItemButton>
+                {localStorage.getItem("fonction") === '"Responsable"' ? (
+                  <ListItemButton href="/employes">
+                    <ListItemIcon>
+                      <PeopleIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Employés" />
+                  </ListItemButton>
+                ) : null}
+              </>
+            )}
             <Divider sx={{ my: 1 }} />
             <ListSubheader component="div" inset>
               Compte
             </ListSubheader>
-            <ListItemButton href="/profil">
-              <ListItemIcon>
-                <AccountCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Profil" />
-            </ListItemButton>
-            <ListItemButton onClick={handleLogout}>
-              <ListItemIcon>
-                <LogoutIcon />
-              </ListItemIcon>
-              <ListItemText primary="Se déconnecter" />
-            </ListItemButton>
+            {userId ? (
+              <>
+                <ListItemButton href="/profile">
+                  <ListItemIcon>
+                    <AccountCircleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Profil" />
+                </ListItemButton>
+                <ListItemButton onClick={handleLogout}>
+                  <ListItemIcon>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Déconnexion" />
+                </ListItemButton>
+              </>
+            ) : (
+              <ListItemButton href="/login">
+                <ListItemIcon>
+                  <LoginIcon />
+                </ListItemIcon>
+                <ListItemText primary="Connexion" />
+              </ListItemButton>
+            )}
           </List>
         </Drawer>
         <Box

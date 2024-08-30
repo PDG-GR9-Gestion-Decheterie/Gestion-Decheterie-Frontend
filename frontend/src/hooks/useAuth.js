@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUserId(null);
     setFonction(null);
-    navigate("/login", { replace: true });
+    navigate("/", { replace: true });
   };
 
   const value = useMemo(
