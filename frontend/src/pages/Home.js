@@ -5,6 +5,12 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import HomeIcon from "@mui/icons-material/Home";
 import { getInfos } from "../Endpoints";
 
 export default function Home() {
@@ -48,14 +54,22 @@ export default function Home() {
                 >
                   {i.nom}
                 </Typography>
-                <Typography sx={{ fontStyle: "italic" }}>
-                  {i.adresse_street} {i.adresse_number}, {i.adresse_postcode}{" "}
-                  {i.adresse_city}
-                </Typography>
+                <List>
+                  <ListItem>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <HomeIcon />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary="Adresse"
+                      secondary={`${i.adresse_street} ${i.adresse_number}, ${i.adresse_postcode} ${i.adresse_city}`}
+                    />
+                  </ListItem>
+                </List>
                 <Box
                   sx={{
                     display: "flex",
-                    justifyContent: "center",
                     flexWrap: "wrap",
                   }}
                 >
@@ -74,6 +88,9 @@ export default function Home() {
                         flexDirection: "column",
                         alignItems: "center",
                         justifyContent: "center",
+                        "&:hover": {
+                          bgcolor: "rgba(0, 0, 0, 0.04)",
+                        },
                       }}
                     >
                       <img
