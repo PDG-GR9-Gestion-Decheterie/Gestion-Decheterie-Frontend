@@ -20,7 +20,7 @@ async function logoutUser() {
 }
 
 async function getProfil() {
-  return fetch(`${apiUrl}/api/profile/`, {
+  return fetch(`${apiUrl}/api/profile`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -317,6 +317,15 @@ async function getApiKey() {
   });
 }
 
+async function getInfos() {
+  return fetch(`${apiUrl}/api/infos`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
 export {
   loginUser,
   logoutUser,
@@ -352,4 +361,5 @@ export {
   getDechets,
   getStatus,
   getApiKey,
+  getInfos,
 };
