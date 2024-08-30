@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Grid, Paper, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -33,7 +35,7 @@ export default function Profil() {
       }
     };
     fetchProfil();
-  }, []);
+  }, [navigate]);
 
   return (
     <Layout
@@ -124,7 +126,7 @@ export default function Profil() {
                 </ListItemAvatar>
                 <ListItemText
                   primary="Adresse"
-                  secondary={`${profil.adresse_rue} ${profil.adresse_numero}, ${profil.adresse_npa} ${profil.adresse_nomville}`}
+                  secondary={`${profil.adresse_street} ${profil.adresse_number}, ${profil.adresse_postcode} ${profil.adresse_city}`}
                 />
               </ListItem>
             </List>

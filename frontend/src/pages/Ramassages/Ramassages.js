@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
-import Layout from "../../components/Layout";
-import { Grid, Paper, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+import Layout from "../../components/Layout";
 import { getRamassages } from "../../Endpoints";
 
 export default function Ramassages() {
@@ -27,7 +29,7 @@ export default function Ramassages() {
       }
     };
     fetchRamassages();
-  }, []);
+  }, [navigate]);
 
   return (
     <Layout

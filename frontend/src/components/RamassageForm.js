@@ -1,8 +1,20 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import FactoryIcon from "@mui/icons-material/Factory";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import BreakfastDiningIcon from "@mui/icons-material/BreakfastDining";
@@ -11,20 +23,6 @@ import NumbersIcon from "@mui/icons-material/Numbers";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useNavigate } from "react-router-dom";
-import {
-  Grid,
-  Paper,
-  Typography,
-  Button,
-  Select,
-  MenuItem,
-  TextField,
-  Box,
-  CircularProgress,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
 import {
   getDecheteries,
   getStatus,
@@ -142,7 +140,7 @@ export default function RamassageForm({ idRamassage }) {
       }
     };
     fetchContenants();
-  }, []);
+  }, [idRamassage, navigate]);
 
   const handleCreate = async (e) => {
     e.preventDefault();

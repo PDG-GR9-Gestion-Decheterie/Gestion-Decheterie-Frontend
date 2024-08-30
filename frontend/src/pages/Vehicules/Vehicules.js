@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import Layout from "../../components/Layout";
-import { Grid, Paper } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
+import Layout from "../../components/Layout";
 import { getVehicules } from "../../Endpoints";
 
 export default function Employes() {
@@ -28,7 +29,7 @@ export default function Employes() {
       }
     };
     fetchVehicules();
-  }, []);
+  }, [navigate]);
 
   return (
     <Layout

@@ -1,8 +1,20 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
 import NumbersIcon from "@mui/icons-material/Numbers";
 import PortraitIcon from "@mui/icons-material/Portrait";
 import AutoAwesomeMotionIcon from "@mui/icons-material/AutoAwesomeMotion";
@@ -11,20 +23,6 @@ import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
 import FactoryIcon from "@mui/icons-material/Factory";
 import RecyclingIcon from "@mui/icons-material/Recycling";
-import { useNavigate } from "react-router-dom";
-import {
-  Grid,
-  Paper,
-  Typography,
-  Button,
-  Select,
-  MenuItem,
-  TextField,
-  Box,
-  CircularProgress,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
 import {
   getDecheteries,
   getContenant,
@@ -98,7 +96,7 @@ export default function ContenantForm({ idContenant }) {
       }
     };
     fetchDechets();
-  }, []);
+  }, [idContenant, navigate]);
 
   const handleCreate = async (e) => {
     e.preventDefault();

@@ -1,26 +1,23 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import Layout from "../../components/Layout";
-import { useParams } from "react-router-dom";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import CircularProgress from "@mui/material/CircularProgress";
 import HomeIcon from "@mui/icons-material/Home";
-import {
-  Grid,
-  Paper,
-  Typography,
-  Button,
-  Box,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  CircularProgress,
-} from "@mui/material";
+import Layout from "../../components/Layout";
 import { getDecheterie, deleteDecheterie, getAdresse } from "../../Endpoints";
 
 export default function Decheterie() {
@@ -59,7 +56,7 @@ export default function Decheterie() {
       }
     };
     fetchDecheterie();
-  }, []);
+  }, [id, navigate]);
 
   useEffect(() => {
     const fetchAdress = async () => {
@@ -76,7 +73,7 @@ export default function Decheterie() {
       }
     };
     fetchAdress();
-  }, [decheterie.fk_adresse]);
+  }, [decheterie.fk_adresse, navigate]);
 
   if (!decheterie.fk_adresse) {
     return (

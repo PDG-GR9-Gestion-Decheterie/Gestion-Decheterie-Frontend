@@ -1,30 +1,27 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import Layout from "../../components/Layout";
-import { useParams } from "react-router-dom";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import AutoAwesomeMotionIcon from "@mui/icons-material/AutoAwesomeMotion";
 import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 import FilterNoneIcon from "@mui/icons-material/FilterNone";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
 import FactoryIcon from "@mui/icons-material/Factory";
 import RecyclingIcon from "@mui/icons-material/Recycling";
-import {
-  Grid,
-  Paper,
-  Typography,
-  Button,
-  Box,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@mui/material";
+import Layout from "../../components/Layout";
 import { getContenant, deleteContenant, getDecheteries } from "../../Endpoints";
 
 export default function Contenant() {
@@ -76,7 +73,7 @@ export default function Contenant() {
       }
     };
     fetchDecheteries();
-  }, []);
+  }, [id, navigate]);
 
   return (
     <Layout

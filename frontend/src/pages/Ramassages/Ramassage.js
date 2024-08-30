@@ -146,7 +146,7 @@ export default function Ramassage() {
       }
     };
     fetchContenants();
-  }, []);
+  }, [ramassage.fk_decheterie, id, navigate]);
 
   // Fetch contenants separately because it depends on ramassage
   useEffect(() => {
@@ -164,7 +164,7 @@ export default function Ramassage() {
       }
     };
     fetchContenants();
-  }, [ramassage.fk_decheterie]);
+  }, [ramassage.fk_decheterie, navigate]);
 
   if (!ramassage.fk_decheterie) {
     return (
