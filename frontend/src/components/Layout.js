@@ -29,6 +29,7 @@ import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
 import LoginIcon from "@mui/icons-material/Login";
 import { useAuth } from "../hooks/useAuth";
 import { logoutUser } from "../Endpoints";
+import ShowChartIcon from "@mui/icons-material/ShowChart";
 
 function Copyright(props) {
   return (
@@ -210,6 +211,15 @@ export default function Layout({ title, content }) {
                       <PeopleIcon />
                     </ListItemIcon>
                     <ListItemText primary="Employés" />
+                  </ListItemButton>
+                ) : null}
+                {localStorage.getItem("fonction") === '"Secretaire"' ||
+                localStorage.getItem("fonction") === '"Responsable"' ? (
+                  <ListItemButton href="/graphs">
+                    <ListItemIcon>
+                      <ShowChartIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Graphs" />
                   </ListItemButton>
                 ) : null}
               </>
