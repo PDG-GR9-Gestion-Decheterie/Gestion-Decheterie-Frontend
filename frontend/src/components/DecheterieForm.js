@@ -128,22 +128,6 @@ export default function DecheterieForm({ idDecheterie }) {
               bgcolor: "background.paper",
             }}
           >
-            {!idDecheterie && (
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <NumbersIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <TextField
-                  type="number"
-                  onChange={(e) => setId(e.target.value)}
-                  label="Identifiant"
-                  fullWidth
-                  InputProps={{ inputProps: { min: 0 } }}
-                />
-              </ListItem>
-            )}
             <ListItem>
               <ListItemAvatar>
                 <Avatar>

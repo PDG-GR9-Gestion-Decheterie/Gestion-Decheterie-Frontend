@@ -231,7 +231,7 @@ export default function VehiculeForm({ idVehicule }) {
               </ListItemAvatar>
               <TextField
                 value={dateExpertise}
-                label="Date de naissance"
+                label="Date d'expertise"
                 type="date"
                 onChange={(e) => setDateExpertise(e.target.value)}
                 InputLabelProps={{
