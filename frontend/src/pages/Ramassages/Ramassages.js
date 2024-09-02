@@ -9,6 +9,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
 import Layout from "../../components/Layout";
 import { getRamassages } from "../../Endpoints";
 
@@ -87,7 +88,18 @@ export default function Ramassages() {
                             {r.decheterie_nom ? r.decheterie_nom : "-"}
                           </TableCell>
                           <TableCell>
-                            {r.fk_status ? r.fk_status : "-"}
+                            <Chip
+                              label={r.fk_status ? r.fk_status : "-"}
+                              color={
+                                r.fk_status === "en attente"
+                                  ? "warning"
+                                  : r.fk_status === "accepté"
+                                  ? "success"
+                                  : r.fk_status === "refusé"
+                                  ? "error"
+                                  : "default"
+                              }
+                            />
                           </TableCell>
                           <TableCell>{r.poids ? r.poids : "-"}</TableCell>
                           <TableCell>
