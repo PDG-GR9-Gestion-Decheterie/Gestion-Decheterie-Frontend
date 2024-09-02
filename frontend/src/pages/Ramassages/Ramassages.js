@@ -57,6 +57,7 @@ export default function Ramassages() {
                       <TableCell>Status</TableCell>
                       <TableCell>Poids ramassage</TableCell>
                       <TableCell>Contenant</TableCell>
+                      <TableCell>Déchet</TableCell>
                       <TableCell>Taille contenant</TableCell>
                       <TableCell>Nombre cadres contenant</TableCell>
                       <TableCell>Employé</TableCell>
@@ -127,6 +128,7 @@ export default function Ramassages() {
                               />
                             )}
                           </TableCell>
+                          <TableCell>{r.contenant_fk_dechet}</TableCell>
                           <TableCell>
                             {r.contenant_taille ? r.contenant_taille : "-"}
                           </TableCell>

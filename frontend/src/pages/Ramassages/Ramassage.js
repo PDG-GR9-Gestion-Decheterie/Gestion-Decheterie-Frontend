@@ -14,6 +14,7 @@ import FilterNoneIcon from "@mui/icons-material/FilterNone";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import RecyclingIcon from "@mui/icons-material/Recycling";
 import Layout from "../../components/Layout";
 import { useParams } from "react-router-dom";
 import {
@@ -248,6 +249,22 @@ export default function Ramassage() {
                       (c) => c.id === ramassage.fk_contenant
                     );
                     return c ? c.nom : "-";
+                  })()}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <RecyclingIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Déchet"
+                  secondary={(() => {
+                    const c = contenants.find(
+                      (c) => c.id === ramassage.fk_contenant
+                    );
+                    return c ? c.fk_dechet : "-";
                   })()}
                 />
               </ListItem>

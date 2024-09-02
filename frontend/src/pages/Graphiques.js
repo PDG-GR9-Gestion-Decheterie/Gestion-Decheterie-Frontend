@@ -106,7 +106,9 @@ export default function Itineraire() {
       (selectedMonth === "Tous" ||
         ramassageMonth === allMonths.indexOf(selectedMonth) + 1) &&
       (selectedDecheterie === "Tous" ||
-        ramassage.decheterie_nom === selectedDecheterie)
+        ramassage.decheterie_nom === selectedDecheterie) &&
+      (selectedTypeDechet === "Tous" ||
+        ramassage.contenant_fk_dechet === selectedTypeDechet) // <-- Ajout de ce filtre
     ) {
       let dateLabel;
       if (selectedMonth === "Tous") {
