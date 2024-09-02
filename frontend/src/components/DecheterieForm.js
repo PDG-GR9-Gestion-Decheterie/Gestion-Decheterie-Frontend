@@ -16,11 +16,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import HomeIcon from "@mui/icons-material/Home";
-import NumbersIcon from "@mui/icons-material/Numbers";
 import PortraitIcon from "@mui/icons-material/Portrait";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   getDecheterie,
+  getAdresse,
   getAdresses,
   updateDecheterie,
   createDecheterie,
@@ -54,11 +54,31 @@ export default function DecheterieForm({ idDecheterie }) {
     }
   }, [idDecheterie, navigate]);
 
+  useEffect(() => {
+    if (fk_address) {
+      const fetchAdresse = async () => {
+        const response = await getAdresse(fk_address);
+        if (response.ok) {
+          const data = await response.json();
+          setAddresses([data.adresseData]);
+        } else if (response.status === 401) {
+          navigate("/login");
+        } else {
+          navigate("/error");
+        }
+      };
+      fetchAdresse();
+    }
+  }, [fk_address, navigate]);
+
   const searchAddresses = async (address) => {
     const response = await getAdresses(address);
     if (response.ok) {
       const data = await response.json();
       setAddresses(data.adressesData);
+      setFk_address(data.adressesData[0].id);
+    } else if (response.status === 404) {
+      return;
     } else if (response.status === 401) {
       navigate("/login");
     } else {
@@ -125,22 +145,6 @@ export default function DecheterieForm({ idDecheterie }) {
               bgcolor: "background.paper",
             }}
           >
-            {!idDecheterie && (
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <NumbersIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <TextField
-                  type="number"
-                  onChange={(e) => setId(e.target.value)}
-                  label="Identifiant"
-                  fullWidth
-                  InputProps={{ inputProps: { min: 0 } }}
-                />
-              </ListItem>
-            )}
             <ListItem>
               <ListItemAvatar>
                 <Avatar>
@@ -162,9 +166,7 @@ export default function DecheterieForm({ idDecheterie }) {
               </ListItemAvatar>
               <TextField
                 label="Rechercher une adresse"
-                onChange={(e) =>
-                  e.target.value && searchAddresses(e.target.value)
-                }
+                onChange={(e) => searchAddresses(e.target.value)}
                 fullWidth
               />
             </ListItem>

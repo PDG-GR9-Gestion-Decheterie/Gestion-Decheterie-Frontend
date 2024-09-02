@@ -9,6 +9,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
 import Layout from "../../components/Layout";
 import { getRamassages } from "../../Endpoints";
 
@@ -56,6 +57,7 @@ export default function Ramassages() {
                       <TableCell>Status</TableCell>
                       <TableCell>Poids ramassage</TableCell>
                       <TableCell>Contenant</TableCell>
+                      <TableCell>Déchet</TableCell>
                       <TableCell>Taille contenant</TableCell>
                       <TableCell>Nombre cadres contenant</TableCell>
                       <TableCell>Employé</TableCell>
@@ -87,12 +89,46 @@ export default function Ramassages() {
                             {r.decheterie_nom ? r.decheterie_nom : "-"}
                           </TableCell>
                           <TableCell>
-                            {r.fk_status ? r.fk_status : "-"}
+                            <Chip
+                              label={r.fk_status ? r.fk_status : "-"}
+                              color={
+                                r.fk_status === "en attente"
+                                  ? "warning"
+                                  : r.fk_status === "accepté"
+                                  ? "success"
+                                  : r.fk_status === "refusé"
+                                  ? "error"
+                                  : "default"
+                              }
+                            />
                           </TableCell>
                           <TableCell>{r.poids ? r.poids : "-"}</TableCell>
                           <TableCell>
-                            {r.contenant_nom ? r.contenant_nom : "-"}
+                            {r.contenant_couleur == null ? (
+                              r.contenant_nom ? (
+                                r.contenant_nom
+                              ) : (
+                                "-"
+                              )
+                            ) : (
+                              <Chip
+                                label={r.contenant_nom ? r.contenant_nom : "-"}
+                                sx={{
+                                  backgroundColor:
+                                    r.contenant_couleur === "rouge"
+                                      ? "#ffc0c0"
+                                      : r.contenant_couleur === "jaune"
+                                      ? "#f6ff87"
+                                      : r.contenant_couleur === "vert"
+                                      ? "#d1ffc0"
+                                      : r.contenant_couleur === "bleu"
+                                      ? "#c0c0ff"
+                                      : "#FFFFFF",
+                                }}
+                              />
+                            )}
                           </TableCell>
+                          <TableCell>{r.contenant_fk_dechet}</TableCell>
                           <TableCell>
                             {r.contenant_taille ? r.contenant_taille : "-"}
                           </TableCell>

@@ -29,6 +29,7 @@ import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
 import LoginIcon from "@mui/icons-material/Login";
 import { useAuth } from "../hooks/useAuth";
 import { logoutUser } from "../Endpoints";
+import ShowChartIcon from "@mui/icons-material/ShowChart";
 
 function Copyright(props) {
   return (
@@ -149,6 +150,11 @@ export default function Layout({ title, content }) {
             >
               {title}
             </Typography>
+            <Box
+              sx={{ flexShrink: 0, display: "flex", justifyContent: "center" }}
+            >
+              <img src="DIRTS_logo.png" alt="Logo" style={{ height: 50 }} />
+            </Box>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -204,6 +210,15 @@ export default function Layout({ title, content }) {
                   </ListItemIcon>
                   <ListItemText primary="Itinéraire" />
                 </ListItemButton>
+                {localStorage.getItem("fonction") === '"Secretaire"' ||
+                localStorage.getItem("fonction") === '"Responsable"' ? (
+                  <ListItemButton href="/graphiques">
+                    <ListItemIcon>
+                      <ShowChartIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Graphiques" />
+                  </ListItemButton>
+                ) : null}
                 {localStorage.getItem("fonction") === '"Responsable"' ? (
                   <ListItemButton href="/employes">
                     <ListItemIcon>

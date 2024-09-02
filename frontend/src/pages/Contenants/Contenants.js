@@ -9,6 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import Layout from "../../components/Layout";
 import { getContenants } from "../../Endpoints";
 
@@ -80,7 +81,25 @@ export default function Contenants() {
                           {c.taille == null ? "-" : c.taille}
                         </TableCell>
                         <TableCell>
-                          {c.couleur == null ? "-" : c.couleur}
+                          {c.couleur == null ? (
+                            "-"
+                          ) : (
+                            <Chip
+                              label={c.couleur == null ? "-" : c.couleur}
+                              sx={{
+                                backgroundColor:
+                                  c.couleur === "rouge"
+                                    ? "#ffc0c0"
+                                    : c.couleur === "jaune"
+                                    ? "#f6ff87"
+                                    : c.couleur === "vert"
+                                    ? "#d1ffc0"
+                                    : c.couleur === "bleu"
+                                    ? "#c0c0ff"
+                                    : "#FFFFFF",
+                              }}
+                            />
+                          )}
                         </TableCell>
                         <TableCell>{c.decheterie_nom}</TableCell>
                         <TableCell>{c.fk_dechet}</TableCell>

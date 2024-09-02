@@ -15,7 +15,6 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import NumbersIcon from "@mui/icons-material/Numbers";
 import PortraitIcon from "@mui/icons-material/Portrait";
 import AutoAwesomeMotionIcon from "@mui/icons-material/AutoAwesomeMotion";
 import FilterNoneIcon from "@mui/icons-material/FilterNone";
@@ -176,22 +175,6 @@ export default function ContenantForm({ idContenant }) {
               bgcolor: "background.paper",
             }}
           >
-            {!idContenant && (
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <NumbersIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <TextField
-                  type="number"
-                  onChange={(e) => setId(e.target.value)}
-                  label="Identifiant"
-                  fullWidth
-                  InputProps={{ inputProps: { min: 0 } }}
-                />
-              </ListItem>
-            )}
             <ListItem>
               <ListItemAvatar>
                 <Avatar>

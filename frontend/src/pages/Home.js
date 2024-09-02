@@ -73,51 +73,52 @@ export default function Home() {
                     flexWrap: "wrap",
                   }}
                 >
-                  {i.contenants.map((c) => (
-                    <Box
-                      key={c}
-                      sx={{
-                        height: 120,
-                        width: 120,
-                        p: 1,
-                        m: 1,
-                        border: 1,
-                        borderRadius: 1,
-                        borderColor: "primary.main",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        "&:hover": {
-                          bgcolor: "rgba(0, 0, 0, 0.04)",
-                        },
-                      }}
-                    >
-                      <img
-                        src={`/dechets/${c}.png`}
-                        alt={c}
-                        width="50"
-                        height="50"
-                      />
-                      <Typography
-                        variant="body2"
-                        color="primary"
-                        sx={{ textAlign: "center" }}
+                  {i.contenants && i.contenants.length > 0 ? (
+                    i.contenants.map((c) => (
+                      <Box
+                        key={c}
+                        sx={{
+                          height: 120,
+                          width: 120,
+                          p: 1,
+                          m: 1,
+                          border: 1,
+                          borderRadius: 1,
+                          borderColor: "primary.main",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          "&:hover": {
+                            bgcolor: "rgba(0, 0, 0, 0.04)",
+                          },
+                        }}
                       >
-                        {c}
-                      </Typography>
-                    </Box>
-                  ))}
+                        <img
+                          src={`/dechets/${c}.png`}
+                          alt={c}
+                          width="50"
+                          height="50"
+                        />
+                        <Typography
+                          variant="body2"
+                          color="primary"
+                          sx={{ textAlign: "center" }}
+                        >
+                          {c}
+                        </Typography>
+                      </Box>
+                    ))
+                  ) : (
+                    <Typography variant="body" gutterBottom>
+                      Cette déchèterie ne récupère aucun déchet.
+                    </Typography>
+                  )}
                 </Box>
               </Paper>
             ))
           ) : (
-            <Typography
-              component="h2"
-              variant="h6"
-              color="primary"
-              gutterBottom
-            >
+            <Typography component="h2" variant="h6" gutterBottom>
               Aucune information
             </Typography>
           )}
