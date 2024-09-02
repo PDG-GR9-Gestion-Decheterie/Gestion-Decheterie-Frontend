@@ -50,8 +50,8 @@ export default function Itineraire() {
   ];
   const months = ["Tous", ...allMonths];
   const decheteries = [
-    ...new Set(ramassages.map((r) => r.decheterie_nom)),
     "Tous",
+    ...new Set(ramassages.map((r) => r.decheterie_nom)),
   ];
   const dechetTypes = [
     "Tous",
