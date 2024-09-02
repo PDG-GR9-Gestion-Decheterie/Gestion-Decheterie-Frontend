@@ -13,6 +13,7 @@ export default function Itineraire() {
   );
   const [selectedMonth, setSelectedMonth] = React.useState("Tous");
   const [selectedDecheterie, setSelectedDecheterie] = React.useState("Tous");
+  const [selectedTypeDechet, setSelectedTypeDechet] = React.useState("Tous");
 
   useEffect(() => {
     const fetchRamassages = async () => {
@@ -52,6 +53,10 @@ export default function Itineraire() {
     ...new Set(ramassages.map((r) => r.decheterie_nom)),
     "Tous",
   ];
+  const dechetTypes = [
+    "Tous",
+    ...new Set(ramassages.map((r) => r.contenant_fk_dechet)),
+  ];
 
   const handleYearChange = (event) => {
     setSelectedYear(event.target.value);
@@ -63,6 +68,10 @@ export default function Itineraire() {
 
   const handleDecheterieChange = (event) => {
     setSelectedDecheterie(event.target.value);
+  };
+
+  const handleTypeDechetChange = (event) => {
+    setSelectedTypeDechet(event.target.value);
   };
 
   const getAllLabels = () => {
@@ -77,7 +86,7 @@ export default function Itineraire() {
 
   const labels = getAllLabels();
 
-  // Initialiser ramassagesByPeriod avec tous les labels et comptages à 0
+  // Group data by period and dechèterie
   const ramassagesByPeriod = ramassages.reduce((acc, ramassage) => {
     const ramassageDate = new Date(ramassage.date);
     const ramassageYear = ramassageDate.getFullYear();
@@ -114,7 +123,7 @@ export default function Itineraire() {
     return acc;
   }, {});
 
-  // Assurer que tous les labels sont présents avec un compte de 0 si pas de données
+  // Ensure all labels are present with a count of 0 if no data
   Object.keys(ramassagesByPeriod).forEach((decheterie) => {
     labels.forEach((label) => {
       if (!ramassagesByPeriod[decheterie][label]) {
@@ -133,6 +142,73 @@ export default function Itineraire() {
     };
   });
 
+  // Group data by period and type dechet
+  const ramassagesByType = ramassages.reduce((acc, ramassage) => {
+    const ramassageDate = new Date(ramassage.date);
+    const ramassageYear = ramassageDate.getFullYear();
+    const ramassageMonth = ramassageDate.getMonth() + 1;
+    const ramassageDay = ramassageDate.getDate();
+
+    if (
+      ramassageYear === selectedYear &&
+      (selectedMonth === "Tous" ||
+        ramassageMonth === allMonths.indexOf(selectedMonth) + 1) &&
+      (selectedDecheterie === "Tous" ||
+        ramassage.decheterie_nom === selectedDecheterie) &&
+      (selectedTypeDechet === "Tous" ||
+        ramassage.contenant_fk_dechet === selectedTypeDechet)
+    ) {
+      let dateLabel;
+      if (selectedMonth === "Tous") {
+        dateLabel = allMonths[ramassageMonth - 1];
+      } else {
+        dateLabel = ramassageDay.toString();
+      }
+
+      const typeDechet = ramassage.contenant_fk_dechet;
+
+      if (!acc[typeDechet]) {
+        acc[typeDechet] = {};
+      }
+
+      if (!acc[typeDechet][dateLabel]) {
+        acc[typeDechet][dateLabel] = 0;
+      }
+
+      acc[typeDechet][dateLabel] += 1;
+    }
+
+    return acc;
+  }, {});
+
+  // Ensure all labels are present with a count of 0 if no data
+  Object.keys(ramassagesByType).forEach((typeDechet) => {
+    labels.forEach((label) => {
+      if (!ramassagesByType[typeDechet][label]) {
+        ramassagesByType[typeDechet][label] = 0;
+      }
+    });
+  });
+
+  const seriesDataByType = Object.keys(ramassagesByType).map((typeDechet) => {
+    const periodData = labels.map(
+      (label) => ramassagesByType[typeDechet][label] || 0
+    );
+    return {
+      label: typeDechet,
+      data: periodData,
+    };
+  });
+
+  // Change the month if clicked on the graph
+  const handleClickGraph = (event, params) => {
+    if (selectedMonth === "Tous") {
+      setSelectedMonth(allMonths[params.dataIndex]);
+    } else {
+      setSelectedMonth("Tous");
+    }
+  };
+
   return (
     <Layout
       title={"Graphs"}
@@ -148,8 +224,8 @@ export default function Itineraire() {
           <Box
             sx={{
               display: "flex",
-              flexDirection: "row", // Les sélecteurs seront alignés en ligne
-              justifyContent: "center", // Centrer les sélecteurs horizontalement
+              flexDirection: "row",
+              justifyContent: "center",
               gap: 3,
             }}
           >
@@ -186,7 +262,7 @@ export default function Itineraire() {
             </FormControl>
 
             <FormControl sx={{ minWidth: 120 }}>
-              <InputLabel id="decheterie-select-label">Decheterie</InputLabel>
+              <InputLabel id="decheterie-select-label">Dechèterie</InputLabel>
               <Select
                 labelId="decheterie-select-label"
                 value={selectedDecheterie}
@@ -196,6 +272,24 @@ export default function Itineraire() {
                 {decheteries.map((decheterie) => (
                   <MenuItem key={decheterie} value={decheterie}>
                     {decheterie}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl sx={{ minWidth: 120 }}>
+              <InputLabel id="type-dechet-select-label">
+                Type de Déchet
+              </InputLabel>
+              <Select
+                labelId="type-dechet-select-label"
+                value={selectedTypeDechet}
+                onChange={handleTypeDechetChange}
+                label="Type de Déchet"
+              >
+                {dechetTypes.map((typeDechet) => (
+                  <MenuItem key={typeDechet} value={typeDechet}>
+                    {typeDechet}
                   </MenuItem>
                 ))}
               </Select>
@@ -213,6 +307,22 @@ export default function Itineraire() {
             series={seriesData}
             width={1000}
             height={500}
+            onItemClick={handleClickGraph}
+          />
+
+          {/* Second Bar Chart */}
+          <BarChart
+            xAxis={[
+              {
+                data: labels,
+                label: selectedMonth === "Tous" ? "Mois" : "Jours",
+                scaleType: "band",
+              },
+            ]}
+            series={seriesDataByType}
+            width={1000}
+            height={500}
+            onItemClick={handleClickGraph}
           />
         </Box>
       }
