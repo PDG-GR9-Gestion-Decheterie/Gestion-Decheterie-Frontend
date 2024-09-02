@@ -150,6 +150,11 @@ export default function Layout({ title, content }) {
             >
               {title}
             </Typography>
+            <Box
+              sx={{ flexShrink: 0, display: "flex", justifyContent: "center" }}
+            >
+              <img src="DIRTS_logo.png" alt="Logo" style={{ height: 50 }} />
+            </Box>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
