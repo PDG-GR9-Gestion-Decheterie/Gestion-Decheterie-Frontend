@@ -183,6 +183,8 @@ function Directions({ addresses }) {
         margin: "0.25rem",
         backgroundColor: "white",
         borderRadius: "0.25rem",
+        maxHeight: "80%",
+        overflowY: "auto",
       }}
     >
       {selected.legs.map((leg, legIndex) => (
