@@ -217,6 +217,7 @@ function Directions({ addresses }) {
           location: `${address.street} ${address.number}, ${address.postcode} ${address.city}`,
           stopover: true,
         })),
+        optimizeWaypoints: true,
       })
       .then((response) => {
         directionsRenderer.setDirections(response);
@@ -246,6 +247,8 @@ function Directions({ addresses }) {
         margin: "0.25rem",
         backgroundColor: "white",
         borderRadius: "0.25rem",
+        maxHeight: "80%",
+        overflowY: "auto",
       }}
     >
       {selected.legs.map((leg, legIndex) => (

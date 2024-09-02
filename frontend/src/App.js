@@ -27,7 +27,7 @@ import Ramassage from "./pages/Ramassages/Ramassage";
 import RamassageCreate from "./pages/Ramassages/RamassageCreate";
 import RamassageUpdate from "./pages/Ramassages/RamassageUpdate";
 import Itineraire from "./pages/Itineraire";
-import Graphs from "./pages/Graphs";
+import Graphiques from "./pages/Graphiques";
 
 export default function App() {
   return (
@@ -211,10 +211,10 @@ export default function App() {
           }
         />
         <Route
-          path="/graphs"
+          path="/graphiques"
           element={
             <ProtectedRoute>
-              <Graphs />
+              <Graphiques />
             </ProtectedRoute>
           }
         />
