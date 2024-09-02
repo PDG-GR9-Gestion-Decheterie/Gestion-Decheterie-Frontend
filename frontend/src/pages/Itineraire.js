@@ -6,13 +6,25 @@ import {
   useMapsLibrary,
   useMap,
 } from "@vis.gl/react-google-maps";
+import OpenInFullIcon from "@mui/icons-material/OpenInFull";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { getApiKey, getRamassages, getAdresse } from "../Endpoints";
 import Layout from "../components/Layout";
-import { Grid, Paper, Box, CircularProgress } from "@mui/material";
+import {
+  Grid,
+  Paper,
+  Box,
+  CircularProgress,
+  Typography,
+  Avatar,
+  Stack,
+} from "@mui/material";
 
 export default function Itineraire() {
   const navigate = useNavigate();
   const [apiKey, setApiKey] = React.useState("");
+  const [ramassages, setRamassages] = React.useState([]);
+  const [addresses, setAddresses] = React.useState([]);
 
   useEffect(() => {
     const fetchApiKey = async () => {
@@ -27,9 +39,44 @@ export default function Itineraire() {
       }
     };
     fetchApiKey();
+
+    const fetchRamassages = async () => {
+      const response = await getRamassages();
+      if (response.ok) {
+        const data = await response.json();
+        setRamassages(data.ramassagesData);
+      } else if (response.status === 401) {
+        navigate("/login");
+      } else {
+        navigate("/error");
+      }
+    };
+    fetchRamassages();
   }, [navigate]);
 
-  if (!apiKey) {
+  useEffect(() => {
+    if (!ramassages.length) return;
+
+    // Create an array of promises to get addresses
+    const addressPromises = ramassages.map((ramassage) =>
+      getAdresse(ramassage.decheterie_fk_adresse).then((response) => {
+        if (response.ok) {
+          return response.json().then((data) => data.adresseData);
+        } else {
+          navigate("/error");
+        }
+      })
+    );
+
+    // Wait for all address promises to resolve
+    Promise.all(addressPromises).then((addresses) => {
+      // Filter out any null results in case of errors
+      const validAddresses = addresses.filter((address) => address !== null);
+      setAddresses(validAddresses);
+    });
+  }, [ramassages, navigate]);
+
+  if (!apiKey || !addresses.length) {
     return (
       <Layout
         title="Chargement..."
@@ -47,14 +94,18 @@ export default function Itineraire() {
       title={"Itinéraire"}
       content={
         <Grid item xs={12}>
-          <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+          <Paper
+            sx={{
+              p: 2,
+            }}
+          >
             <div style={{ height: "80vh", width: "100%" }}>
               <APIProvider apiKey={apiKey}>
                 <Map
                   defaultZoom={13}
                   defaultCenter={{ lat: 46.784372, lng: 6.642003 }}
                 >
-                  <Directions />
+                  <Directions addresses={addresses} />
                 </Map>
               </APIProvider>
             </div>
@@ -65,7 +116,7 @@ export default function Itineraire() {
   );
 }
 
-function Directions() {
+function Directions({ addresses }) {
   const map = useMap();
   const routesLibrary = useMapsLibrary("routes");
   const [directionsService, setDirectionsService] = React.useState();
@@ -74,28 +125,13 @@ function Directions() {
   const [routeIndex, setRouteIndex] = React.useState(0);
   const selected = routes[routeIndex];
   const leg = selected?.legs[0];
-  const [ramassages, setRamassages] = React.useState([]);
-  const navigate = useNavigate();
 
   // Initialize directions service and renderer
   useEffect(() => {
     if (!routesLibrary || !map) return;
     setDirectionsService(new routesLibrary.DirectionsService());
     setDirectionsRenderer(new routesLibrary.DirectionsRenderer({ map }));
-
-    const fetchRamassages = async () => {
-      const response = await getRamassages();
-      if (response.ok) {
-        const data = await response.json();
-        setRamassages(data.ramassagesData);
-      } else if (response.status === 401) {
-        navigate("/login");
-      } else {
-        navigate("/error");
-      }
-    };
-    fetchRamassages();
-  }, [routesLibrary, map, navigate]);
+  }, [routesLibrary, map]);
 
   // Use directions service
   useEffect(() => {
@@ -103,16 +139,14 @@ function Directions() {
 
     directionsService
       .route({
-        origin: "Lausanne",
-        destination: "Payerne",
+        origin: `${addresses[0].street} ${addresses[0].number}, ${addresses[0].postcode} ${addresses[0].city}`,
+        destination: `${addresses[0].street} ${addresses[0].number}, ${addresses[0].postcode} ${addresses[0].city}`,
         travelMode: "DRIVING",
         provideRouteAlternatives: true,
-        waypoints: [
-          {
-            location: `moudon`,
-            stopover: true,
-          },
-        ],
+        waypoints: addresses.slice(1).map((address) => ({
+          location: `${address.street} ${address.number}, ${address.postcode} ${address.city}`,
+          stopover: true,
+        })),
       })
       .then((response) => {
         directionsRenderer.setDirections(response);
@@ -120,7 +154,7 @@ function Directions() {
       });
 
     return () => directionsRenderer.setMap(null);
-  }, [directionsService, directionsRenderer]);
+  }, [directionsService, directionsRenderer, addresses]);
 
   // Update direction route
   useEffect(() => {
@@ -131,30 +165,45 @@ function Directions() {
   if (!leg) return null;
 
   return (
-    <div className="directions">
-      <h2>{selected.summary}</h2>
-
-      {/* Display details for each leg of the route */}
+    <div
+      style={{
+        position: "absolute",
+        width: "275px",
+        top: "0px",
+        right: "0px",
+        padding: "1.25rem",
+        paddingBottom: "0px",
+        margin: "0.25rem",
+        backgroundColor: "white",
+        borderRadius: "0.25rem",
+      }}
+    >
       {selected.legs.map((leg, legIndex) => (
         <div key={legIndex}>
-          <p>
-            {leg.start_address.split(",")[0]} to {leg.end_address.split(",")[0]}
-          </p>
-          <p>Distance: {leg.distance?.text}</p>
-          <p>Duration: {leg.duration?.text}</p>
+          <strong>
+            De {leg.start_address.split(",")[0]} à{" "}
+            {leg.end_address.split(",")[0]}
+          </strong>
+          <Stack
+            spacing={2}
+            direction="row"
+            sx={{ alignItems: "center", paddingBottom: 2 }}
+          >
+            <Avatar sx={{ height: 30, width: 30 }}>
+              <OpenInFullIcon />
+            </Avatar>
+            <Typography variant="body2" color="text.secondary">
+              {leg.distance?.text}
+            </Typography>
+            <Avatar sx={{ height: 30, width: 30 }}>
+              <AccessTimeIcon />
+            </Avatar>
+            <Typography variant="body2" color="text.secondary">
+              {leg.duration?.text}
+            </Typography>
+          </Stack>
         </div>
       ))}
-
-      <h2>Other Routes</h2>
-      <ul>
-        {routes.map((route, index) => (
-          <li key={route.summary}>
-            <button onClick={() => setRouteIndex(index)}>
-              {route.summary}
-            </button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
