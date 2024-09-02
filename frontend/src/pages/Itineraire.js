@@ -153,6 +153,7 @@ function Directions({ addresses }) {
           location: `${address.street} ${address.number}, ${address.postcode} ${address.city}`,
           stopover: true,
         })),
+        optimizeWaypoints: true,
       })
       .then((response) => {
         directionsRenderer.setDirections(response);
