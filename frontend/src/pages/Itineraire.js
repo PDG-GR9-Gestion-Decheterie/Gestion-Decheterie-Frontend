@@ -72,7 +72,13 @@ export default function Itineraire() {
     Promise.all(addressPromises).then((addresses) => {
       // Filter out any null results in case of errors
       const validAddresses = addresses.filter((address) => address !== null);
-      setAddresses(validAddresses);
+      // Remove duplicates
+      const uniqueAddresses = Array.from(
+        new Set(validAddresses.map((a) => a.id))
+      ).map((id) => {
+        return validAddresses.find((a) => a.id === id);
+      });
+      setAddresses(uniqueAddresses);
     });
   }, [ramassages, navigate]);
 
