@@ -169,7 +169,7 @@ export default function Itineraire() {
                 />
               </ListItem>
             </List>
-            <div style={{ height: "80vh", width: "100%" }}>
+            <div style={{ height: "68vh", width: "100%" }}>
               <APIProvider apiKey={apiKey}>
                 <Map
                   defaultZoom={13}
@@ -201,7 +201,7 @@ function Directions({ addresses }) {
     if (!routesLibrary || !map) return;
     setDirectionsService(new routesLibrary.DirectionsService());
     setDirectionsRenderer(new routesLibrary.DirectionsRenderer({ map }));
-  }, [routesLibrary, map]);
+  }, [routesLibrary, map, addresses]);
 
   // Use directions service
   useEffect(() => {
@@ -231,7 +231,7 @@ function Directions({ addresses }) {
   useEffect(() => {
     if (!directionsRenderer) return;
     directionsRenderer.setRouteIndex(routeIndex);
-  }, [routeIndex, directionsRenderer]);
+  }, [routeIndex, directionsRenderer, addresses]);
 
   if (!leg) return null;
 
@@ -243,7 +243,6 @@ function Directions({ addresses }) {
         top: "0px",
         right: "0px",
         padding: "1.25rem",
-        paddingBottom: "0px",
         margin: "0.25rem",
         backgroundColor: "white",
         borderRadius: "0.25rem",
@@ -277,6 +276,25 @@ function Directions({ addresses }) {
           </Stack>
         </div>
       ))}
+      <strong>
+        Total:{" "}
+        {(
+          selected.legs.reduce((total, leg) => {
+            const legDistance = leg.distance?.value || 0;
+            return total + legDistance;
+          }, 0) / 1000
+        ).toFixed(1)}{" "}
+        {/* Convert to kilometers if the distance is in meters */}
+        km pour une durée de{" "}
+        {(
+          selected.legs.reduce((total, leg) => {
+            const legDuration = leg.duration?.value || 0;
+            return total + legDuration;
+          }, 0) / 60
+        ).toFixed(0)}{" "}
+        {/* Convert to minutes if the duration is in seconds */}
+        min
+      </strong>
     </div>
   );
 }
