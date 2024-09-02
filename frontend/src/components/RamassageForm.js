@@ -19,7 +19,6 @@ import FactoryIcon from "@mui/icons-material/Factory";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import BreakfastDiningIcon from "@mui/icons-material/BreakfastDining";
 import ScaleIcon from "@mui/icons-material/Scale";
-import NumbersIcon from "@mui/icons-material/Numbers";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";

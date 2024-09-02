@@ -3,7 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { getRamassages } from "../Endpoints";
 import Layout from "../components/Layout";
 import { BarChart } from "@mui/x-charts/BarChart";
-import { Box, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import {
+  Box,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Grid,
+  Paper,
+} from "@mui/material";
 
 export default function Itineraire() {
   const navigate = useNavigate();
@@ -213,118 +221,124 @@ export default function Itineraire() {
     <Layout
       title={"Graphs"}
       content={
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 3,
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              gap: 3,
-            }}
-          >
-            <FormControl sx={{ minWidth: 120 }}>
-              <InputLabel id="year-select-label">Année</InputLabel>
-              <Select
-                labelId="year-select-label"
-                value={selectedYear}
-                onChange={handleYearChange}
-                label="Année"
+        <Grid item xs={12}>
+          <Paper sx={{ p: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 3,
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  gap: 3,
+                }}
               >
-                {years.map((year) => (
-                  <MenuItem key={year} value={year}>
-                    {year}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                <FormControl sx={{ minWidth: 120 }}>
+                  <InputLabel id="year-select-label">Année</InputLabel>
+                  <Select
+                    labelId="year-select-label"
+                    value={selectedYear}
+                    onChange={handleYearChange}
+                    label="Année"
+                  >
+                    {years.map((year) => (
+                      <MenuItem key={year} value={year}>
+                        {year}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
 
-            <FormControl sx={{ minWidth: 120 }}>
-              <InputLabel id="month-select-label">Mois</InputLabel>
-              <Select
-                labelId="month-select-label"
-                value={selectedMonth}
-                onChange={handleMonthChange}
-                label="Mois"
-              >
-                {months.map((month, index) => (
-                  <MenuItem key={index} value={month}>
-                    {month}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                <FormControl sx={{ minWidth: 120 }}>
+                  <InputLabel id="month-select-label">Mois</InputLabel>
+                  <Select
+                    labelId="month-select-label"
+                    value={selectedMonth}
+                    onChange={handleMonthChange}
+                    label="Mois"
+                  >
+                    {months.map((month, index) => (
+                      <MenuItem key={index} value={month}>
+                        {month}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
 
-            <FormControl sx={{ minWidth: 120 }}>
-              <InputLabel id="decheterie-select-label">Dechèterie</InputLabel>
-              <Select
-                labelId="decheterie-select-label"
-                value={selectedDecheterie}
-                onChange={handleDecheterieChange}
-                label="Déchèterie"
-              >
-                {decheteries.map((decheterie) => (
-                  <MenuItem key={decheterie} value={decheterie}>
-                    {decheterie}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                <FormControl sx={{ minWidth: 120 }}>
+                  <InputLabel id="decheterie-select-label">
+                    Dechèterie
+                  </InputLabel>
+                  <Select
+                    labelId="decheterie-select-label"
+                    value={selectedDecheterie}
+                    onChange={handleDecheterieChange}
+                    label="Déchèterie"
+                  >
+                    {decheteries.map((decheterie) => (
+                      <MenuItem key={decheterie} value={decheterie}>
+                        {decheterie}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
 
-            <FormControl sx={{ minWidth: 120 }}>
-              <InputLabel id="type-dechet-select-label">
-                Type de Déchet
-              </InputLabel>
-              <Select
-                labelId="type-dechet-select-label"
-                value={selectedTypeDechet}
-                onChange={handleTypeDechetChange}
-                label="Type de Déchet"
-              >
-                {dechetTypes.map((typeDechet) => (
-                  <MenuItem key={typeDechet} value={typeDechet}>
-                    {typeDechet}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
+                <FormControl sx={{ minWidth: 120 }}>
+                  <InputLabel id="type-dechet-select-label">
+                    Type de Déchet
+                  </InputLabel>
+                  <Select
+                    labelId="type-dechet-select-label"
+                    value={selectedTypeDechet}
+                    onChange={handleTypeDechetChange}
+                    label="Type de Déchet"
+                  >
+                    {dechetTypes.map((typeDechet) => (
+                      <MenuItem key={typeDechet} value={typeDechet}>
+                        {typeDechet}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
 
-          <BarChart
-            xAxis={[
-              {
-                data: labels,
-                label: selectedMonth === "Tous" ? "Mois" : "Jours",
-                scaleType: "band",
-              },
-            ]}
-            series={seriesData}
-            width={1000}
-            height={500}
-            onItemClick={handleClickGraph}
-          />
+              <BarChart
+                xAxis={[
+                  {
+                    data: labels,
+                    label: selectedMonth === "Tous" ? "Mois" : "Jours",
+                    scaleType: "band",
+                  },
+                ]}
+                series={seriesData}
+                width={1000}
+                height={500}
+                onItemClick={handleClickGraph}
+              />
 
-          {/* Second Bar Chart */}
-          <BarChart
-            xAxis={[
-              {
-                data: labels,
-                label: selectedMonth === "Tous" ? "Mois" : "Jours",
-                scaleType: "band",
-              },
-            ]}
-            series={seriesDataByType}
-            width={1000}
-            height={500}
-            onItemClick={handleClickGraph}
-          />
-        </Box>
+              {/* Second Bar Chart */}
+              <BarChart
+                xAxis={[
+                  {
+                    data: labels,
+                    label: selectedMonth === "Tous" ? "Mois" : "Jours",
+                    scaleType: "band",
+                  },
+                ]}
+                series={seriesDataByType}
+                width={1000}
+                height={500}
+                onItemClick={handleClickGraph}
+              />
+            </Box>
+          </Paper>
+        </Grid>
       }
     />
   );
