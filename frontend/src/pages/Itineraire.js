@@ -8,6 +8,7 @@ import {
 } from "@vis.gl/react-google-maps";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { getApiKey, getRamassages, getAdresse } from "../Endpoints";
 import Layout from "../components/Layout";
 import {
@@ -18,6 +19,10 @@ import {
   Typography,
   Avatar,
   Stack,
+  TextField,
+  ListItem,
+  ListItemAvatar,
+  List,
 } from "@mui/material";
 
 export default function Itineraire() {
@@ -25,6 +30,8 @@ export default function Itineraire() {
   const [apiKey, setApiKey] = React.useState("");
   const [ramassages, setRamassages] = React.useState([]);
   const [addresses, setAddresses] = React.useState([]);
+  const [dateSetted, setDateSetted] = React.useState(false);
+  const [noRamassagesInDate, setNoRamassagesInDate] = React.useState(false);
 
   useEffect(() => {
     const fetchApiKey = async () => {
@@ -54,19 +61,27 @@ export default function Itineraire() {
     fetchRamassages();
   }, [navigate]);
 
-  useEffect(() => {
-    if (!ramassages.length) return;
-
+  function handleDateChange(e) {
+    setDateSetted(true);
     // Create an array of promises to get addresses
-    const addressPromises = ramassages.map((ramassage) =>
-      getAdresse(ramassage.decheterie_fk_adresse).then((response) => {
-        if (response.ok) {
-          return response.json().then((data) => data.adresseData);
-        } else {
-          navigate("/error");
-        }
-      })
-    );
+    const addressPromises = ramassages
+      .filter((ramassage) => ramassage.date === e.target.value)
+      .map((ramassage) =>
+        getAdresse(ramassage.decheterie_fk_adresse).then((response) => {
+          if (response.ok) {
+            return response.json().then((data) => data.adresseData);
+          } else {
+            navigate("/error");
+          }
+        })
+      );
+
+    if (addressPromises.length === 0) {
+      setNoRamassagesInDate(true);
+      return;
+    }
+
+    setNoRamassagesInDate(false);
 
     // Wait for all address promises to resolve
     Promise.all(addressPromises).then((addresses) => {
@@ -80,9 +95,9 @@ export default function Itineraire() {
       });
       setAddresses(uniqueAddresses);
     });
-  }, [ramassages, navigate]);
+  }
 
-  if (!apiKey || !addresses.length) {
+  if (!apiKey) {
     return (
       <Layout
         title="Chargement..."
@@ -95,16 +110,65 @@ export default function Itineraire() {
     );
   }
 
+  if (!dateSetted || noRamassagesInDate) {
+    return (
+      <Layout
+        title={"Itinéraire"}
+        content={
+          <Grid item xs={12}>
+            <Paper sx={{ p: 2 }}>
+              <List>
+                <ListItem>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <CalendarMonthIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <TextField
+                    label="Date des ramassages"
+                    type="date"
+                    onChange={handleDateChange}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </ListItem>
+                {noRamassagesInDate && (
+                  <Typography variant="body2" color="error">
+                    Aucun ramassage prévu pour cette date
+                  </Typography>
+                )}
+              </List>
+            </Paper>
+          </Grid>
+        }
+      />
+    );
+  }
+
   return (
     <Layout
       title={"Itinéraire"}
       content={
         <Grid item xs={12}>
-          <Paper
-            sx={{
-              p: 2,
-            }}
-          >
+          <Paper sx={{ p: 2 }}>
+            <List>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <CalendarMonthIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <TextField
+                  label="Date des ramassages"
+                  type="date"
+                  onChange={handleDateChange}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </ListItem>
+            </List>
             <div style={{ height: "80vh", width: "100%" }}>
               <APIProvider apiKey={apiKey}>
                 <Map
