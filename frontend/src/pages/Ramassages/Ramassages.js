@@ -103,7 +103,29 @@ export default function Ramassages() {
                           </TableCell>
                           <TableCell>{r.poids ? r.poids : "-"}</TableCell>
                           <TableCell>
-                            {r.contenant_nom ? r.contenant_nom : "-"}
+                            {r.contenant_couleur == null ? (
+                              r.contenant_nom ? (
+                                r.contenant_nom
+                              ) : (
+                                "-"
+                              )
+                            ) : (
+                              <Chip
+                                label={r.contenant_nom ? r.contenant_nom : "-"}
+                                sx={{
+                                  backgroundColor:
+                                    r.contenant_couleur === "rouge"
+                                      ? "#ffc0c0"
+                                      : r.contenant_couleur === "jaune"
+                                      ? "#f6ff87"
+                                      : r.contenant_couleur === "vert"
+                                      ? "#d1ffc0"
+                                      : r.contenant_couleur === "bleu"
+                                      ? "#c0c0ff"
+                                      : "#FFFFFF",
+                                }}
+                              />
+                            )}
                           </TableCell>
                           <TableCell>
                             {r.contenant_taille ? r.contenant_taille : "-"}
