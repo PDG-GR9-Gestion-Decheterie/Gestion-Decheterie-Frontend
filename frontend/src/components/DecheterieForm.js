@@ -21,6 +21,7 @@ import PortraitIcon from "@mui/icons-material/Portrait";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   getDecheterie,
+  getAdresse,
   getAdresses,
   updateDecheterie,
   createDecheterie,
@@ -53,6 +54,23 @@ export default function DecheterieForm({ idDecheterie }) {
       fetchDecheterie();
     }
   }, [idDecheterie, navigate]);
+
+  useEffect(() => {
+    if (fk_address) {
+      const fetchAdresse = async () => {
+        const response = await getAdresse(fk_address);
+        if (response.ok) {
+          const data = await response.json();
+          setAddresses([data.adresseData]);
+        } else if (response.status === 401) {
+          navigate("/login");
+        } else {
+          navigate("/error");
+        }
+      };
+      fetchAdresse();
+    }
+  }, [fk_address, navigate]);
 
   const searchAddresses = async (address) => {
     const response = await getAdresses(address);
