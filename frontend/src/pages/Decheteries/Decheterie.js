@@ -90,7 +90,7 @@ export default function Decheterie() {
 
   return (
     <Layout
-      title={`Décheterie n°${id}`}
+      title={`Déchèterie n°${id}`}
       content={
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
@@ -135,7 +135,7 @@ export default function Decheterie() {
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                    Êtes-vous sûr de vouloir supprimer la décheterie n°{id}?
+                    Êtes-vous sûr de vouloir supprimer la déchèterie n°{id}?
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>

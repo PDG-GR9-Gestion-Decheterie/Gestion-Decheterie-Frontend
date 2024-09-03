@@ -45,6 +45,7 @@ export default function ContenantForm({ idContenant }) {
   const [contenantFetched, setContenantFetched] = React.useState(false);
   const names = ["benne", "big bag", "grande caisse", "palette"];
   const sizes = ["petit", "moyen", "grand"];
+  const [showError, setShowError] = React.useState(false);
 
   useEffect(() => {
     if (idContenant) {
@@ -99,6 +100,12 @@ export default function ContenantForm({ idContenant }) {
 
   const handleCreate = async (e) => {
     e.preventDefault();
+
+    if (!name || !fk_decheterie || !fk_dechet) {
+      setShowError(true);
+      return;
+    }
+
     const response = await createContenant({
       id,
       nom: name,
@@ -120,6 +127,12 @@ export default function ContenantForm({ idContenant }) {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+
+    if (!name || !fk_decheterie || !fk_dechet) {
+      setShowError(true);
+      return;
+    }
+
     const response = await updateContenant({
       id: idContenant,
       nom: name,
@@ -169,6 +182,11 @@ export default function ContenantForm({ idContenant }) {
           noValidate
           sx={{ mt: 1 }}
         >
+          {showError && (
+            <Typography color="error">
+              Veuillez remplir tous les champs
+            </Typography>
+          )}
           <List
             sx={{
               width: "100%",
@@ -275,12 +293,12 @@ export default function ContenantForm({ idContenant }) {
                 </Avatar>
               </ListItemAvatar>
               <FormControl fullWidth>
-                <InputLabel id="decheterie-label">Décheterie</InputLabel>
+                <InputLabel id="decheterie-label">Déchèterie</InputLabel>
                 <Select
                   onChange={(e) => setFk_decheterie(e.target.value)}
                   value={fk_decheterie}
                   labelId="decheterie-label"
-                  label="Décheterie"
+                  label="Déchèterie"
                 >
                   {decheteries.map((d) => (
                     <MenuItem key={d.id} value={d.id}>

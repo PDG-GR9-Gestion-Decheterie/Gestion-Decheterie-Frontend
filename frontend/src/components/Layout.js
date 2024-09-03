@@ -190,7 +190,7 @@ export default function Layout({ title, content }) {
                   <ListItemIcon>
                     <FactoryIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Décheteries" />
+                  <ListItemText primary="Déchèteries" />
                 </ListItemButton>
                 <ListItemButton href="/vehicules">
                   <ListItemIcon>
@@ -203,6 +203,12 @@ export default function Layout({ title, content }) {
                     <BreakfastDiningIcon />
                   </ListItemIcon>
                   <ListItemText primary="Contenants" />
+                </ListItemButton>
+                <ListItemButton href="/employes">
+                  <ListItemIcon>
+                    <PeopleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Employés" />
                 </ListItemButton>
                 <ListItemButton href="/itineraire">
                   <ListItemIcon>
@@ -217,14 +223,6 @@ export default function Layout({ title, content }) {
                       <AnalyticsIcon />
                     </ListItemIcon>
                     <ListItemText primary="Graphiques" />
-                  </ListItemButton>
-                ) : null}
-                {localStorage.getItem("fonction") === '"Responsable"' ? (
-                  <ListItemButton href="/employes">
-                    <ListItemIcon>
-                      <PeopleIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Employés" />
                   </ListItemButton>
                 ) : null}
               </>

@@ -114,7 +114,7 @@ export default function Profil() {
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primary="Décheterie"
+                  primary="Déchèterie"
                   secondary={profil.decheterie_nom}
                 />
               </ListItem>

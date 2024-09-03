@@ -41,6 +41,7 @@ export default function VehiculeForm({ idVehicule }) {
   const [decheteries, setDecheteries] = React.useState([]);
   const [vehiculeFetched, setVehiculeFetched] = React.useState(false);
   const vehiculeTypes = ["camion", "camionnette"];
+  const [showError, setShowError] = React.useState(false);
 
   useEffect(() => {
     if (idVehicule) {
@@ -81,6 +82,20 @@ export default function VehiculeForm({ idVehicule }) {
 
   const handleCreate = async (e) => {
     e.preventDefault();
+
+    if (
+      !id ||
+      !type ||
+      remorque == null ||
+      !anneeFabrication ||
+      !dateExpertise ||
+      !consommationCarburant ||
+      !fk_decheterie
+    ) {
+      setShowError(true);
+      return;
+    }
+
     const response = await createVehicule({
       immatriculation: id,
       type,
@@ -101,6 +116,12 @@ export default function VehiculeForm({ idVehicule }) {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+
+    if (!anneeFabrication || !dateExpertise || !consommationCarburant) {
+      setShowError(true);
+      return;
+    }
+
     const response = await updateVehicule({
       immatriculation: idVehicule,
       type,
@@ -149,6 +170,11 @@ export default function VehiculeForm({ idVehicule }) {
           noValidate
           sx={{ mt: 1 }}
         >
+          {showError && (
+            <Typography color="error">
+              Veuillez remplir tous les champs
+            </Typography>
+          )}
           <List
             sx={{
               width: "100%",
@@ -217,10 +243,12 @@ export default function VehiculeForm({ idVehicule }) {
                 </Avatar>
               </ListItemAvatar>
               <TextField
+                type="number"
                 onChange={(e) => setAnneeFabrication(e.target.value)}
                 value={anneeFabrication}
                 label="Année de fabrication"
                 fullWidth
+                InputProps={{ inputProps: { min: 1900, max: 2024 } }}
               />
             </ListItem>
             <ListItem>
@@ -261,12 +289,12 @@ export default function VehiculeForm({ idVehicule }) {
                 </Avatar>
               </ListItemAvatar>
               <FormControl fullWidth>
-                <InputLabel id="decheterie-label">Décheterie</InputLabel>
+                <InputLabel id="decheterie-label">Déchèterie</InputLabel>
                 <Select
                   onChange={(e) => setFk_decheterie(e.target.value)}
                   value={fk_decheterie}
                   labelId="decheterie-label"
-                  label="Décheterie"
+                  label="Déchèterie"
                 >
                   {decheteries.map((d) => (
                     <MenuItem key={d.id} value={d.id}>

@@ -8,7 +8,7 @@ export default function DecheterieUpdate() {
 
   return (
     <Layout
-      title={`Décheterie ${id}`}
+      title={`Déchèterie ${id}`}
       content={<DecheterieForm idDecheterie={id} />}
     />
   );

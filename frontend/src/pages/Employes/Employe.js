@@ -194,7 +194,7 @@ export default function Employe() {
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primary="Décheterie"
+                  primary="Déchèterie"
                   secondary={(() => {
                     const decheterie = decheteries.find(
                       (d) => d.id === employe.fk_decheterie

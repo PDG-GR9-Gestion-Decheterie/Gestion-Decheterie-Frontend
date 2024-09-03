@@ -53,7 +53,7 @@ export default function Ramassages() {
                     <TableRow>
                       <TableCell>ID</TableCell>
                       <TableCell>Date</TableCell>
-                      <TableCell>Décheterie</TableCell>
+                      <TableCell>Déchèterie</TableCell>
                       <TableCell>Status</TableCell>
                       <TableCell>Poids ramassage</TableCell>
                       <TableCell>Contenant</TableCell>

@@ -56,7 +56,7 @@ export default function Employes() {
                       <TableCell>Année de fabrication</TableCell>
                       <TableCell>Date d'expertise</TableCell>
                       <TableCell>Consommation de carburant</TableCell>
-                      <TableCell>Décheterie</TableCell>
+                      <TableCell>Déchèterie</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
