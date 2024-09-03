@@ -9,6 +9,7 @@ import {
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import {
   getApiKey,
   getRamassages,
@@ -242,74 +243,14 @@ export default function Itineraire() {
         content={
           <Grid item xs={12}>
             <Paper sx={{ p: 2 }}>
-              <List>
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <CalendarMonthIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <TextField
-                    label="Date des ramassages"
-                    type="date"
-                    onChange={handleDateChange}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    value={date}
-                  />
-                  <FormControl fullWidth>
-                    <InputLabel id="employe-label">Chauffeur</InputLabel>
-                    <Select
-                      onChange={handleEmployeChange}
-                      labelId="employe-label"
-                      label="Chauffeur"
-                      value={employe}
-                    >
-                      {employes
-                        .filter((e) => e.typepermis !== null)
-                        .map((e) => (
-                          <MenuItem
-                            key={`employe-${e.idlogin}`}
-                            value={e.idlogin}
-                          >
-                            {e.prenom} {e.nom}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </FormControl>
-                </ListItem>
-                {noRamassagesInDate && (
-                  <Typography variant="body2" color="error">
-                    Aucun ramassage prévu pour cette date
-                  </Typography>
-                )}
-                {noRamassagesForEmploye && (
-                  <Typography variant="body2" color="error">
-                    Aucun ramassage prévu pour ce chauffeur
-                  </Typography>
-                )}
-              </List>
-            </Paper>
-          </Grid>
-        }
-      />
-    );
-  }
-
-  return (
-    <Layout
-      title={"Itinéraire"}
-      content={
-        <Grid item xs={12}>
-          <Paper sx={{ p: 2 }}>
-            <List>
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <CalendarMonthIcon />
-                  </Avatar>
-                </ListItemAvatar>
+              <Stack
+                spacing={2}
+                direction="row"
+                sx={{ alignItems: "center", paddingBottom: 2 }}
+              >
+                <Avatar>
+                  <CalendarMonthIcon />
+                </Avatar>
                 <TextField
                   label="Date des ramassages"
                   type="date"
@@ -319,7 +260,10 @@ export default function Itineraire() {
                   }}
                   value={date}
                 />
-                <FormControl fullWidth>
+                <Avatar>
+                  <LocalShippingIcon />
+                </Avatar>
+                <FormControl sx={{ minWidth: 150 }}>
                   <InputLabel id="employe-label">Chauffeur</InputLabel>
                   <Select
                     onChange={handleEmployeChange}
@@ -339,8 +283,78 @@ export default function Itineraire() {
                       ))}
                   </Select>
                 </FormControl>
-              </ListItem>
-            </List>
+              </Stack>
+              {noRamassagesInDate && (
+                <Typography variant="body2" color="error">
+                  Aucun ramassage prévu pour cette date
+                </Typography>
+              )}
+              {noRamassagesForEmploye && (
+                <Typography variant="body2" color="error">
+                  Aucun ramassage prévu pour ce chauffeur
+                </Typography>
+              )}
+            </Paper>
+          </Grid>
+        }
+      />
+    );
+  }
+
+  return (
+    <Layout
+      title={"Itinéraire"}
+      content={
+        <Grid item xs={12}>
+          <Paper sx={{ p: 2 }}>
+            <Stack
+              spacing={2}
+              direction="row"
+              sx={{ alignItems: "center", paddingBottom: 2 }}
+            >
+              <Avatar>
+                <CalendarMonthIcon />
+              </Avatar>
+              <TextField
+                label="Date des ramassages"
+                type="date"
+                onChange={handleDateChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value={date}
+              />
+              <Avatar>
+                <LocalShippingIcon />
+              </Avatar>
+              <FormControl sx={{ minWidth: 150 }}>
+                <InputLabel id="employe-label">Chauffeur</InputLabel>
+                <Select
+                  onChange={handleEmployeChange}
+                  labelId="employe-label"
+                  label="Chauffeur"
+                  value={employe}
+                >
+                  {employes
+                    .filter((e) => e.typepermis !== null)
+                    .map((e) => (
+                      <MenuItem key={`employe-${e.idlogin}`} value={e.idlogin}>
+                        {e.prenom} {e.nom}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </Stack>
+            {noRamassagesInDate && (
+              <Typography variant="body2" color="error">
+                Aucun ramassage prévu pour cette date
+              </Typography>
+            )}
+            {noRamassagesForEmploye && (
+              <Typography variant="body2" color="error">
+                Aucun ramassage prévu pour ce chauffeur
+              </Typography>
+            )}
             <div style={{ height: "68vh", width: "100%" }}>
               <APIProvider apiKey={apiKey}>
                 <Map
@@ -400,7 +414,7 @@ function Directions({ addresses, principalAddress }) {
       });
 
     return () => directionsRenderer.setMap(null);
-  }, [directionsService, directionsRenderer, addresses]);
+  }, [directionsService, directionsRenderer, addresses, principalAddress]);
 
   // Update direction route
   useEffect(() => {
