@@ -33,6 +33,7 @@ import {
   updateEmploye,
   createEmploye,
   getAdresses,
+  getAdresse,
 } from "../Endpoints";
 
 export default function EmployeForm({ idEmploye }) {
@@ -45,7 +46,7 @@ export default function EmployeForm({ idEmploye }) {
   const [startDate, setStartDate] = React.useState();
   const [phoneNumber, setPhoneNumber] = React.useState();
   const [typePermis, setTypePermis] = React.useState();
-  const [fk_address, setFk_address] = React.useState();
+  const [fk_address, setFk_address] = React.useState("");
   const [fk_decheterie, setFk_decheterie] = React.useState();
   const [fk_fonction, setFk_fonction] = React.useState();
   const [decheteries, setDecheteries] = React.useState([]);
@@ -71,6 +72,13 @@ export default function EmployeForm({ idEmploye }) {
           setFk_address(data.employeData.fk_adresse);
           setFk_decheterie(data.employeData.fk_decheterie);
           setFk_fonction(data.employeData.fk_fonction);
+
+          // Fetch address
+          const addressResponse = await getAdresse(data.employeData.fk_adresse);
+          if (addressResponse.ok) {
+            const addressJson = await addressResponse.json();
+            setAddresses([addressJson.adresseData]);
+          }
         } else if (response.status === 401) {
           navigate("/login");
         } else {

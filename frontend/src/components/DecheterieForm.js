@@ -30,7 +30,7 @@ export default function DecheterieForm({ idDecheterie }) {
   const navigate = useNavigate();
   const [id, setId] = React.useState();
   const [name, setName] = React.useState();
-  const [fk_address, setFk_address] = React.useState();
+  const [fk_address, setFk_address] = React.useState("");
   const [addresses, setAddresses] = React.useState([]);
   const [decheterieFetched, setDecheterieFetched] = React.useState(false);
 
