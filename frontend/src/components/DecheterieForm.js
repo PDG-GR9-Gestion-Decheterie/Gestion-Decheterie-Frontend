@@ -80,6 +80,9 @@ export default function DecheterieForm({ idDecheterie }) {
 
   const handleCreate = async (e) => {
     e.preventDefault();
+
+    
+
     const response = await createDecheterie({
       id,
       nom: name,

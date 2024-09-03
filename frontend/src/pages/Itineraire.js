@@ -9,7 +9,7 @@ import {
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {
   getApiKey,
   getRamassages,
@@ -116,7 +116,8 @@ export default function Itineraire() {
     }
 
     const addressesByDate = ramassages.filter(
-      (ramassage) => ramassage.date === e.target.value
+      (ramassage) =>
+        ramassage.date === e.target.value && ramassage.fk_status === "accepté"
     );
 
     if (addressesByDate.length === 0) {
@@ -170,7 +171,8 @@ export default function Itineraire() {
     }
 
     const addressesByDate = ramassages.filter(
-      (ramassage) => ramassage.date === date
+      (ramassage) =>
+        ramassage.date === date && ramassage.fk_status === "accepté"
     );
 
     if (addressesByDate.length === 0) {
@@ -258,7 +260,7 @@ export default function Itineraire() {
                   value={date}
                 />
                 <Avatar>
-                  <LocalShippingIcon />
+                  <AccountCircleIcon />
                 </Avatar>
                 <FormControl sx={{ minWidth: 150 }}>
                   <InputLabel id="employe-label">Chauffeur</InputLabel>
@@ -322,7 +324,7 @@ export default function Itineraire() {
                 value={date}
               />
               <Avatar>
-                <LocalShippingIcon />
+                <AccountCircleIcon />
               </Avatar>
               <FormControl sx={{ minWidth: 150 }}>
                 <InputLabel id="employe-label">Chauffeur</InputLabel>
