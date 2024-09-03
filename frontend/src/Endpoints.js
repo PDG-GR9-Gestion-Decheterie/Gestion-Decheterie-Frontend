@@ -1,4 +1,4 @@
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_URL || "";
 
 async function loginUser(credentials) {
   return fetch(`${apiUrl}/api/login`, {
