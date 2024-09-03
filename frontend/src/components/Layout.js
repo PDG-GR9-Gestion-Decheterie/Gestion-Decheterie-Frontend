@@ -27,9 +27,9 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import FactoryIcon from "@mui/icons-material/Factory";
 import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
 import LoginIcon from "@mui/icons-material/Login";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
 import { useAuth } from "../hooks/useAuth";
 import { logoutUser } from "../Endpoints";
-import ShowChartIcon from "@mui/icons-material/ShowChart";
 
 function Copyright(props) {
   return (
@@ -214,7 +214,7 @@ export default function Layout({ title, content }) {
                 localStorage.getItem("fonction") === '"Responsable"' ? (
                   <ListItemButton href="/graphiques">
                     <ListItemIcon>
-                      <ShowChartIcon />
+                      <AnalyticsIcon />
                     </ListItemIcon>
                     <ListItemText primary="Graphiques" />
                   </ListItemButton>

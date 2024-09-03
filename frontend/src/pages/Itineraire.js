@@ -9,7 +9,13 @@ import {
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import { getApiKey, getRamassages, getAdresse } from "../Endpoints";
+import {
+  getApiKey,
+  getRamassages,
+  getAdresse,
+  getEmployes,
+  getDecheteries,
+} from "../Endpoints";
 import Layout from "../components/Layout";
 import {
   Grid,
@@ -23,6 +29,10 @@ import {
   ListItem,
   ListItemAvatar,
   List,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
 export default function Itineraire() {
@@ -30,8 +40,15 @@ export default function Itineraire() {
   const [apiKey, setApiKey] = React.useState("");
   const [ramassages, setRamassages] = React.useState([]);
   const [addresses, setAddresses] = React.useState([]);
+  const [employes, setEmployes] = React.useState([]);
   const [dateSetted, setDateSetted] = React.useState(false);
+  const [employeSetted, setEmployeSetted] = React.useState(false);
   const [noRamassagesInDate, setNoRamassagesInDate] = React.useState(false);
+  const [noRamassagesForEmploye, setNoRamassagesForEmploye] =
+    React.useState(false);
+  const [date, setDate] = React.useState("");
+  const [employe, setEmploye] = React.useState("");
+  const [principalAddress, setPrincipalAddress] = React.useState("");
 
   useEffect(() => {
     const fetchApiKey = async () => {
@@ -59,29 +76,132 @@ export default function Itineraire() {
       }
     };
     fetchRamassages();
+
+    const fetchEmployes = async () => {
+      const response = await getEmployes();
+      if (response.ok) {
+        const data = await response.json();
+        setEmployes(data.employesData);
+      } else if (response.status === 401) {
+        navigate("/login");
+      } else {
+        navigate("/error");
+      }
+    };
+    fetchEmployes();
+
+    const fetchDecheteries = async () => {
+      const response = await getDecheteries();
+      if (response.ok) {
+        const data = await response.json();
+        const decheterie = data.decheteriesData.find(
+          (d) => d.principal === true
+        );
+        setPrincipalAddress(
+          `${decheterie.adresse_street} ${decheterie.adresse_number}, ${decheterie.adresse_postcode} ${decheterie.adresse_city}`
+        );
+      } else if (response.status === 401) {
+        navigate("/login");
+      } else {
+        navigate("/error");
+      }
+    };
+    fetchDecheteries();
   }, [navigate]);
 
   function handleDateChange(e) {
     setDateSetted(true);
-    // Create an array of promises to get addresses
-    const addressPromises = ramassages
-      .filter((ramassage) => ramassage.date === e.target.value)
-      .map((ramassage) =>
-        getAdresse(ramassage.decheterie_fk_adresse).then((response) => {
-          if (response.ok) {
-            return response.json().then((data) => data.adresseData);
-          } else {
-            navigate("/error");
-          }
-        })
-      );
+    setDate(e.target.value);
 
-    if (addressPromises.length === 0) {
+    if (employe === "") {
+      return;
+    }
+
+    const addressesByDate = ramassages.filter(
+      (ramassage) => ramassage.date === e.target.value
+    );
+
+    if (addressesByDate.length === 0) {
       setNoRamassagesInDate(true);
       return;
     }
 
     setNoRamassagesInDate(false);
+
+    const addressesByEmploye = addressesByDate.filter(
+      (ramassages) => ramassages.fk_employee === employe
+    );
+
+    if (addressesByEmploye.length === 0) {
+      setNoRamassagesForEmploye(true);
+      return;
+    }
+
+    setNoRamassagesForEmploye(false);
+
+    const addressPromises = addressesByEmploye.map((ramassage) =>
+      getAdresse(ramassage.decheterie_fk_adresse).then((response) => {
+        if (response.ok) {
+          return response.json().then((data) => data.adresseData);
+        } else {
+          navigate("/error");
+        }
+      })
+    );
+
+    // Wait for all address promises to resolve
+    Promise.all(addressPromises).then((addresses) => {
+      // Filter out any null results in case of errors
+      const validAddresses = addresses.filter((address) => address !== null);
+      // Remove duplicates
+      const uniqueAddresses = Array.from(
+        new Set(validAddresses.map((a) => a.id))
+      ).map((id) => {
+        return validAddresses.find((a) => a.id === id);
+      });
+      setAddresses(uniqueAddresses);
+    });
+  }
+
+  function handleEmployeChange(e) {
+    setEmployeSetted(true);
+    setEmploye(e.target.value);
+
+    if (date === "") {
+      return;
+    }
+
+    const addressesByDate = ramassages.filter(
+      (ramassage) => ramassage.date === date
+    );
+
+    if (addressesByDate.length === 0) {
+      setNoRamassagesInDate(true);
+      return;
+    }
+
+    setNoRamassagesInDate(false);
+
+    const addressesByEmploye = addressesByDate.filter(
+      (ramassages) => ramassages.fk_employee === e.target.value
+    );
+
+    if (addressesByEmploye.length === 0) {
+      setNoRamassagesForEmploye(true);
+      return;
+    }
+
+    setNoRamassagesForEmploye(false);
+
+    const addressPromises = addressesByEmploye.map((ramassage) =>
+      getAdresse(ramassage.decheterie_fk_adresse).then((response) => {
+        if (response.ok) {
+          return response.json().then((data) => data.adresseData);
+        } else {
+          navigate("/error");
+        }
+      })
+    );
 
     // Wait for all address promises to resolve
     Promise.all(addressPromises).then((addresses) => {
@@ -110,7 +230,12 @@ export default function Itineraire() {
     );
   }
 
-  if (!dateSetted || noRamassagesInDate) {
+  if (
+    !dateSetted ||
+    !employeSetted ||
+    noRamassagesInDate ||
+    noRamassagesForEmploye
+  ) {
     return (
       <Layout
         title={"Itinéraire"}
@@ -131,11 +256,37 @@ export default function Itineraire() {
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    value={date}
                   />
+                  <FormControl fullWidth>
+                    <InputLabel id="employe-label">Chauffeur</InputLabel>
+                    <Select
+                      onChange={handleEmployeChange}
+                      labelId="employe-label"
+                      label="Chauffeur"
+                      value={employe}
+                    >
+                      {employes
+                        .filter((e) => e.typepermis !== null)
+                        .map((e) => (
+                          <MenuItem
+                            key={`employe-${e.idlogin}`}
+                            value={e.idlogin}
+                          >
+                            {e.prenom} {e.nom}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
                 </ListItem>
                 {noRamassagesInDate && (
                   <Typography variant="body2" color="error">
                     Aucun ramassage prévu pour cette date
+                  </Typography>
+                )}
+                {noRamassagesForEmploye && (
+                  <Typography variant="body2" color="error">
+                    Aucun ramassage prévu pour ce chauffeur
                   </Typography>
                 )}
               </List>
@@ -166,7 +317,28 @@ export default function Itineraire() {
                   InputLabelProps={{
                     shrink: true,
                   }}
+                  value={date}
                 />
+                <FormControl fullWidth>
+                  <InputLabel id="employe-label">Chauffeur</InputLabel>
+                  <Select
+                    onChange={handleEmployeChange}
+                    labelId="employe-label"
+                    label="Chauffeur"
+                    value={employe}
+                  >
+                    {employes
+                      .filter((e) => e.typepermis !== null)
+                      .map((e) => (
+                        <MenuItem
+                          key={`employe-${e.idlogin}`}
+                          value={e.idlogin}
+                        >
+                          {e.prenom} {e.nom}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
               </ListItem>
             </List>
             <div style={{ height: "68vh", width: "100%" }}>
@@ -175,7 +347,10 @@ export default function Itineraire() {
                   defaultZoom={13}
                   defaultCenter={{ lat: 46.784372, lng: 6.642003 }}
                 >
-                  <Directions addresses={addresses} />
+                  <Directions
+                    addresses={addresses}
+                    principalAddress={principalAddress}
+                  />
                 </Map>
               </APIProvider>
             </div>
@@ -186,7 +361,7 @@ export default function Itineraire() {
   );
 }
 
-function Directions({ addresses }) {
+function Directions({ addresses, principalAddress }) {
   const map = useMap();
   const routesLibrary = useMapsLibrary("routes");
   const [directionsService, setDirectionsService] = React.useState();
@@ -209,11 +384,11 @@ function Directions({ addresses }) {
 
     directionsService
       .route({
-        origin: `${addresses[0].street} ${addresses[0].number}, ${addresses[0].postcode} ${addresses[0].city}`,
-        destination: `${addresses[0].street} ${addresses[0].number}, ${addresses[0].postcode} ${addresses[0].city}`,
+        origin: principalAddress,
+        destination: principalAddress,
         travelMode: "DRIVING",
         provideRouteAlternatives: true,
-        waypoints: addresses.slice(1).map((address) => ({
+        waypoints: addresses.map((address) => ({
           location: `${address.street} ${address.number}, ${address.postcode} ${address.city}`,
           stopover: true,
         })),
@@ -253,8 +428,8 @@ function Directions({ addresses }) {
       {selected.legs.map((leg, legIndex) => (
         <div key={legIndex}>
           <strong>
-            De {leg.start_address.split(",")[0]} à{" "}
-            {leg.end_address.split(",")[0]}
+            De {leg.start_address.split(",").slice(0, 2).join(",")} à{" "}
+            {leg.end_address.split(",").slice(0, 2).join(",")}
           </strong>
           <Stack
             spacing={2}
