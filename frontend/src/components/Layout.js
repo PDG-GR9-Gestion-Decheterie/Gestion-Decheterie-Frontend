@@ -153,7 +153,7 @@ export default function Layout({ title, content }) {
             <Box
               sx={{ flexShrink: 0, display: "flex", justifyContent: "center" }}
             >
-              <img src="DIRTS_logo.png" alt="Logo" style={{ height: 50 }} />
+              <img src="/DIRTS_logo.png" alt="Logo" style={{ height: 50 }} />
             </Box>
           </Toolbar>
         </AppBar>
