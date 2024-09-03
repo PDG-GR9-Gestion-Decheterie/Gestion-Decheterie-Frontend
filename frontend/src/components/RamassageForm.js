@@ -50,6 +50,7 @@ export default function RamassageForm({ idRamassage }) {
   const [employes, setEmployes] = React.useState([]);
   const [ramassageFetched, setRamassageFetched] = React.useState(false);
   const [selectedPermis, setSelectedPermis] = React.useState();
+  const [showError, setShowError] = React.useState(false);
 
   useEffect(() => {
     if (idRamassage) {
@@ -143,6 +144,19 @@ export default function RamassageForm({ idRamassage }) {
 
   const handleCreate = async (e) => {
     e.preventDefault();
+
+    if (
+      !date ||
+      !fk_status ||
+      !poids ||
+      !fk_contenant ||
+      !fk_employe ||
+      !fk_vehicule
+    ) {
+      setShowError(true);
+      return;
+    }
+
     const response = await createRamassage({
       id,
       date,
@@ -164,6 +178,19 @@ export default function RamassageForm({ idRamassage }) {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+
+    if (
+      !date ||
+      !fk_status ||
+      !poids ||
+      !fk_contenant ||
+      !fk_employe ||
+      !fk_vehicule
+    ) {
+      setShowError(true);
+      return;
+    }
+
     const response = await updateRamassage({
       id: idRamassage,
       date,
@@ -218,6 +245,11 @@ export default function RamassageForm({ idRamassage }) {
           noValidate
           sx={{ mt: 1 }}
         >
+          {showError && (
+            <Typography color="error">
+              Veuillez remplir tous les champs
+            </Typography>
+          )}
           <List
             sx={{
               width: "100%",

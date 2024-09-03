@@ -33,6 +33,7 @@ export default function DecheterieForm({ idDecheterie }) {
   const [fk_address, setFk_address] = React.useState("");
   const [addresses, setAddresses] = React.useState([]);
   const [decheterieFetched, setDecheterieFetched] = React.useState(false);
+  const [showError, setShowError] = React.useState(false);
 
   useEffect(() => {
     if (idDecheterie) {
@@ -81,7 +82,10 @@ export default function DecheterieForm({ idDecheterie }) {
   const handleCreate = async (e) => {
     e.preventDefault();
 
-    
+    if (!name || !fk_address) {
+      setShowError(true);
+      return;
+    }
 
     const response = await createDecheterie({
       id,
@@ -99,6 +103,12 @@ export default function DecheterieForm({ idDecheterie }) {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+
+    if (!name || !fk_address) {
+      setShowError(true);
+      return;
+    }
+
     const response = await updateDecheterie({
       id,
       nom: name,
@@ -134,6 +144,11 @@ export default function DecheterieForm({ idDecheterie }) {
           noValidate
           sx={{ mt: 1 }}
         >
+          {showError && (
+            <Typography color="error">
+              Veuillez remplir tous les champs
+            </Typography>
+          )}
           <List
             sx={{
               width: "100%",

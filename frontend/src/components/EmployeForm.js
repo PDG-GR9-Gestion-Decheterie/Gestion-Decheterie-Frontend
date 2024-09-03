@@ -54,6 +54,7 @@ export default function EmployeForm({ idEmploye }) {
   const [addresses, setAddresses] = React.useState([]);
   const [employeFetched, setEmployeFetched] = React.useState(false);
   const typesPermis = ["B", "C"];
+  const [showError, setShowError] = React.useState(false);
 
   useEffect(() => {
     if (idEmploye) {
@@ -132,6 +133,23 @@ export default function EmployeForm({ idEmploye }) {
 
   const handleCreate = async (e) => {
     e.preventDefault();
+
+    if (
+      !id ||
+      !password ||
+      !lastName ||
+      !firstName ||
+      !birthDate ||
+      !startDate ||
+      !fk_fonction ||
+      !phoneNumber ||
+      !fk_address ||
+      !fk_decheterie
+    ) {
+      setShowError(true);
+      return;
+    }
+
     const response = await createEmploye({
       idlogin: id,
       mdplogin: password,
@@ -156,6 +174,23 @@ export default function EmployeForm({ idEmploye }) {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+
+    if (
+      !id ||
+      !password ||
+      !lastName ||
+      !firstName ||
+      !birthDate ||
+      !startDate ||
+      !fk_fonction ||
+      !phoneNumber ||
+      !fk_address ||
+      !fk_decheterie
+    ) {
+      setShowError(true);
+      return;
+    }
+
     const response = await updateEmploye({
       idlogin: idEmploye,
       mdplogin: password,
@@ -208,6 +243,11 @@ export default function EmployeForm({ idEmploye }) {
           noValidate
           sx={{ mt: 1 }}
         >
+          {showError && (
+            <Typography color="error">
+              Veuillez remplir tous les champs
+            </Typography>
+          )}
           <List
             sx={{
               width: "100%",
