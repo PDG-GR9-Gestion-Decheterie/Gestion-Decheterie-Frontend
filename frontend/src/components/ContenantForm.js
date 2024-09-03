@@ -332,7 +332,7 @@ export default function ContenantForm({ idContenant }) {
                 <Button
                   variant="outlined"
                   sx={{ mt: 3, mb: 2, mr: 2 }}
-                  onClick={() => navigate("/")}
+                  onClick={() => navigate("/contenants")}
                 >
                   Annuler
                 </Button>

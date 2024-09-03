@@ -30,13 +30,13 @@ export default function DecheterieForm({ idDecheterie }) {
   const navigate = useNavigate();
   const [id, setId] = React.useState();
   const [name, setName] = React.useState();
-  const [fk_address, setFk_address] = React.useState();
+  const [fk_address, setFk_address] = React.useState("");
   const [addresses, setAddresses] = React.useState([]);
   const [decheterieFetched, setDecheterieFetched] = React.useState(false);
 
   useEffect(() => {
     if (idDecheterie) {
-      const fetchDecheterie = async () => {
+      const fetchData = async () => {
         const response = await getDecheterie(idDecheterie);
         if (response.ok) {
           const data = await response.json();
@@ -44,32 +44,24 @@ export default function DecheterieForm({ idDecheterie }) {
           setId(data.decheterieData.id);
           setName(data.decheterieData.nom);
           setFk_address(data.decheterieData.fk_adresse);
+
+          // Fetch address
+          const addressResponse = await getAdresse(
+            data.decheterieData.fk_adresse
+          );
+          if (addressResponse.ok) {
+            const addressJson = await addressResponse.json();
+            setAddresses([addressJson.adresseData]);
+          }
         } else if (response.status === 401) {
           navigate("/login");
         } else {
           navigate("/error");
         }
       };
-      fetchDecheterie();
+      fetchData();
     }
   }, [idDecheterie, navigate]);
-
-  useEffect(() => {
-    if (fk_address) {
-      const fetchAdresse = async () => {
-        const response = await getAdresse(fk_address);
-        if (response.ok) {
-          const data = await response.json();
-          setAddresses([data.adresseData]);
-        } else if (response.status === 401) {
-          navigate("/login");
-        } else {
-          navigate("/error");
-        }
-      };
-      fetchAdresse();
-    }
-  }, [fk_address, navigate]);
 
   const searchAddresses = async (address) => {
     const response = await getAdresses(address);
@@ -88,6 +80,9 @@ export default function DecheterieForm({ idDecheterie }) {
 
   const handleCreate = async (e) => {
     e.preventDefault();
+
+    
+
     const response = await createDecheterie({
       id,
       nom: name,
@@ -212,7 +207,7 @@ export default function DecheterieForm({ idDecheterie }) {
                 <Button
                   variant="outlined"
                   sx={{ mt: 3, mb: 2, mr: 2 }}
-                  onClick={() => navigate("/")}
+                  onClick={() => navigate("/decheteries")}
                 >
                   Annuler
                 </Button>
