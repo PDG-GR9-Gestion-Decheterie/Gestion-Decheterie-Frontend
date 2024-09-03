@@ -202,7 +202,7 @@ export default function Ramassage() {
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primary="Décheterie"
+                  primary="Déchèterie"
                   secondary={(() => {
                     const decheterie = decheteries.find(
                       (d) => d.id === ramassage.fk_decheterie

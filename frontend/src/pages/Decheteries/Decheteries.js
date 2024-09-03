@@ -33,7 +33,7 @@ export default function Decheteries() {
 
   return (
     <Layout
-      title={"Décheteries"}
+      title={"Déchèteries"}
       content={
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
@@ -45,7 +45,7 @@ export default function Decheteries() {
                   color="primary"
                   gutterBottom
                 >
-                  Liste des décheteries
+                  Liste des déchèteries
                 </Typography>
                 <Table size="small">
                   <TableHead>
@@ -89,7 +89,7 @@ export default function Decheteries() {
                 color="primary"
                 gutterBottom
               >
-                Aucune décheterie
+                Aucune déchèterie
               </Typography>
             )}
             {localStorage.getItem("fonction") === '"Responsable"' ? (
@@ -99,7 +99,7 @@ export default function Decheteries() {
                 sx={{ mt: 3, mb: 2 }}
                 onClick={() => navigate("/decheteries/create")}
               >
-                Nouvelle décheterie
+                Nouvelle déchèterie
               </Button>
             ) : null}
           </Paper>

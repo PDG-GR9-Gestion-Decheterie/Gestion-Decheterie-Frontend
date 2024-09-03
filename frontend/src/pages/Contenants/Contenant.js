@@ -149,7 +149,7 @@ export default function Contenant() {
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primary="Décheterie"
+                  primary="Déchèterie"
                   secondary={(() => {
                     const decheterie = decheteries.find(
                       (d) => d.id === contenant.fk_decheterie

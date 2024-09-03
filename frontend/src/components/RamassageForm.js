@@ -279,7 +279,7 @@ export default function RamassageForm({ idRamassage }) {
                 </Avatar>
               </ListItemAvatar>
               <FormControl fullWidth>
-                <InputLabel id="decheterie-label">Décheterie</InputLabel>
+                <InputLabel id="decheterie-label">Déchèterie</InputLabel>
                 <Select
                   onChange={(e) => {
                     setFk_decheterie(e.target.value);
@@ -287,7 +287,7 @@ export default function RamassageForm({ idRamassage }) {
                   }}
                   value={fk_decheterie}
                   labelId="decheterie-label"
-                  label="Décheterie"
+                  label="Déchèterie"
                 >
                   {decheteries.map((d) => (
                     <MenuItem key={`decheterie-${d.id}`} value={d.id}>

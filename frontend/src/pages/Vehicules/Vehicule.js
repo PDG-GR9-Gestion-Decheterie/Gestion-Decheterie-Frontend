@@ -140,7 +140,7 @@ export default function Vehicule() {
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primary="Décheterie"
+                  primary="Déchèterie"
                   secondary={(() => {
                     const decheterie = decheteries.find(
                       (d) => d.id === vehicule.fk_decheterie

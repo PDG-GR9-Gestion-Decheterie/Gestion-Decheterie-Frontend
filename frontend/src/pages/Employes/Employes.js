@@ -53,7 +53,7 @@ export default function Employes() {
                       <TableCell>ID</TableCell>
                       <TableCell>Nom</TableCell>
                       <TableCell>Prénom</TableCell>
-                      <TableCell>Décheterie</TableCell>
+                      <TableCell>Déchèterie</TableCell>
                       <TableCell>Fonction</TableCell>
                       <TableCell>Date de naissance</TableCell>
                       <TableCell>Date de début du contrat</TableCell>

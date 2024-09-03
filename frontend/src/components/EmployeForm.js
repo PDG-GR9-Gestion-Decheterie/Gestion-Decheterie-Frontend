@@ -374,12 +374,12 @@ export default function EmployeForm({ idEmploye }) {
                 </Avatar>
               </ListItemAvatar>
               <FormControl fullWidth>
-                <InputLabel id="decheterie-label">Décheterie</InputLabel>
+                <InputLabel id="decheterie-label">Déchèterie</InputLabel>
                 <Select
                   onChange={(e) => setFk_decheterie(e.target.value)}
                   value={fk_decheterie}
                   labelId="decheterie-label"
-                  label="Décheterie"
+                  label="Déchèterie"
                 >
                   {decheteries.map((d) => (
                     <MenuItem key={d.id} value={d.id}>
