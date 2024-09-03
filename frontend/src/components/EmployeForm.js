@@ -417,7 +417,7 @@ export default function EmployeForm({ idEmploye }) {
                 <Button
                   variant="outlined"
                   sx={{ mt: 3, mb: 2, mr: 2 }}
-                  onClick={() => navigate("/")}
+                  onClick={() => navigate("/employes")}
                 >
                   Annuler
                 </Button>

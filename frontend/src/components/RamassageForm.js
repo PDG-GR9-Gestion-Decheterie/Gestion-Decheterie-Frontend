@@ -418,7 +418,7 @@ export default function RamassageForm({ idRamassage }) {
                 <Button
                   variant="outlined"
                   sx={{ mt: 3, mb: 2, mr: 2 }}
-                  onClick={() => navigate("/")}
+                  onClick={() => navigate("/ramassages")}
                 >
                   Annuler
                 </Button>
