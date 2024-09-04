@@ -68,8 +68,23 @@ export default function DecheterieForm({ idDecheterie }) {
     const response = await getAdresses(address);
     if (response.ok) {
       const data = await response.json();
-      setAddresses(data.adressesData);
-      setFk_address(data.adressesData[0].id);
+      const sortedAdresse = data.adressesData.sort((a, b) => {
+        // Comparer par ville
+        if (a.city < b.city) return -1;
+        if (a.city > b.city) return 1;
+
+        // Si les villes sont identiques, comparer par rue
+        if (a.street < b.street) return -1;
+        if (a.street > b.street) return 1;
+
+        // Si les villes et les rues sont identiques, comparer par numéro (numérique)
+        const numA = parseInt(a.number, 10);
+        const numB = parseInt(b.number, 10);
+
+        return numA - numB;
+      });
+      setAddresses(sortedAdresse);
+      setFk_address(sortedAdresse[0].id);
     } else if (response.status === 404) {
       return;
     } else if (response.status === 401) {
