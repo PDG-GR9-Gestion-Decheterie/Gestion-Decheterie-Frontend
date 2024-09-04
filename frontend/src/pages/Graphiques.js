@@ -28,7 +28,10 @@ export default function Itineraire() {
       const response = await getRamassages();
       if (response.ok) {
         const data = await response.json();
-        setRamassages(data.ramassagesData);
+        const ramassagesOk = data.ramassagesData.filter(
+          (ramassage) => ramassage.fk_status === "accepté"
+        );
+        setRamassages(ramassagesOk);
       } else if (response.status === 401) {
         navigate("/login");
       } else {
