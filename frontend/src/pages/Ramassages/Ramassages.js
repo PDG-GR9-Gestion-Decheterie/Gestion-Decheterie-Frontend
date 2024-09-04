@@ -66,8 +66,10 @@ export default function Ramassages() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {ramassages
-                      .sort((a, b) => a.date - b.date)
+                    {ramassages // sort by date
+                      .sort((a, b) => {
+                        return new Date(b.date) - new Date(a.date);
+                      })
                       .map((r) => (
                         <TableRow
                           key={r.id}
