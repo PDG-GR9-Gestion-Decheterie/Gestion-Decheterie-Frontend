@@ -66,8 +66,16 @@ export default function Employes() {
                       <TableRow
                         key={e.idlogin}
                         hover={true}
-                        style={{ cursor: "pointer" }}
-                        onClick={() => navigate(`/employes/${e.idlogin}`)}
+                        style={
+                          localStorage.getItem("fonction") === '"Responsable"'
+                            ? { cursor: "pointer" }
+                            : null
+                        }
+                        onClick={
+                          localStorage.getItem("fonction") === '"Responsable"'
+                            ? () => navigate(`/employes/${e.idlogin}`)
+                            : null
+                        }
                       >
                         <TableCell>{e.idlogin}</TableCell>
                         <TableCell>{e.nom}</TableCell>

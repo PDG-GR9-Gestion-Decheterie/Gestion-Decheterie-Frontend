@@ -151,7 +151,6 @@ export default function EmployeForm({ idEmploye }) {
 
     if (
       !id ||
-      !password ||
       !lastName ||
       !firstName ||
       !birthDate ||
@@ -191,7 +190,6 @@ export default function EmployeForm({ idEmploye }) {
 
     if (
       !id ||
-      !password ||
       !lastName ||
       !firstName ||
       !birthDate ||
