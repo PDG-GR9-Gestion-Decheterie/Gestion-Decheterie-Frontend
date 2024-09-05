@@ -224,7 +224,7 @@ export default function Itineraire() {
 
   return (
     <Layout
-      title={"Graphs"}
+      title={"Graphiques"}
       content={
         <Grid item xs={12}>
           <Paper sx={{ p: 2 }}>
