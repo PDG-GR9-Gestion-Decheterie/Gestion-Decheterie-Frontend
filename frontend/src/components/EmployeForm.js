@@ -157,7 +157,6 @@ export default function EmployeForm({ idEmploye }) {
       !birthDate ||
       !startDate ||
       !fk_fonction ||
-      !phoneNumber ||
       !fk_address ||
       !fk_decheterie
     ) {
@@ -198,7 +197,6 @@ export default function EmployeForm({ idEmploye }) {
       !birthDate ||
       !startDate ||
       !fk_fonction ||
-      !phoneNumber ||
       !fk_address ||
       !fk_decheterie
     ) {
