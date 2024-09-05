@@ -151,13 +151,11 @@ export default function EmployeForm({ idEmploye }) {
 
     if (
       !id ||
-      !password ||
       !lastName ||
       !firstName ||
       !birthDate ||
       !startDate ||
       !fk_fonction ||
-      !phoneNumber ||
       !fk_address ||
       !fk_decheterie
     ) {
@@ -192,13 +190,11 @@ export default function EmployeForm({ idEmploye }) {
 
     if (
       !id ||
-      !password ||
       !lastName ||
       !firstName ||
       !birthDate ||
       !startDate ||
       !fk_fonction ||
-      !phoneNumber ||
       !fk_address ||
       !fk_decheterie
     ) {

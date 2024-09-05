@@ -66,8 +66,20 @@ export default function Contenants() {
                       <TableRow
                         key={c.id}
                         hover={true}
-                        style={{ cursor: "pointer" }}
-                        onClick={() => navigate(`/contenants/${c.id}`)}
+                        style={
+                          localStorage.getItem("fonction") ===
+                            '"Responsable"' ||
+                          localStorage.getItem("fonction") === '"Secrétaire"'
+                            ? { cursor: "pointer" }
+                            : null
+                        }
+                        onClick={
+                          localStorage.getItem("fonction") ===
+                            '"Responsable"' ||
+                          localStorage.getItem("fonction") === '"Secrétaire"'
+                            ? () => navigate(`/contenants/${c.id}`)
+                            : null
+                        }
                       >
                         <TableCell>{c.id}</TableCell>
                         <TableCell>{c.nom}</TableCell>
@@ -78,7 +90,7 @@ export default function Contenants() {
                           {c.nbcadre == null ? "-" : c.nbcadre}
                         </TableCell>
                         <TableCell>
-                          {c.taille == null ? "-" : c.taille}
+                          s{c.taille == null ? "-" : c.taille}
                         </TableCell>
                         <TableCell>
                           {c.couleur == null ? (
@@ -118,7 +130,8 @@ export default function Contenants() {
                 Aucun contenant
               </Typography>
             )}
-            {localStorage.getItem("fonction") === '"Responsable"' ? (
+            {localStorage.getItem("fonction") === '"Responsable"' ||
+            localStorage.getItem("fonction") === '"Secrétaire"' ? (
               <Button
                 fullWidth
                 variant="contained"

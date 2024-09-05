@@ -216,7 +216,7 @@ export default function Layout({ title, content }) {
                   </ListItemIcon>
                   <ListItemText primary="Itinéraire" />
                 </ListItemButton>
-                {localStorage.getItem("fonction") === '"Secretaire"' ||
+                {localStorage.getItem("fonction") === '"Secrétaire"' ||
                 localStorage.getItem("fonction") === '"Responsable"' ? (
                   <ListItemButton href="/graphiques">
                     <ListItemIcon>

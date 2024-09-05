@@ -75,12 +75,16 @@ export default function Ramassages() {
                           key={r.id}
                           hover={true}
                           style={
-                            localStorage.getItem("fonction") === '"Responsable"'
+                            localStorage.getItem("fonction") ===
+                              '"Responsable"' ||
+                            localStorage.getItem("fonction") === '"Secrétaire"'
                               ? { cursor: "pointer" }
                               : null
                           }
                           onClick={
-                            localStorage.getItem("fonction") === '"Responsable"'
+                            localStorage.getItem("fonction") ===
+                              '"Responsable"' ||
+                            localStorage.getItem("fonction") === '"Secrétaire"'
                               ? () => navigate(`/ramassages/${r.id}`)
                               : null
                           }
