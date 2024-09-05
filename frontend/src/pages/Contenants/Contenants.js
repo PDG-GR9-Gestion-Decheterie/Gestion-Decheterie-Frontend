@@ -90,7 +90,7 @@ export default function Contenants() {
                           {c.nbcadre == null ? "-" : c.nbcadre}
                         </TableCell>
                         <TableCell>
-                          s{c.taille == null ? "-" : c.taille}
+                          {c.taille == null ? "-" : c.taille}
                         </TableCell>
                         <TableCell>
                           {c.couleur == null ? (
